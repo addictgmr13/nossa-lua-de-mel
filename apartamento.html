@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Nosso Apartamento • Flávio e Gabriela</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;0,700;1,400;1,600&display=swap" rel="stylesheet">
+<style>
+:root {
+  color-scheme: light;
+  --bg: #fcf8f7;
+  --card: #ffffff;
+  --ink: #2c2423;
+  --mut: #786a68;
+  --line: #ebdcd8;
+  --shadow: rgba(120, 70, 60, 0.06);
+  --primary: #9b4f53;
+  --primary-hover: #823e42;
+  --primary-light: #f7eded;
+  --ok: #10b981;
+  --track: #f1eae7;
+  --sim: #10b981;
+  --amamos: #ec4899;
+  --talvez: #f59e0b;
+  --nao: #ef4444;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Plus Jakarta Sans', system-ui, sans-serif; background: var(--bg); color: var(--ink); line-height: 1.6; }
+.wrap { max-width: 960px; margin: 0 auto; padding: 24px 20px 80px; }
+
+header { padding: 20px 0 32px; text-align: center; position: relative; }
+.eyebrow { font-size: 13px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--primary); font-weight: 800; margin-bottom: 8px; display: block;}
+h1 { font-family: 'Playfair Display', serif; font-size: clamp(34px, 5vw, 48px); font-weight: 700; line-height: 1.15; margin: 0 0 12px; color: var(--primary); }
+.sub { color: var(--mut); font-size: 16px; font-weight: 500; max-width: 700px; margin: 0 auto; font-family: 'Playfair Display', serif; font-style: italic;}
+
+.sync-bar { display: flex; justify-content: center; align-items: center; gap: 12px; margin-top: 24px; flex-wrap: wrap; }
+.btn { font-family: inherit; font-size: 14px; font-weight: 700; padding: 12px 22px; border-radius: 14px; border: 1px solid var(--line); background: var(--card); color: var(--ink); cursor: pointer; display: inline-flex; align-items: center; gap: 8px; box-shadow: 0 2px 6px var(--shadow); text-decoration: none; transition: all 0.2s;}
+.btn:hover { border-color: var(--primary); transform: translateY(-2px); }
+.btn-primary { background: linear-gradient(135deg, var(--primary), var(--primary-hover)); color: white; border: none; box-shadow: 0 6px 20px rgba(155, 79, 83, 0.3); }
+.spin svg { animation: rot 1s linear infinite; }
+@keyframes rot { to { transform: rotate(360deg); } }
+
+.sync-status { font-size: 13px; color: var(--mut); display: flex; align-items: center; gap: 8px; font-weight: 600; background: var(--card); padding: 6px 16px; border-radius: 99px; border: 1px solid var(--line);}
+.status-dot { width: 10px; height: 10px; border-radius: 50%; background: var(--ok); box-shadow: 0 0 10px rgba(16, 185, 129, 0.5); }
+
+.cfg-panel { margin-top: 16px; padding: 24px; border-radius: 20px; background: var(--card); border: 1px solid var(--line); display: none; box-shadow: 0 10px 30px var(--shadow); text-align: left; max-width: 600px; margin-left: auto; margin-right: auto;}
+.cfg-panel.show { display: block; }
+.cfg-row { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 16px; }
+.cfg-row input { flex: 1; min-width: 240px; font: inherit; font-size: 15px; padding: 12px 16px; border: 2px solid var(--line); border-radius: 14px; background: var(--bg); color: var(--ink); font-weight: 500;}
+
+section { margin-top: 40px; }
+.card { background: var(--card); border: 1px solid var(--line); border-radius: 24px; padding: 32px; box-shadow: 0 12px 40px var(--shadow); }
+
+.stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 16px; margin-bottom: 24px; }
+.stat { background: var(--card); border: 1px solid var(--line); border-radius: 20px; padding: 20px; box-shadow: 0 4px 12px var(--shadow); position: relative; overflow: hidden; }
+.stat::after { content: ''; position: absolute; top: 0; left: 0; width: 4px; height: 100%; background: var(--primary); border-radius: 4px 0 0 4px; opacity: 0.8;}
+.stat:nth-child(2)::after { background: var(--ok); }
+.stat:nth-child(3)::after { background: #f59e0b; }
+.stat small { display: block; color: var(--mut); font-size: 12px; font-weight: 700; text-transform: uppercase; margin-bottom: 6px; }
+.stat b { font-size: 24px; font-weight: 800; color: var(--ink); font-family: 'Playfair Display', serif; }
+
+.bar { height: 18px; background: var(--track); border-radius: 99px; overflow: hidden; margin: 16px 0 10px; box-shadow: inset 0 2px 4px rgba(0,0,0,0.03); }
+.bar i { display: block; height: 100%; background: linear-gradient(90deg, #d49598, var(--primary)); border-radius: 99px; transition: width 1s cubic-bezier(0.4, 0, 0.2, 1); }
+.row { display: flex; justify-content: space-between; color: var(--mut); font-size: 14px; font-weight: 600; }
+
+h2 { font-family: 'Playfair Display', serif; font-size: 24px; font-weight: 700; margin-bottom: 20px; color: var(--primary); display: flex; align-items: center; gap: 10px; }
+h3 { font-size: 18px; font-weight: 700; margin-bottom: 12px; color: var(--ink); }
+
+.tblwrap { overflow-x: auto; border-radius: 16px; border: 1px solid var(--line); background: var(--bg); }
+table { width: 100%; border-collapse: collapse; font-size: 14px; min-width: 600px; text-align: left; }
+th { background: var(--primary-light); color: var(--primary); font-weight: 800; padding: 14px 16px; font-size: 13px; text-transform: uppercase; letter-spacing: 0.05em; border-bottom: 1px solid var(--line); }
+td { padding: 14px 16px; border-bottom: 1px solid var(--line); vertical-align: middle; font-weight: 500; }
+tr:last-child td { border-bottom: none; }
+
+.badge { display: inline-block; padding: 6px 12px; border-radius: 99px; font-size: 12px; font-weight: 700; text-align: center; }
+.badge-sim { background: #d1fae5; color: #065f46; }
+.badge-amamos { background: #fce7f3; color: #db2777; }
+.badge-talvez { background: #fef3c7; color: #92400e; }
+.badge-nao { background: #fee2e2; color: #991b1b; }
+
+.link-apto { color: var(--primary); font-weight: 700; text-decoration: none; display: inline-flex; align-items: center; gap: 6px; }
+.link-apto:hover { text-decoration: underline; }
+
+.nav-back { display: inline-flex; align-items: center; gap: 8px; color: var(--primary); font-weight: 700; text-decoration: none; margin-bottom: 20px; font-size: 14px; }
+.nav-back:hover { text-decoration: underline; }
+
+footer { margin-top: 56px; color: var(--mut); font-size: 14px; text-align: center; font-weight: 600; font-family: 'Playfair Display', serif; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <a href="index.html" class="nav-back">← Voltar para o site da Lua de Mel</a>
+  
+  <header>
+    <span class="eyebrow">Nosso Novo Sonho</span>
+    <h1>Nosso Apartamento</h1>
+    <p class="sub">Planejamento financeiro do Porquinho Inter e curadoria dos imóveis de interesse para o nosso futuro.</p>
+    
+    <div class="sync-bar">
+      <div class="sync-actions" style="display:flex; gap:10px; flex-wrap:wrap; justify-content:center;">
+        <button type="button" class="btn btn-primary" id="btnSync">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width:18px;height:18px;"><path d="M21 12a9 9 0 0 0-9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/><path d="M3 12a9 9 0 0 0 9 9 9.75 9.75 0 0 0 6.74-2.74L21 16"/><path d="M16 16h5v5"/></svg>
+          <span>Atualizar Dados</span>
+        </button>
+        <a class="btn" id="btnOpenSheet" href="#" target="_blank">Abrir Planilha</a>
+        <button type="button" class="btn" id="btnToggleCfg">⚙ Configurar</button>
+      </div>
+      <div class="sync-status"><span class="status-dot" id="statusDot"></span><span id="statusText">Sincronizado</span></div>
+    </div>
+    <div class="cfg-panel" id="cfgPanel">
+      <h3 style="margin-top:0">Vínculo com Google Sheets</h3>
+      <div class="cfg-row">
+        <input type="text" id="sheetInput" placeholder="Cole o link do Google Sheets aqui">
+        <button type="button" class="btn btn-primary" id="btnSaveSheet">Salvar</button>
+      </div>
+    </div>
+  </header>
+
+  <section>
+    <h2>🐷 Cofrinho • Banco Inter (Apartamento)</h2>
+    <div class="stats">
+      <div class="stat"><small>Meta do Imóvel</small><b id="sMeta">R$ 50.000,00</b></div>
+      <div class="stat"><small>Saldo no Inter</small><b id="sSaldo">R$ 5.420,00</b></div>
+      <div class="stat"><small>Progresso</small><b id="sPct">10.8%</b></div>
+    </div>
+    <div class="card">
+      <div class="row"><span id="barL">R$ 5.420,00</span><span id="barR">Faltam R$ 44.580,00</span></div>
+      <div class="bar"><i id="bar" style="width: 10.8%"></i></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>🏢 Curadoria de Apartamentos</h2>
+    <div class="card">
+      <p style="color: var(--mut); margin-bottom: 20px; font-size: 15px;">Estes imóveis são sincronizados automaticamente da nossa planilha oficial. Para adicionar novos imóveis ou alterar status, basta editar diretamente na planilha!</p>
+      
+      <div class="tblwrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Imóvel / Bairro</th>
+              <th>Valor Estimado</th>
+              <th>Interesse</th>
+              <th>Acesso</th>
+            </tr>
+          </thead>
+          <tbody id="listaAptos">
+            <!-- Itens inseridos via JavaScript -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <footer>Feito com muito amor para Flávio e Gabriela ❤️</footer>
+</div>
+
+<script>
+(function(){
+  var DEFAULT_SHEET_ID = "12BraMQBBj5ibVlncKVWJ1BtcWo3UH2P7n0oj1WaJI-c";
+  var SHEET_KEY = "flavio_gabriela_apto_sheet_v1";
+
+  var STATE = {
+    meta: 50000,
+    saldo: 5420,
+    aptos: [
+      { titulo: "Cobertura 3 Quartos - Savassi", preco: 680000, status: "amamos", link: "https://www.zapimoveis.com.br" },
+      { titulo: "Apto 2 Quartos - Lourdes", preco: 450000, status: "sim", link: "https://www.imovelweb.com.br" },
+      { titulo: "Apto 3 Quartos - Buritis", preco: 520000, status: "talvez", link: "https://www.vivareal.com.br" }
+    ]
+  };
+
+  function getSheetId(){
+    try { return localStorage.getItem(SHEET_KEY) || DEFAULT_SHEET_ID; } catch(e){ return DEFAULT_SHEET_ID; }
+  }
+  function extractSheetId(val){
+    if(!val) return DEFAULT_SHEET_ID;
+    var m = val.match(/\/d\/([a-zA-Z0-9-_]+)/);
+    if (m) return m[1];
+    m = val.match(/([a-zA-Z0-9-_]{40,})/);
+    return m ? m[1] : val.trim();
+  }
+  function updateSheetLinks(){
+    var id = getSheetId();
+    document.getElementById("btnOpenSheet").href = "https://docs.google.com/spreadsheets/d/" + id + "/edit";
+    document.getElementById("sheetInput").value = "https://docs.google.com/spreadsheets/d/" + id + "/edit";
+  }
+
+  function cellStr(c){
+    if(!c) return "";
+    if(c.f !== undefined && c.f !== null && String(c.f).trim() !== "") return String(c.f).trim();
+    if(c.v === undefined || c.v === null) return "";
+    return String(c.v).trim();
+  }
+
+  function cellNum(c){
+    if(!c) return 0;
+    if(typeof c.v === "number") return c.v;
+    var raw = String(c.v !== undefined && c.v !== null ? c.v : (c.f || "")).trim().replace(/[R$\s€]/g, "");
+    if(raw.indexOf(",") > -1 && raw.indexOf(".") > -1){ raw = raw.replace(/\./g, "").replace(",", "."); } 
+    else if(raw.indexOf(",") > -1){ raw = raw.replace(",", "."); }
+    var n = parseFloat(raw); return isNaN(n) ? 0 : n;
+  }
+
+  async function fetchTab(sheetId, tabName){
+    var url = "https://docs.google.com/spreadsheets/d/" + sheetId + "/gviz/tq?tqx=out:json&sheet=" + encodeURIComponent(tabName) + "&_=" + Date.now();
+    var res = await fetch(url, { cache: "no-store" });
+    if(!res.ok) throw new Error("HTTP " + res.status);
+    var txt = await res.text();
+    var start = txt.indexOf("{"), end = txt.lastIndexOf("}");
+    if(start === -1 || end === -1) throw new Error("RES_NOT_JSON");
+    var json = JSON.parse(txt.slice(start, end + 1));
+    if(json.status !== "ok" || !json.table) throw new Error("ABA_NAO_ENCONTRADA");
+    return (json.table.rows || []).map(function(r){ return r.c || []; });
+  }
+
+  var brl = function(v){ return (Number(v)||0).toLocaleString("pt-BR",{style:"currency",currency:"BRL"}); };
+
+  function render(){
+    var meta = STATE.meta;
+    var saldo = STATE.saldo;
+    var falta = Math.max(meta - saldo, 0);
+    var pct = meta > 0 ? (saldo / meta * 100) : 0;
+
+    document.getElementById("sMeta").textContent = brl(meta);
+    document.getElementById("sSaldo").textContent = brl(saldo);
+    document.getElementById("sPct").textContent = pct.toFixed(1).replace(".", ",") + "%";
+    document.getElementById("barL").textContent = brl(saldo);
+    document.getElementById("barR").textContent = "Faltam " + brl(falta);
+    document.getElementById("bar").style.width = Math.min(pct, 100).toFixed(2) + "%";
+
+    var aptos = STATE.aptos;
+    var tbody = document.getElementById("listaAptos");
+    
+    if(aptos.length === 0){
+      tbody.innerHTML = '<tr><td colspan="4" style="text-align: center; color: var(--mut); padding: 24px;">Nenhum imóvel cadastrado na planilha.</td></tr>';
+      return;
+    }
+
+    tbody.innerHTML = aptos.map(function(item){
+      var st = (item.status || "").toLowerCase();
+      var badgeClass = "badge-talvez";
+      var badgeText = "Analisando";
+      
+      if(st === "amamos" || st.indexOf("amamos") > -1){ badgeClass = "badge-amamos"; badgeText = "Amamos!"; }
+      else if(st === "sim" || st.indexOf("sim") > -1){ badgeClass = "badge-sim"; badgeText = "Sim"; }
+      else if(st === "nao" || st.indexOf("não") > -1 || st.indexOf("nao") > -1){ badgeClass = "badge-nao"; badgeText = "Não"; }
+
+      var cleanLink = item.link || "#";
+      if(cleanLink && cleanLink !== "#" && !cleanLink.startsWith("http")) cleanLink = "https://" + cleanLink;
+
+      return '<tr>' +
+        '<td><strong>' + item.titulo + '</strong></td>' +
+        '<td>' + (item.preco ? brl(item.preco) : 'Não informado') + '</td>' +
+        '<td><span class="badge ' + badgeClass + '">' + badgeText + '</span></td>' +
+        '<td><a href="' + cleanLink + '" target="_blank" class="link-apto">🔗 Abrir Anúncio</a></td>' +
+      '</tr>';
+    }).join("");
+  }
+
+  async function syncFromSheets(){
+    var btn = document.getElementById("btnSync");
+    var dot = document.getElementById("statusDot");
+    var txt = document.getElementById("statusText");
+    var sheetId = getSheetId();
+
+    btn.classList.add("spin"); btn.disabled = true;
+    txt.textContent = "Sincronizando...";
+
+    try {
+      var results = await Promise.all([
+        fetchTab(sheetId, "Cofrinho Inter"),
+        fetchTab(sheetId, "Imóveis")
+      ]);
+
+      var cofRows = results[0];
+      if(cofRows && cofRows.length > 0){
+        for(var i = cofRows.length - 1; i >= 0; i--){
+          var r = cofRows[i];
+          var sal = cellNum(r[1]);
+          var met = cellNum(r[2]);
+          if(sal > 0){
+            STATE.saldo = sal;
+            if(met > 0) STATE.meta = met;
+            break;
+          }
+        }
+      }
+
+      var imovRows = results[1];
+      var sheetImov = [];
+      if(imovRows && imovRows.length > 0){
+        imovRows.forEach(function(r){
+          var tit = cellStr(r[0]);
+          if(!tit) return;
+          var preco = cellNum(r[1]);
+          var stRaw = cellStr(r[2]).toLowerCase();
+          var st = "talvez";
+          if(stRaw.indexOf("amamos") > -1) st = "amamos";
+          else if(stRaw.indexOf("sim") > -1) st = "sim";
+          else if(stRaw.indexOf("não") > -1 || stRaw.indexOf("nao") > -1) st = "nao";
+          var lnk = cellStr(r[3]);
+
+          sheetImov.push({
+            titulo: tit,
+            preco: preco,
+            status: st,
+            link: lnk
+          });
+        });
+      }
+
+      if(sheetImov.length > 0) STATE.aptos = sheetImov;
+
+      dot.className = "status-dot"; dot.style.background = "var(--ok)";
+      txt.textContent = "Sincronizado";
+    } catch(err) {
+      dot.className = "status-dot"; dot.style.background = "var(--ok)";
+      txt.textContent = "Modo Local";
+    } finally {
+      btn.classList.remove("spin");
+      btn.disabled = false;
+      render();
+    }
+  }
+
+  updateSheetLinks();
+  render();
+
+  document.getElementById("btnSync").addEventListener("click", syncFromSheets);
+  document.getElementById("btnToggleCfg").addEventListener("click", function(){
+    document.getElementById("cfgPanel").classList.toggle("show");
+  });
+  document.getElementById("btnSaveSheet").addEventListener("click", function(){
+    var newId = extractSheetId(document.getElementById("sheetInput").value);
+    try { localStorage.setItem(SHEET_KEY, newId); } catch(e){}
+    updateSheetLinks();
+    document.getElementById("cfgPanel").classList.remove("show");
+    syncFromSheets();
+  });
+
+  syncFromSheets();
+})();
+</script>
+</body>
+</html>
