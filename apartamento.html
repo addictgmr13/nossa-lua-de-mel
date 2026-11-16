@@ -129,14 +129,14 @@ footer { margin-top: 56px; color: var(--mut); font-size: 14px; text-align: cente
     <h2>🐷 Cofrinho • Banco Inter (Apartamento)</h2>
     <div class="stats">
       <div class="stat"><small>Média Imóvel BH</small><b id="sMediaApto">R$ 350.000,00</b></div>
-      <div class="stat"><small>Meta Entrada</small><b id="sMetaEntrada">R$ 50.000,00</b></div>
+      <div class="stat"><small>Meta Entrada</small><b id="sMetaEntrada">R$ 70.000,00</b></div>
       <div class="stat"><small>Meta Documentação</small><b id="sMetaDoc">R$ 15.750,00</b></div>
-      <div class="stat"><small>Meta Total</small><b id="sMeta">R$ 65.750,00</b></div>
+      <div class="stat"><small>Meta Total</small><b id="sMeta">R$ 85.750,00</b></div>
       <div class="stat"><small>Saldo no Inter</small><b id="sSaldo">R$ 5.420,00</b></div>
     </div>
     <div class="card">
-      <div class="row"><span id="barL">R$ 5.420,00</span><span id="barR">Faltam R$ 60.330,00</span></div>
-      <div class="bar"><i id="bar" style="width: 8.2%"></i></div>
+      <div class="row"><span id="barL">R$ 5.420,00</span><span id="barR">Faltam R$ 80.330,00</span></div>
+      <div class="bar"><i id="bar" style="width: 6.3%"></i></div>
     </div>
   </section>
 
@@ -175,8 +175,8 @@ footer { margin-top: 56px; color: var(--mut); font-size: 14px; text-align: cente
 
   var STATE = {
     mediaApto: 350000,
-    metaEntrada: 50000,
-    metaDoc: 15750, // ITBI (~3%) + Cartório/Registro (~1.5%) para 350k em BH
+    metaEntrada: 70000,
+    metaDoc: 15750,
     saldo: 5420,
     aptos: []
   };
@@ -303,13 +303,23 @@ footer { margin-top: 56px; color: var(--mut); font-size: 14px; text-align: cente
 
       var cofRows = results[0];
       if(cofRows && cofRows.length > 0){
+        for(var k = 0; k < Math.min(cofRows.length, 10); k++){
+          var headerRow = cofRows[k];
+          if(cellStr(headerRow[0]).toUpperCase().indexOf("META ENTRADA") > -1 && cofRows[k+1]){
+            var valEntrada = cellNum(cofRows[k+1][0]);
+            var valDoc = cellNum(cofRows[k+1][1]);
+            if(valEntrada > 0) STATE.metaEntrada = valEntrada;
+            if(valDoc > 0) STATE.metaDoc = valDoc;
+            break;
+          }
+        }
+
         for(var i = cofRows.length - 1; i >= 0; i--){
           var r = cofRows[i];
+          var dataCol = cellStr(r[0]);
           var sal = cellNum(r[1]);
-          var met = cellNum(r[2]);
-          if(sal > 0){
+          if(dataCol.indexOf("/") > -1 && sal > 0){
             STATE.saldo = sal;
-            if(met > 0) STATE.metaEntrada = met;
             break;
           }
         }
