@@ -21,10 +21,6 @@
   --primary-light: #f7eded;
   --ok: #10b981;
   --track: #f1eae7;
-  --sim: #10b981;
-  --amamos: #ec4899;
-  --talvez: #f59e0b;
-  --nao: #ef4444;
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -166,11 +162,7 @@ footer { margin-top: 56px; color: var(--mut); font-size: 14px; text-align: cente
   var STATE = {
     meta: 50000,
     saldo: 5420,
-    aptos: [
-      { titulo: "Cobertura 3 Quartos - Savassi", preco: 680000, status: "amamos", link: "https://www.zapimoveis.com.br" },
-      { titulo: "Apto 2 Quartos - Lourdes", preco: 450000, status: "sim", link: "https://www.imovelweb.com.br" },
-      { titulo: "Apto 3 Quartos - Buritis", preco: 520000, status: "talvez", link: "https://www.vivareal.com.br" }
-    ]
+    aptos: []
   };
 
   function getSheetId(){
@@ -243,11 +235,11 @@ footer { margin-top: 56px; color: var(--mut); font-size: 14px; text-align: cente
     tbody.innerHTML = aptos.map(function(item){
       var st = (item.status || "").toLowerCase();
       var badgeClass = "badge-talvez";
-      var badgeText = "Analisando";
+      var badgeText = item.status || "Analisando";
       
-      if(st === "amamos" || st.indexOf("amamos") > -1){ badgeClass = "badge-amamos"; badgeText = "Amamos!"; }
-      else if(st === "sim" || st.indexOf("sim") > -1){ badgeClass = "badge-sim"; badgeText = "Sim"; }
-      else if(st === "nao" || st.indexOf("não") > -1 || st.indexOf("nao") > -1){ badgeClass = "badge-nao"; badgeText = "Não"; }
+      if(st.indexOf("amamos") > -1 || st.indexOf("alto") > -1){ badgeClass = "badge-amamos"; badgeText = "Amamos!"; }
+      else if(st.indexOf("sim") > -1 || st.indexOf("médio") > -1 || st.indexOf("medio") > -1){ badgeClass = "badge-sim"; badgeText = "Sim / Médio"; }
+      else if(st.indexOf("não") > -1 || st.indexOf("nao") > -1 || st.indexOf("baixo") > -1){ badgeClass = "badge-nao"; badgeText = "Não"; }
 
       var cleanLink = item.link || "#";
       if(cleanLink && cleanLink !== "#" && !cleanLink.startsWith("http")) cleanLink = "https://" + cleanLink;
@@ -293,15 +285,26 @@ footer { margin-top: 56px; color: var(--mut); font-size: 14px; text-align: cente
       var imovRows = results[1];
       var sheetImov = [];
       if(imovRows && imovRows.length > 0){
-        imovRows.forEach(function(r){
+        // Encontra onde começa a tabela de imóveis pulando cabeçalhos decorativos
+        var startIdx = 0;
+        for(var i=0; i<imovRows.length; i++){
+          var rowText = cellStr(imovRows[i][0]).toLowerCase();
+          if(rowText.indexOf("imóvel") > -1 || rowText.indexOf("imovel") > -1 || rowText.indexOf("bairro") > -1 || rowText.indexOf("monsenhor") > -1){
+            if(rowText.indexOf("imóvel") > -1 || rowText.indexOf("imovel") > -1){
+              startIdx = i + 1; // Pula a linha do cabeçalho "Imóvel / Bairro"
+            } else {
+              startIdx = i; // Já é um imóvel
+            }
+            break;
+          }
+        }
+
+        for(var j = startIdx; j < imovRows.length; j++){
+          var r = imovRows[j];
           var tit = cellStr(r[0]);
-          if(!tit) return;
+          if(!tit || tit.toLowerCase() === "imóvel / bairro" || tit.toLowerCase() === "imovel / bairro") continue;
           var preco = cellNum(r[1]);
-          var stRaw = cellStr(r[2]).toLowerCase();
-          var st = "talvez";
-          if(stRaw.indexOf("amamos") > -1) st = "amamos";
-          else if(stRaw.indexOf("sim") > -1) st = "sim";
-          else if(stRaw.indexOf("não") > -1 || stRaw.indexOf("nao") > -1) st = "nao";
+          var st = cellStr(r[2]) || "Analisando";
           var lnk = cellStr(r[3]);
 
           sheetImov.push({
@@ -310,7 +313,7 @@ footer { margin-top: 56px; color: var(--mut); font-size: 14px; text-align: cente
             status: st,
             link: lnk
           });
-        });
+        }
       }
 
       if(sheetImov.length > 0) STATE.aptos = sheetImov;
