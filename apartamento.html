@@ -21,6 +21,10 @@
   --primary-light: #f7eded;
   --ok: #10b981;
   --track: #f1eae7;
+  --sim: #10b981;
+  --amamos: #ec4899;
+  --talvez: #f59e0b;
+  --nao: #ef4444;
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -50,13 +54,15 @@ h1 { font-family: 'Playfair Display', serif; font-size: clamp(34px, 5vw, 48px); 
 section { margin-top: 40px; }
 .card { background: var(--card); border: 1px solid var(--line); border-radius: 24px; padding: 32px; box-shadow: 0 12px 40px var(--shadow); }
 
-.stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 16px; margin-bottom: 24px; }
+.stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 16px; margin-bottom: 24px; }
 .stat { background: var(--card); border: 1px solid var(--line); border-radius: 20px; padding: 20px; box-shadow: 0 4px 12px var(--shadow); position: relative; overflow: hidden; }
 .stat::after { content: ''; position: absolute; top: 0; left: 0; width: 4px; height: 100%; background: var(--primary); border-radius: 4px 0 0 4px; opacity: 0.8;}
-.stat:nth-child(2)::after { background: var(--ok); }
-.stat:nth-child(3)::after { background: #f59e0b; }
+.stat:nth-child(2)::after { background: #3b82f6; }
+.stat:nth-child(3)::after { background: var(--ok); }
+.stat:nth-child(4)::after { background: #f59e0b; }
+.stat:nth-child(5)::after { background: #8b5cf6; }
 .stat small { display: block; color: var(--mut); font-size: 12px; font-weight: 700; text-transform: uppercase; margin-bottom: 6px; }
-.stat b { font-size: 24px; font-weight: 800; color: var(--ink); font-family: 'Playfair Display', serif; }
+.stat b { font-size: 22px; font-weight: 800; color: var(--ink); font-family: 'Playfair Display', serif; }
 
 .bar { height: 18px; background: var(--track); border-radius: 99px; overflow: hidden; margin: 16px 0 10px; box-shadow: inset 0 2px 4px rgba(0,0,0,0.03); }
 .bar i { display: block; height: 100%; background: linear-gradient(90deg, #d49598, var(--primary)); border-radius: 99px; transition: width 1s cubic-bezier(0.4, 0, 0.2, 1); }
@@ -93,7 +99,7 @@ footer { margin-top: 56px; color: var(--mut); font-size: 14px; text-align: cente
   <header>
     <span class="eyebrow">Nosso Novo Sonho</span>
     <h1>Nosso Apartamento</h1>
-    <p class="sub">Planejamento financeiro do Porquinho Inter e curadoria dos imóveis de interesse para o nosso futuro.</p>
+    <p class="sub">Planejamento financeiro do Porquinho Inter, metas de entrada e documentação, e curadoria dos imóveis em Belo Horizonte.</p>
     
     <div class="sync-bar">
       <div class="sync-actions" style="display:flex; gap:10px; flex-wrap:wrap; justify-content:center;">
@@ -118,13 +124,15 @@ footer { margin-top: 56px; color: var(--mut); font-size: 14px; text-align: cente
   <section>
     <h2>🐷 Cofrinho • Banco Inter (Apartamento)</h2>
     <div class="stats">
-      <div class="stat"><small>Meta do Imóvel</small><b id="sMeta">R$ 50.000,00</b></div>
+      <div class="stat"><small>Média Imóvel BH</small><b id="sMediaApto">R$ 350.000,00</b></div>
+      <div class="stat"><small>Meta Entrada</small><b id="sMetaEntrada">R$ 50.000,00</b></div>
+      <div class="stat"><small>Meta Documentação</small><b id="sMetaDoc">R$ 15.750,00</b></div>
+      <div class="stat"><small>Meta Total</small><b id="sMeta">R$ 65.750,00</b></div>
       <div class="stat"><small>Saldo no Inter</small><b id="sSaldo">R$ 5.420,00</b></div>
-      <div class="stat"><small>Progresso</small><b id="sPct">10.8%</b></div>
     </div>
     <div class="card">
-      <div class="row"><span id="barL">R$ 5.420,00</span><span id="barR">Faltam R$ 44.580,00</span></div>
-      <div class="bar"><i id="bar" style="width: 10.8%"></i></div>
+      <div class="row"><span id="barL">R$ 5.420,00</span><span id="barR">Faltam R$ 60.330,00</span></div>
+      <div class="bar"><i id="bar" style="width: 8.2%"></i></div>
     </div>
   </section>
 
@@ -160,7 +168,9 @@ footer { margin-top: 56px; color: var(--mut); font-size: 14px; text-align: cente
   var SHEET_KEY = "flavio_gabriela_apto_sheet_v1";
 
   var STATE = {
-    meta: 50000,
+    mediaApto: 350000,
+    metaEntrada: 50000,
+    metaDoc: 15750, // ITBI (~3%) + Cartório/Registro (~1.5%) para 350k em BH
     saldo: 5420,
     aptos: []
   };
@@ -212,14 +222,19 @@ footer { margin-top: 56px; color: var(--mut); font-size: 14px; text-align: cente
   var brl = function(v){ return (Number(v)||0).toLocaleString("pt-BR",{style:"currency",currency:"BRL"}); };
 
   function render(){
-    var meta = STATE.meta;
+    var metaEntrada = STATE.metaEntrada;
+    var metaDoc = STATE.metaDoc;
+    var metaTotal = metaEntrada + metaDoc;
     var saldo = STATE.saldo;
-    var falta = Math.max(meta - saldo, 0);
-    var pct = meta > 0 ? (saldo / meta * 100) : 0;
+    var falta = Math.max(metaTotal - saldo, 0);
+    var pct = metaTotal > 0 ? (saldo / metaTotal * 100) : 0;
 
-    document.getElementById("sMeta").textContent = brl(meta);
+    document.getElementById("sMediaApto").textContent = brl(STATE.mediaApto);
+    document.getElementById("sMetaEntrada").textContent = brl(metaEntrada);
+    document.getElementById("sMetaDoc").textContent = brl(metaDoc);
+    document.getElementById("sMeta").textContent = brl(metaTotal);
     document.getElementById("sSaldo").textContent = brl(saldo);
-    document.getElementById("sPct").textContent = pct.toFixed(1).replace(".", ",") + "%";
+    
     document.getElementById("barL").textContent = brl(saldo);
     document.getElementById("barR").textContent = "Faltam " + brl(falta);
     document.getElementById("bar").style.width = Math.min(pct, 100).toFixed(2) + "%";
@@ -276,7 +291,7 @@ footer { margin-top: 56px; color: var(--mut); font-size: 14px; text-align: cente
           var met = cellNum(r[2]);
           if(sal > 0){
             STATE.saldo = sal;
-            if(met > 0) STATE.meta = met;
+            if(met > 0) STATE.metaEntrada = met; // se houver meta na planilha, atualiza a entrada
             break;
           }
         }
@@ -285,15 +300,14 @@ footer { margin-top: 56px; color: var(--mut); font-size: 14px; text-align: cente
       var imovRows = results[1];
       var sheetImov = [];
       if(imovRows && imovRows.length > 0){
-        // Encontra onde começa a tabela de imóveis pulando cabeçalhos decorativos
         var startIdx = 0;
         for(var i=0; i<imovRows.length; i++){
           var rowText = cellStr(imovRows[i][0]).toLowerCase();
           if(rowText.indexOf("imóvel") > -1 || rowText.indexOf("imovel") > -1 || rowText.indexOf("bairro") > -1 || rowText.indexOf("monsenhor") > -1){
             if(rowText.indexOf("imóvel") > -1 || rowText.indexOf("imovel") > -1){
-              startIdx = i + 1; // Pula a linha do cabeçalho "Imóvel / Bairro"
+              startIdx = i + 1;
             } else {
-              startIdx = i; // Já é um imóvel
+              startIdx = i;
             }
             break;
           }
@@ -333,7 +347,7 @@ footer { margin-top: 56px; color: var(--mut); font-size: 14px; text-align: cente
   updateSheetLinks();
   render();
 
-  document.getElementById("btnSync").addEventListener("click", syncFromSheets);
+  document.getElementById("btnSync").addEventListener("click", syncFromSSHets = syncFromSheets);
   document.getElementById("btnToggleCfg").addEventListener("click", function(){
     document.getElementById("cfgPanel").classList.toggle("show");
   });
@@ -341,6 +355,7 @@ footer { margin-top: 56px; color: var(--mut); font-size: 14px; text-align: cente
     var newId = extractSheetId(document.getElementById("sheetInput").value);
     try { localStorage.setItem(SHEET_KEY, newId); } catch(e){}
     updateSheetLinks();
+    document.getElementById("cfgPanel").classList.remove("side");
     document.getElementById("cfgPanel").classList.remove("show");
     syncFromSheets();
   });
