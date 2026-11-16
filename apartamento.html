@@ -29,7 +29,7 @@
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
 body { font-family: 'Plus Jakarta Sans', system-ui, sans-serif; background: var(--bg); color: var(--ink); line-height: 1.6; }
-.wrap { max-width: 960px; margin: 0 auto; padding: 24px 20px 80px; }
+.wrap { max-width: 1060px; margin: 0 auto; padding: 24px 20px 80px; }
 
 header { padding: 20px 0 32px; text-align: center; position: relative; }
 .eyebrow { font-size: 13px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--primary); font-weight: 800; margin-bottom: 8px; display: block;}
@@ -72,18 +72,22 @@ h2 { font-family: 'Playfair Display', serif; font-size: 24px; font-weight: 700; 
 h3 { font-size: 18px; font-weight: 700; margin-bottom: 12px; color: var(--ink); }
 
 .tblwrap { overflow-x: auto; border-radius: 16px; border: 1px solid var(--line); background: var(--bg); }
-table { width: 100%; border-collapse: collapse; font-size: 14px; min-width: 600px; text-align: left; }
-th { background: var(--primary-light); color: var(--primary); font-weight: 800; padding: 14px 16px; font-size: 13px; text-transform: uppercase; letter-spacing: 0.05em; border-bottom: 1px solid var(--line); }
+table { width: 100%; border-collapse: collapse; font-size: 14px; min-width: 780px; text-align: left; }
+th { background: var(--primary-light); color: var(--primary); font-weight: 800; padding: 14px 16px; font-size: 13px; text-transform: uppercase; letter-spacing: 0.05em; border-bottom: 1px solid var(--line); white-space: nowrap; }
 td { padding: 14px 16px; border-bottom: 1px solid var(--line); vertical-align: middle; font-weight: 500; }
 tr:last-child td { border-bottom: none; }
 
-.badge { display: inline-block; padding: 6px 12px; border-radius: 99px; font-size: 12px; font-weight: 700; text-align: center; }
+.badge { display: inline-block; padding: 6px 12px; border-radius: 99px; font-size: 12px; font-weight: 700; text-align: center; white-space: nowrap; }
 .badge-sim { background: #d1fae5; color: #065f46; }
 .badge-amamos { background: #fce7f3; color: #db2777; }
 .badge-talvez { background: #fef3c7; color: #92400e; }
 .badge-nao { background: #fee2e2; color: #991b1b; }
+.badge-neutro { background: #f1eae7; color: var(--mut); }
 
-.link-apto { color: var(--primary); font-weight: 700; text-decoration: none; display: inline-flex; align-items: center; gap: 6px; }
+.data-visita { font-size: 13px; color: var(--ink); font-weight: 600; white-space: nowrap; }
+.sem-data { color: var(--mut); font-size: 13px; }
+
+.link-apto { color: var(--primary); font-weight: 700; text-decoration: none; display: inline-flex; align-items: center; gap: 6px; white-space: nowrap; }
 .link-apto:hover { text-decoration: underline; }
 
 .nav-back { display: inline-flex; align-items: center; gap: 8px; color: var(--primary); font-weight: 700; text-decoration: none; margin-bottom: 20px; font-size: 14px; }
@@ -148,6 +152,8 @@ footer { margin-top: 56px; color: var(--mut); font-size: 14px; text-align: cente
               <th>Imóvel / Bairro</th>
               <th>Valor Estimado</th>
               <th>Interesse</th>
+              <th>Visita Agendada</th>
+              <th>Data</th>
               <th>Acesso</th>
             </tr>
           </thead>
@@ -243,7 +249,7 @@ footer { margin-top: 56px; color: var(--mut); font-size: 14px; text-align: cente
     var tbody = document.getElementById("listaAptos");
     
     if(aptos.length === 0){
-      tbody.innerHTML = '<tr><td colspan="4" style="text-align: center; color: var(--mut); padding: 24px;">Nenhum imóvel cadastrado na planilha.</td></tr>';
+      tbody.innerHTML = '<tr><td colspan="6" style="text-align: center; color: var(--mut); padding: 24px;">Nenhum imóvel cadastrado na planilha.</td></tr>';
       return;
     }
 
@@ -256,13 +262,25 @@ footer { margin-top: 56px; color: var(--mut); font-size: 14px; text-align: cente
       else if(st.indexOf("sim") > -1 || st.indexOf("médio") > -1 || st.indexOf("medio") > -1){ badgeClass = "badge-sim"; badgeText = "Sim / Médio"; }
       else if(st.indexOf("não") > -1 || st.indexOf("nao") > -1 || st.indexOf("baixo") > -1){ badgeClass = "badge-nao"; badgeText = "Não"; }
 
+      var vis = (item.visita || "").toLowerCase();
+      var visBadge = '<span class="badge badge-neutro">Não</span>';
+      if(vis === "sim"){
+        visBadge = '<span class="badge badge-sim">Sim</span>';
+      }
+
+      var dataHtml = item.data 
+        ? '<span class="data-visita">📅 ' + item.data + '</span>' 
+        : '<span class="sem-data">—</span>';
+
       var cleanLink = item.link || "#";
       if(cleanLink && cleanLink !== "#" && !cleanLink.startsWith("http")) cleanLink = "https://" + cleanLink;
 
       return '<tr>' +
         '<td><strong>' + item.titulo + '</strong></td>' +
-        '<td>' + (item.preco ? brl(item.preco) : 'Não informado') + '</td>' +
+        '<td style="white-space: nowrap;">' + (item.preco ? brl(item.preco) : 'Não informado') + '</td>' +
         '<td><span class="badge ' + badgeClass + '">' + badgeText + '</span></td>' +
+        '<td>' + visBadge + '</td>' +
+        '<td>' + dataHtml + '</td>' +
         '<td><a href="' + cleanLink + '" target="_blank" class="link-apto">🔗 Abrir Anúncio</a></td>' +
       '</tr>';
     }).join("");
@@ -291,7 +309,7 @@ footer { margin-top: 56px; color: var(--mut); font-size: 14px; text-align: cente
           var met = cellNum(r[2]);
           if(sal > 0){
             STATE.saldo = sal;
-            if(met > 0) STATE.metaEntrada = met; // se houver meta na planilha, atualiza a entrada
+            if(met > 0) STATE.metaEntrada = met;
             break;
           }
         }
@@ -317,14 +335,19 @@ footer { margin-top: 56px; color: var(--mut); font-size: 14px; text-align: cente
           var r = imovRows[j];
           var tit = cellStr(r[0]);
           if(!tit || tit.toLowerCase() === "imóvel / bairro" || tit.toLowerCase() === "imovel / bairro") continue;
+          
           var preco = cellNum(r[1]);
           var st = cellStr(r[2]) || "Analisando";
-          var lnk = cellStr(r[3]);
+          var visita = cellStr(r[3]) || "Não";
+          var dataVisita = cellStr(r[4]);
+          var lnk = cellStr(r[5]);
 
           sheetImov.push({
             titulo: tit,
             preco: preco,
             status: st,
+            visita: visita,
+            data: dataVisita,
             link: lnk
           });
         }
@@ -347,7 +370,7 @@ footer { margin-top: 56px; color: var(--mut); font-size: 14px; text-align: cente
   updateSheetLinks();
   render();
 
-  document.getElementById("btnSync").addEventListener("click", syncFromSSHets = syncFromSheets);
+  document.getElementById("btnSync").addEventListener("click", syncFromSheets);
   document.getElementById("btnToggleCfg").addEventListener("click", function(){
     document.getElementById("cfgPanel").classList.toggle("show");
   });
@@ -355,7 +378,6 @@ footer { margin-top: 56px; color: var(--mut); font-size: 14px; text-align: cente
     var newId = extractSheetId(document.getElementById("sheetInput").value);
     try { localStorage.setItem(SHEET_KEY, newId); } catch(e){}
     updateSheetLinks();
-    document.getElementById("cfgPanel").classList.remove("side");
     document.getElementById("cfgPanel").classList.remove("show");
     syncFromSheets();
   });
