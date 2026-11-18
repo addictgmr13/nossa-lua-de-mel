@@ -60,6 +60,7 @@ h1 { font-family: 'Playfair Display', serif; font-size: clamp(34px, 5vw, 48px); 
 
 section { margin-top: 40px; }
 .card { background: var(--card); border: 1px solid var(--line); border-radius: 24px; padding: 32px; box-shadow: 0 12px 40px var(--shadow); }
+@media (max-width: 640px) { .card { padding: 20px; border-radius: 20px; } }
 
 .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 16px; margin-bottom: 24px; }
 .stat { background: var(--card); border: 1px solid var(--line); border-radius: 20px; padding: 20px; box-shadow: 0 4px 12px var(--shadow); position: relative; overflow: hidden; }
@@ -74,6 +75,12 @@ section { margin-top: 40px; }
 .bar { height: 18px; background: var(--track); border-radius: 99px; overflow: hidden; margin: 16px 0 10px; box-shadow: inset 0 2px 4px rgba(0,0,0,0.03); }
 .bar i { display: block; height: 100%; background: linear-gradient(90deg, #d49598, var(--primary)); border-radius: 99px; transition: width 1s cubic-bezier(0.4, 0, 0.2, 1); }
 .row { display: flex; justify-content: space-between; color: var(--mut); font-size: 14px; font-weight: 600; }
+
+.grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; margin-top: 28px; }
+@media (max-width: 768px) { .grid2 { grid-template-columns: 1fr; } }
+.chartbox { overflow-x: auto; background: var(--bg); border-radius: 16px; padding: 16px; border: 1px solid var(--line); margin-bottom: 12px; }
+.chartbox svg { width: 100%; min-width: 320px; height: auto; display: block; }
+.note { font-size: 13px; color: var(--mut); font-weight: 500; margin-top: 10px; }
 
 h2 { font-family: 'Playfair Display', serif; font-size: 24px; font-weight: 700; margin-bottom: 20px; color: var(--primary); display: flex; align-items: center; gap: 10px; }
 h3 { font-size: 18px; font-weight: 700; margin-bottom: 12px; color: var(--ink); }
@@ -102,11 +109,52 @@ h3 { font-size: 18px; font-weight: 700; margin-bottom: 12px; color: var(--ink); 
 .filter-btn.active { background: var(--primary); color: #fff; border-color: var(--primary); }
 
 .tblwrap { overflow-x: auto; border-radius: 16px; border: 1px solid var(--line); background: var(--bg); }
-table { width: 100%; border-collapse: collapse; font-size: 14px; min-width: 820px; text-align: left; }
+table { width: 100%; border-collapse: collapse; font-size: 14px; text-align: left; }
 th { background: var(--primary-light); color: var(--primary); font-weight: 800; padding: 14px 16px; font-size: 12px; text-transform: uppercase; letter-spacing: 0.05em; border-bottom: 1px solid var(--line); white-space: nowrap; }
 td { padding: 14px 16px; border-bottom: 1px solid var(--line); vertical-align: middle; font-weight: 500; }
 tr:last-child td { border-bottom: none; }
 .obs-sub { display: block; font-size: 12px; color: var(--mut); font-weight: 400; margin-top: 4px; line-height: 1.4; max-width: 340px; }
+
+/* Responsividade Mobile: Tabela vira Cards Empilhados durante Visitas */
+@media (max-width: 760px) {
+  .tblwrap { border: none; background: transparent; overflow-x: visible; }
+  table, thead, tbody, th, td, tr { display: block; width: 100%; }
+  thead { display: none; }
+  tbody tr {
+    background: var(--bg);
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    padding: 14px 16px;
+    margin-bottom: 14px;
+    box-shadow: 0 3px 10px var(--shadow);
+  }
+  tbody td {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    padding: 8px 0;
+    border-bottom: 1px dashed var(--line);
+    text-align: right;
+  }
+  tbody td:last-child { border-bottom: none; padding-bottom: 2px; }
+  tbody td::before {
+    content: attr(data-label);
+    font-size: 11px;
+    font-weight: 800;
+    text-transform: uppercase;
+    color: var(--mut);
+    text-align: left;
+    flex-shrink: 0;
+  }
+  tbody td[data-label="Imóvel / Bairro"] {
+    flex-direction: column;
+    align-items: flex-start;
+    text-align: left;
+  }
+  tbody td[data-label="Imóvel / Bairro"]::before { margin-bottom: 4px; }
+  .obs-sub { max-width: 100%; }
+}
 
 .cmp-check { width: 18px; height: 18px; accent-color: var(--primary); cursor: pointer; }
 
@@ -181,7 +229,6 @@ footer { margin-top: 56px; color: var(--mut); font-size: 14px; text-align: cente
 .search-sort-bar input:focus { outline: none; border-color: var(--primary); }
 .backup-box { margin-top: 18px; padding-top: 16px; border-top: 1px dashed var(--line); }
 .backup-btns { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 8px; }
-
 </style>
 </head>
 <body class="is-loading">
@@ -208,8 +255,9 @@ footer { margin-top: 56px; color: var(--mut); font-size: 14px; text-align: cente
       <div class="sync-status"><span class="status-dot" id="statusDot"></span><span id="statusText">Sincronizado</span></div>
     </div>
     <div class="cfg-panel" id="cfgPanel">
-      <h3 style="margin-top:0">Vínculo com Google Sheets</h3>
-      <label style="font-size:12px; color:var(--mut); display:block; margin-top:8px;">Link da Planilha (Leitura):</label>
+      <h3 style="margin-top:0">Vínculo com Google Sheets (Planilha Unificada)</h3>
+      <p style="font-size:12px; color:var(--mut); margin-top:4px;">Ao salvar aqui, o link é compartilhado automaticamente com a aba de Lua de Mel.</p>
+      <label style="font-size:12px; color:var(--mut); display:block; margin-top:10px;">Link da Planilha (Leitura):</label>
       <div class="cfg-row" style="margin-top:6px;">
         <input type="text" id="sheetInput" placeholder="Cole o link do Google Sheets aqui">
       </div>
@@ -245,6 +293,22 @@ footer { margin-top: 56px; color: var(--mut); font-size: 14px; text-align: cente
     <div class="card">
       <div class="row"><span id="barL">R$ 68.939,40</span><span id="barR">Faltam R$ 16.810,60</span></div>
       <div class="bar"><i id="bar" style="width: 80.4%"></i></div>
+
+      <div class="grid2">
+        <div>
+          <h3>Evolução dos Aportes</h3>
+          <div class="chartbox"><svg id="chartApto" viewBox="0 0 520 220"></svg></div>
+          <p class="note" id="insightApto">Acompanhamento mensal do Porquinho Inter rumo à meta de entrada + documentação.</p>
+        </div>
+        <div>
+          <h3>Simulador de Aportes</h3>
+          <div class="field">
+            <label for="dtApto">Quando queremos fechar o valor total?</label>
+            <input type="date" id="dtApto" value="2027-06-01">
+          </div>
+          <div id="planApto"><p class="note" style="margin: 16px 0;">Escolha uma data alvo para calcular os aportes mensais.</p></div>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -408,10 +472,11 @@ footer { margin-top: 56px; color: var(--mut); font-size: 14px; text-align: cente
 <script>
 (function(){
   var DEFAULT_SHEET_ID = "12BraMQBBj5ibVlncKVWJ1BtcWo3UH2P7n0oj1WaJI-c";
-  var SHEET_KEY = "flavio_gabriela_apto_sheet_v1";
-  var WEBAPP_KEY = "flavio_gabriela_apto_webapp_v1";
+  var SHEET_KEY = "flavio_gabriela_unified_sheet_v1";
+  var WEBAPP_KEY = "flavio_gabriela_unified_webapp_v1";
   var CHK_KEY = "flavio_gabriela_visit_chk_v1";
   var ENXOVAL_KEY = "flavio_gabriela_enxoval_v1";
+  var DT_APTO_KEY = "flavio_gabriela_apto_dt_v1";
 
   var DEFAULT_WEBAPP_URL = "https://script.google.com/macros/s/AKfycbx1HyO8kaXKpTV2ZdEnEgMpjFG7qE3tTigmLhgwNj7Z7fLbCOzmEghNJOAKVizS7BLU/exec";
   function getWebAppUrl(){
@@ -440,6 +505,9 @@ footer { margin-top: 56px; color: var(--mut); font-size: 14px; text-align: cente
     metaEntrada: 70000,
     metaDoc: 15750,
     saldo: 68939.40,
+    historicoCof: [
+      { data: "01/11/2026", saldo: 68939.40 }
+    ],
     aptos: [],
     filtroAtual: "todos",
     buscaTexto: "",
@@ -468,7 +536,10 @@ footer { margin-top: 56px; color: var(--mut); font-size: 14px; text-align: cente
     if(!c) return "";
     if(c.f !== undefined && c.f !== null && String(c.f).trim() !== "") return String(c.f).trim();
     if(c.v === undefined || c.v === null) return "";
-    return String(c.v).trim();
+    var s = String(c.v).trim();
+    var dm = s.match(/^Date\((\d+),(\d+),(\d+)\)/);
+    if(dm) return ("0" + dm[3]).slice(-2) + "/" + ("0" + (Number(dm[2]) + 1)).slice(-2) + "/" + dm[1];
+    return s;
   }
 
   function cellNum(c){
@@ -478,6 +549,11 @@ footer { margin-top: 56px; color: var(--mut); font-size: 14px; text-align: cente
     if(raw.indexOf(",") > -1 && raw.indexOf(".") > -1){ raw = raw.replace(/\./g, "").replace(",", "."); } 
     else if(raw.indexOf(",") > -1){ raw = raw.replace(",", "."); }
     var n = parseFloat(raw); return isNaN(n) ? 0 : n;
+  }
+
+  function shortDate(str){
+    var m = str.match(/^(\d{1,2}\/\d{1,2})\/\d{2,4}$/);
+    return m ? m[1] : str;
   }
 
   async function fetchTab(sheetId, tabName){
@@ -493,6 +569,64 @@ footer { margin-top: 56px; color: var(--mut); font-size: 14px; text-align: cente
   }
 
   var brl = function(v){ return (Number(v)||0).toLocaleString("pt-BR",{style:"currency",currency:"BRL"}); };
+
+  /* Gráfico & Simulador de Aportes do Cofrinho Inter */
+  function calcSimuladorApto(dateVal, falta){
+    var box = document.getElementById("planApto");
+    if(!dateVal){
+      box.innerHTML = '<p class="note" style="margin: 16px 0;">Escolha uma data alvo para calcular os aportes mensais.</p>';
+      return;
+    }
+    var now = new Date(); now.setHours(12,0,0,0);
+    var tgt = new Date(dateVal + "T12:00:00");
+    var dias = Math.round((tgt - now) / 86400000);
+    if(dias < 7){
+      box.innerHTML = '<p class="note" style="margin: 16px 0;">Escolha uma data futura válida.</p>';
+      return;
+    }
+    var meses = dias / 30.44;
+    var sem = dias / 7;
+    box.innerHTML =
+      '<div style="display:flex; justify-content:space-between; border-bottom:1px dashed var(--line); padding-bottom:8px; margin-top:16px;"><span>Dias até lá</span><b style="color:var(--primary)">' + dias + ' dias</b></div>' +
+      '<div style="display:flex; justify-content:space-between; border-bottom:1px dashed var(--line); padding-bottom:8px; margin-top:8px;"><span>Aporte por Mês</span><b style="color:var(--primary)">' + brl(falta / meses) + '</b></div>' +
+      '<div style="display:flex; justify-content:space-between; margin-top:8px;"><span>Aporte por Semana</span><b style="color:var(--primary)">' + brl(falta / sem) + '</b></div>';
+  }
+
+  function renderChartApto(metaTotal, saldoAtual){
+    var H = STATE.historicoCof && STATE.historicoCof.length ? STATE.historicoCof : [{ data: "01/11/2026", saldo: saldoAtual }];
+    var W = 520, Ht = 220, L = 66, R = 16, T = 18, B = 28;
+    var maxVal = Math.max(metaTotal, H.reduce(function(m, p){ return Math.max(m, p.saldo); }, 1000));
+    var ymax = Math.ceil(maxVal / 10000) * 10000;
+    var step = ymax / 4;
+    var x = function(i){ return H.length <= 1 ? (L + W - R) / 2 : L + (W - L - R) * i / (H.length - 1); };
+    var y = function(v){ return T + (Ht - T - B) * (1 - v / ymax); };
+
+    var s = "";
+    for(var t = 0; t <= 4; t++){
+      var tv = t * step;
+      s += '<line x1="'+L+'" x2="'+(W-R)+'" y1="'+y(tv)+'" y2="'+y(tv)+'" stroke="var(--line)"/>';
+      s += '<text x="'+(L-8)+'" y="'+(y(tv)+4)+'" text-anchor="end" font-size="11" font-weight="600" fill="var(--mut)">'+Math.round(tv/1000)+'k</text>';
+    }
+    // Linha tracejada da Meta Total
+    s += '<line x1="'+L+'" x2="'+(W-R)+'" y1="'+y(metaTotal)+'" y2="'+y(metaTotal)+'" stroke="var(--ok)" stroke-width="2" stroke-dasharray="5,4"/>';
+    s += '<text x="'+(W-R)+'" y="'+(y(metaTotal)-5)+'" text-anchor="end" font-size="10" font-weight="700" fill="var(--ok)">Meta '+brl(metaTotal)+'</text>';
+
+    var pts = H.map(function(p, i){ return x(i).toFixed(1) + "," + y(p.saldo).toFixed(1); });
+    if(H.length > 1){
+      s += '<polygon points="'+x(0)+','+y(0)+' '+pts.join(" ")+' '+x(H.length-1)+','+y(0)+'" fill="var(--primary)" opacity=".12"/>';
+      s += '<polyline points="'+pts.join(" ")+'" fill="none" stroke="var(--primary)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>';
+    }
+    H.forEach(function(p, i){
+      var isLast = (i === H.length - 1);
+      s += '<circle cx="'+x(i)+'" cy="'+y(p.saldo)+'" r="'+(isLast?6:4)+'" fill="#fff" stroke="var(--primary)" stroke-width="3"/>';
+    });
+
+    var labelIndices = H.length <= 4 ? H.map(function(_, i){ return i; }) : [0, Math.floor((H.length-1)/2), H.length-1];
+    labelIndices.forEach(function(idx){
+      s += '<text x="'+x(idx)+'" y="'+(Ht-6)+'" text-anchor="middle" font-size="11" font-weight="600" fill="var(--mut)">'+shortDate(H[idx].data)+'</text>';
+    });
+    document.getElementById("chartApto").innerHTML = s;
+  }
 
   /* Simulador de Financiamento + FGTS + SAC Decrescente + Documentação BH */
   function calcSimulador(){
@@ -601,13 +735,18 @@ footer { margin-top: 56px; color: var(--mut); font-size: 14px; text-align: cente
     document.getElementById("sSaldo").textContent = brl(saldo);
     
     document.getElementById("barL").textContent = brl(saldo);
-    document.getElementById("barR").textContent = "Faltam " + brl(falta);
+    document.getElementById("barR").textContent = "Faltam " + brl(falta) + " (" + pct.toFixed(1).replace(".", ",") + "%)";
     document.getElementById("bar").style.width = Math.min(pct, 100).toFixed(2) + "%";
+
+    renderChartApto(metaTotal, saldo);
+    var dtInput = document.getElementById("dtApto");
+    try { var svDt = localStorage.getItem(DT_APTO_KEY); if(svDt) dtInput.value = svDt; } catch(e){}
+    calcSimuladorApto(dtInput.value, falta);
 
     /* Resumo da Curadoria */
     var todosAptos = STATE.aptos;
     var totalAvaliados = todosAptos.length;
-    var visitasAgendadas = todosAptos.filter(function(a){ return (a.visita || "").toLowerCase() === "sim"; }).length;
+    var visitasAgendadas = todosAptos.filter(function(a){ return (a.visita || "").toLowerCase().trim() === "sim"; }).length;
     var aptosComPreco = todosAptos.filter(function(a){ return a.preco > 0; });
     var somaPrecos = aptosComPreco.reduce(function(acc, a){ return acc + a.preco; }, 0);
     var mediaPrecos = aptosComPreco.length > 0 ? (somaPrecos / aptosComPreco.length) : 0;
@@ -619,7 +758,7 @@ footer { margin-top: 56px; color: var(--mut); font-size: 14px; text-align: cente
     /* Filtragem & Ordenação da Tabela */
     var q = (STATE.buscaTexto || "").toLowerCase().trim();
     var aptosFiltrados = todosAptos.filter(function(item){
-      if(STATE.filtroAtual === "visita" && (item.visita || "").toLowerCase() !== "sim") return false;
+      if(STATE.filtroAtual === "visita" && (item.visita || "").toLowerCase().trim() !== "sim") return false;
       if(STATE.filtroAtual === "alto"){
         var s = (item.status || "").toLowerCase();
         if(s.indexOf("amamos") === -1 && s.indexOf("alto") === -1) return false;
@@ -649,11 +788,11 @@ footer { margin-top: 56px; color: var(--mut); font-size: 14px; text-align: cente
       var badgeClass = "badge-talvez";
       var badgeText = item.status || "Analisando";
       
-      if(st.indexOf("amamos") > -1 || st.indexOf("alto") > -1){ badgeClass = "badge-amamos"; badgeText = "Amamos!"; }
-      else if(st.indexOf("sim") > -1 || st.indexOf("médio") > -1 || st.indexOf("medio") > -1){ badgeClass = "badge-sim"; badgeText = "Sim / Médio"; }
-      else if(st.indexOf("não") > -1 || st.indexOf("nao") > -1 || st.indexOf("baixo") > -1){ badgeClass = "badge-nao"; badgeText = "Não"; }
+      if(st.indexOf("amamos") > -1 || st.indexOf("alto") > -1){ badgeClass = "badge-amamos"; badgeText = "Alto / Amamos!"; }
+      else if(st.indexOf("sim") > -1 || st.indexOf("médio") > -1 || st.indexOf("medio") > -1){ badgeClass = "badge-sim"; badgeText = "Médio"; }
+      else if(st.indexOf("não") > -1 || st.indexOf("nao") > -1 || st.indexOf("baixo") > -1){ badgeClass = "badge-nao"; badgeText = "Baixo"; }
 
-      var vis = (item.visita || "").toLowerCase();
+      var vis = (item.visita || "").toLowerCase().trim();
       var visBadge = '<span class="badge badge-neutro">Não</span>';
       if(vis === "sim"){
         visBadge = '<span class="badge badge-sim">Sim</span>';
@@ -666,20 +805,24 @@ footer { margin-top: 56px; color: var(--mut); font-size: 14px; text-align: cente
       var obsHtml = item.obs ? '<span class="obs-sub">' + item.obs + '</span>' : '';
       var condHtml = item.condIptu > 0 ? brl(item.condIptu) + '/mês' : '<span class="sem-data">—</span>';
 
-      var cleanLink = item.link || "#";
-      if(cleanLink && cleanLink !== "#" && !cleanLink.startsWith("http")) cleanLink = "https://" + cleanLink;
+      var rawLink = (item.link || "").trim();
+      var actionHtml = '<span class="badge badge-neutro">Sem link</span>';
+      if(rawLink && rawLink !== "#"){
+        var cleanLink = rawLink.startsWith("http") ? rawLink : ("https://" + rawLink);
+        actionHtml = '<a href="' + cleanLink + '" target="_blank" rel="noopener" class="link-apto">🔗 Abrir Anúncio</a>';
+      }
 
       var isCmpChecked = STATE.selecionadosCmp.indexOf(item.uid) > -1;
 
       return '<tr>' +
-        '<td><input type="checkbox" class="cmp-check" data-cmptit="'+item.uid.replace(/"/g,'&quot;')+'"'+(isCmpChecked?' checked':'')+'></td>' +
-        '<td><strong>' + item.titulo + '</strong>' + obsHtml + '</td>' +
-        '<td style="white-space: nowrap;">' + (item.preco ? brl(item.preco) : 'Não informado') + '</td>' +
-        '<td style="white-space: nowrap;">' + condHtml + '</td>' +
-        '<td><span class="badge ' + badgeClass + '">' + badgeText + '</span></td>' +
-        '<td>' + visBadge + '</td>' +
-        '<td>' + dataHtml + '</td>' +
-        '<td><a href="' + cleanLink + '" target="_blank" class="link-apto">🔗 Abrir Anúncio</a></td>' +
+        '<td data-label="Comparar"><input type="checkbox" class="cmp-check" data-cmptit="'+item.uid.replace(/"/g,'&quot;')+'"'+(isCmpChecked?' checked':'')+'></td>' +
+        '<td data-label="Imóvel / Bairro"><strong>' + item.titulo + '</strong>' + obsHtml + '</td>' +
+        '<td data-label="Valor Estimado" style="white-space: nowrap;">' + (item.preco ? brl(item.preco) : 'Não informado') + '</td>' +
+        '<td data-label="Cond. + IPTU" style="white-space: nowrap;">' + condHtml + '</td>' +
+        '<td data-label="Interesse"><span class="badge ' + badgeClass + '">' + badgeText + '</span></td>' +
+        '<td data-label="Visita">' + visBadge + '</td>' +
+        '<td data-label="Data">' + dataHtml + '</td>' +
+        '<td data-label="Acesso">' + actionHtml + '</td>' +
       '</tr>';
     }).join("");
 
@@ -706,9 +849,9 @@ footer { margin-top: 56px; color: var(--mut); font-size: 14px; text-align: cente
 
   /* Planner de Enxoval & Reforma Inicial */
   var DEFAULT_ENXOVAL = [
-    { cat: "🧊 Eletros", name: "Geladeira Frost Free", price: 3800, done: false },
+    { cat: "🧊 Eletros", name: "Geladeira Frost Free", price: 6000, done: false },
+    { cat: "🛋️ Móveis", name: "Cama Box Queen + Colchão", price: 4000, done: false },
     { cat: "🧊 Eletros", name: "Máquina Lava e Seca", price: 3400, done: false },
-    { cat: "🛋️ Móveis", name: "Cama Box Queen + Colchão", price: 3200, done: false },
     { cat: "🛋️ Móveis", name: "Sofá Retrátil Sala", price: 2900, done: false },
     { cat: "🔨 Reforma/Pintura", name: "Pintura e Pequenos Reparos", price: 3500, done: false }
   ];
@@ -805,14 +948,18 @@ footer { margin-top: 56px; color: var(--mut); font-size: 14px; text-align: cente
           }
         }
 
-        for(var i = cofRows.length - 1; i >= 0; i--){
+        var hist = [];
+        for(var i = 0; i < cofRows.length; i++){
           var r = cofRows[i];
           var dataCol = cellStr(r[0]);
           var sal = cellNum(r[1]);
           if(dataCol.indexOf("/") > -1 && sal > 0){
-            STATE.saldo = sal;
-            break;
+            hist.push({ data: dataCol, saldo: sal });
           }
+        }
+        if(hist.length > 0){
+          STATE.historicoCof = hist;
+          STATE.saldo = hist[hist.length - 1].saldo;
         }
       }
 
@@ -820,14 +967,10 @@ footer { margin-top: 56px; color: var(--mut); font-size: 14px; text-align: cente
       var sheetImov = [];
       if(imovRows && imovRows.length > 0){
         var startIdx = 0;
-        for(var i=0; i<imovRows.length; i++){
+        for(var i = 0; i < imovRows.length; i++){
           var rowText = cellStr(imovRows[i][0]).toLowerCase();
           if(rowText.indexOf("imóvel") > -1 || rowText.indexOf("imovel") > -1 || rowText.indexOf("bairro") > -1 || rowText.indexOf("monsenhor") > -1){
-            if(rowText.indexOf("imóvel") > -1 || rowText.indexOf("imovel") > -1){
-              startIdx = i + 1;
-            } else {
-              startIdx = i;
-            }
+            startIdx = (rowText.indexOf("imóvel") > -1 || rowText.indexOf("imovel") > -1) ? (i + 1) : i;
             break;
           }
         }
@@ -863,18 +1006,25 @@ footer { margin-top: 56px; color: var(--mut); font-size: 14px; text-align: cente
         }
       }
 
-      if(sheetImov.length > 0) STATE.aptos = sheetImov;
+      if(sheetImov.length > 0){
+        STATE.aptos = sheetImov;
+        var validPrices = sheetImov.filter(function(a){ return a.preco > 0; });
+        if(validPrices.length > 0){
+          STATE.mediaApto = Math.round(validPrices.reduce(function(acc, a){ return acc + a.preco; }, 0) / validPrices.length);
+        }
+      }
 
       var enxRows = results[2];
       if(enxRows && enxRows.length > 1){
         var sheetEnx = [];
         for(var eIdx = 1; eIdx < enxRows.length; eIdx++){
           var er = enxRows[eIdx];
+          var eCat = cellStr(er[0]);
           var eName = cellStr(er[1]);
-          if(!eName) continue;
+          if(!eName || eCat.toUpperCase().indexOf("TOTAL") > -1) continue;
           var eDoneStr = cellStr(er[3]).toUpperCase();
           sheetEnx.push({
-            cat: cellStr(er[0]) || "🛋️ Móveis",
+            cat: eCat || "🛋️ Móveis",
             name: eName,
             price: cellNum(er[2]),
             done: (eDoneStr === "SIM" || eDoneStr === "TRUE" || eDoneStr === "OK")
@@ -893,7 +1043,8 @@ footer { margin-top: 56px; color: var(--mut); font-size: 14px; text-align: cente
         for(var vIdx = 1; vIdx < vChkRows.length; vIdx++){
           var vr = vChkRows[vIdx];
           var vKey = cellStr(vr[0]);
-          var vDone = cellStr(vr[1]).toUpperCase();
+          // Suporta tanto 2 colunas (Chave, Concluido) quanto 3 colunas (Chave, Item, Concluido)
+          var vDone = cellStr(vr[2] !== undefined ? vr[2] : vr[1]).toUpperCase();
           if(vKey && (vDone === "SIM" || vDone === "TRUE" || vDone === "OK")){
             remoteChk[vKey] = true;
           }
@@ -947,6 +1098,12 @@ footer { margin-top: 56px; color: var(--mut); font-size: 14px; text-align: cente
   initChecklist();
   render();
 
+  document.getElementById("dtApto").addEventListener("change", function(e){
+    try { localStorage.setItem(DT_APTO_KEY, e.target.value); } catch(err){}
+    var metaTotal = STATE.metaEntrada + STATE.metaDoc;
+    calcSimuladorApto(e.target.value, Math.max(metaTotal - STATE.saldo, 0));
+  });
+
   ["simValor", "simEntrada", "simFgts", "simJuros", "simPrazo"].forEach(function(id){
     document.getElementById(id).addEventListener("input", function(){
       calcSimulador();
@@ -993,6 +1150,7 @@ footer { margin-top: 56px; color: var(--mut); font-size: 14px; text-align: cente
   document.getElementById("btnToggleCfg").addEventListener("click", function(){
     document.getElementById("cfgPanel").classList.toggle("show");
   });
+
   function validateWebAppUrl(u){
     var fb = document.getElementById("webAppFeedback");
     if(!u){ fb.textContent = ""; return true; }
@@ -1045,81 +1203,14 @@ footer { margin-top: 56px; color: var(--mut); font-size: 14px; text-align: cente
     } catch(e){}
     updateSheetLinks();
     document.getElementById("cfgPanel").classList.remove("show");
-    /* Exportar Resumo WhatsApp & Backup JSON */
-  document.getElementById("btnCopyWhatsApp").addEventListener("click", function(){
-    var metaTotal = STATE.metaEntrada + STATE.metaDoc;
-    var pct = metaTotal > 0 ? (STATE.saldo / metaTotal * 100).toFixed(1).replace(".", ",") : "0,0";
-    var visitas = STATE.aptos.filter(function(a){ return (a.visita || "").toLowerCase() === "sim"; }).length;
-
-    var msg = "🏡 *Resumo Nosso Apartamento — Flávio & Gabriela*\n" +
-      "🐷 *Cofrinho Inter:* " + brl(STATE.saldo) + " / " + brl(metaTotal) + " (" + pct + "%)\n" +
-      "📉 *Falta guardar:* " + brl(Math.max(metaTotal - STATE.saldo, 0)) + "\n" +
-      "🏢 *Imóveis avaliados:* " + STATE.aptos.length + " (" + visitas + " visitas agendadas)\n" +
-      "🛋️ *Itens no Enxoval:* " + enxovalItems.length;
-
-    if(navigator.clipboard) navigator.clipboard.writeText(msg);
-    var fb = document.getElementById("backupFeedback");
-    fb.textContent = "✅ Resumo copiado! Agora é só colar no WhatsApp da Gabriela.";
-    setTimeout(function(){ fb.textContent = ""; }, 3500);
-  });
-
-  document.getElementById("btnExportJson").addEventListener("click", function(){
-    var backup = {
-      exportedAt: new Date().toISOString(),
-      enxovalItems: enxovalItems,
-      visitChecklist: JSON.parse(localStorage.getItem(CHK_KEY) || "{}"),
-      simulador: {
-        valor: document.getElementById("simValor").value,
-        entrada: document.getElementById("simEntrada").value,
-        fgts: document.getElementById("simFgts").value,
-        juros: document.getElementById("simJuros").value,
-        prazo: document.getElementById("simPrazo").value
-      }
-    };
-    var blob = new Blob([JSON.stringify(backup, null, 2)], { type: "application/json" });
-    var a = document.createElement("a");
-    a.href = URL.createObjectURL(blob);
-    a.download = "backup_apartamento.json";
-    a.click();
-  });
-
-  document.getElementById("btnImportJson").addEventListener("click", function(){
-    document.getElementById("fileImportJson").click();
-  });
-
-  document.getElementById("fileImportJson").addEventListener("change", function(e){
-    var file = e.target.files[0];
-    if(!file) return;
-    var reader = new FileReader();
-    reader.onload = function(ev){
-      try {
-        var data = JSON.parse(ev.target.result);
-        if(data.enxovalItems){ enxovalItems = data.enxovalItems; saveEnxoval(true); renderEnxoval(); }
-        if(data.visitChecklist){ localStorage.setItem(CHK_KEY, JSON.stringify(data.visitChecklist)); initChecklist(); }
-        if(data.simulador){
-          if(data.simulador.valor) document.getElementById("simValor").value = data.simulador.valor;
-          if(data.simulador.entrada) document.getElementById("simEntrada").value = data.simulador.entrada;
-          if(data.simulador.fgts) document.getElementById("simFgts").value = data.simulador.fgts;
-          if(data.simulador.juros) document.getElementById("simJuros").value = data.simulador.juros;
-          if(data.simulador.prazo) document.getElementById("simPrazo").value = data.simulador.prazo;
-          calcSimulador();
-        }
-        document.getElementById("backupFeedback").textContent = "✅ Backup JSON restaurado com sucesso!";
-      } catch(err){
-        document.getElementById("backupFeedback").textContent = "❌ Arquivo JSON inválido.";
-      }
-    };
-    reader.readAsText(file);
-  });
-
-  syncFromSheets();
+    syncFromSheets();
   });
 
   /* Exportar Resumo WhatsApp & Backup JSON */
   document.getElementById("btnCopyWhatsApp").addEventListener("click", function(){
     var metaTotal = STATE.metaEntrada + STATE.metaDoc;
     var pct = metaTotal > 0 ? (STATE.saldo / metaTotal * 100).toFixed(1).replace(".", ",") : "0,0";
-    var visitas = STATE.aptos.filter(function(a){ return (a.visita || "").toLowerCase() === "sim"; }).length;
+    var visitas = STATE.aptos.filter(function(a){ return (a.visita || "").toLowerCase().trim() === "sim"; }).length;
 
     var msg = "🏡 *Resumo Nosso Apartamento — Flávio & Gabriela*\n" +
       "🐷 *Cofrinho Inter:* " + brl(STATE.saldo) + " / " + brl(metaTotal) + " (" + pct + "%)\n" +

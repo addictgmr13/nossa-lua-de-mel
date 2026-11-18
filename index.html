@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Lua de mel de Flávio e Gabriela</title>
+<title>Lua de mel — Flávio e Gabriela</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;0,700;1,400;1,600&display=swap" rel="stylesheet">
@@ -21,18 +21,11 @@
   --primary-light: #f7eded;
   --ok: #10b981;
   --track: #f1eae7;
-  --roma: #e15b64;
-  --flor: #f59e0b;
-  --mil: #3b82f6;
-  --par: #10b981;
-  --lis: #8b5cf6;
-  --voo: #8c7d7a;
-  box-sizing: border-box;
 }
 
-* { box-sizing: border-box; margin: 0; padding: 0; }
-body { font-family: 'Plus Jakarta Sans', system-ui, sans-serif; background: var(--bg); color: var(--ink); line-height: 1.6; }
-.wrap { max-width: 1080px; margin: 0 auto; padding: 20px 20px 80px; }
+* { box-sizing: border-box; }
+body { margin: 0; font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif; background: var(--bg); color: var(--ink); line-height: 1.6; overflow-x: clip; }
+.wrap { max-width: 1120px; margin: 0 auto; padding: 20px 20px 80px; }
 
 /* Barra de Navegação Unificada */
 .top-nav { display: flex; justify-content: center; gap: 10px; margin-bottom: 24px; background: var(--card); padding: 8px; border-radius: 99px; border: 1px solid var(--line); box-shadow: 0 4px 16px var(--shadow); max-width: 420px; margin-left: auto; margin-right: auto; }
@@ -41,162 +34,173 @@ body { font-family: 'Plus Jakarta Sans', system-ui, sans-serif; background: var(
 .top-nav a.active { background: linear-gradient(135deg, var(--primary), var(--primary-hover)); color: #fff; box-shadow: 0 4px 12px rgba(155, 79, 83, 0.25); }
 
 header { padding: 12px 0 32px; text-align: center; position: relative; }
-.hero-photos { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin: 28px 0; }
-@media (max-width: 768px) { .hero-photos { grid-template-columns: 1fr; } }
-.hero-photo-card { background: var(--card); border: 1px solid var(--line); border-radius: 20px; overflow: hidden; box-shadow: 0 10px 30px var(--shadow); transition: transform 0.3s ease; }
-.hero-photo-card:hover { transform: translateY(-4px); }
-.hero-photo-card img { width: 100%; height: 260px; object-fit: cover; display: block; }
-
 .eyebrow { font-size: 13px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--primary); font-weight: 800; margin-bottom: 8px; display: block;}
-h1 { font-family: 'Playfair Display', serif; font-size: clamp(36px, 6vw, 52px); font-weight: 700; line-height: 1.15; margin: 0 0 12px; color: var(--primary); }
-h2 { font-family: 'Playfair Display', serif; font-size: 26px; font-weight: 700; margin-bottom: 20px; letter-spacing: -0.01em; display: flex; align-items: center; gap: 10px; color: var(--primary); }
-h3 { font-size: 18px; font-weight: 700; margin-bottom: 12px; }
-.sub { color: var(--mut); font-size: 16px; font-weight: 500; max-width: 700px; margin: 0 auto; font-family: 'Playfair Display', serif; font-style: italic;}
+h1 { font-family: 'Playfair Display', Georgia, serif; font-size: clamp(34px, 5.5vw, 52px); font-weight: 700; letter-spacing: -0.02em; line-height: 1.15; margin: 0 0 12px; color: var(--primary); }
+.sub { color: var(--mut); font-size: 16px; font-weight: 500; max-width: 720px; margin: 0 auto; font-family: 'Playfair Display', serif; font-style: italic;}
 
-/* Contagem Regressiva */
-.countdown-box { background: linear-gradient(135deg, var(--primary), var(--primary-hover)); color: #fff; border-radius: 22px; padding: 20px 24px; margin: 24px auto 0; max-width: 680px; box-shadow: 0 10px 28px rgba(155, 79, 83, 0.25); }
-.cd-title { font-size: 12px; text-transform: uppercase; letter-spacing: 0.16em; opacity: 0.9; font-weight: 700; margin-bottom: 12px; display: flex; align-items: center; justify-content: center; gap: 8px; flex-wrap: wrap; }
-.cd-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
-.cd-unit { background: rgba(255,255,255,0.14); backdrop-filter: blur(4px); border-radius: 14px; padding: 10px 6px; }
-.cd-unit b { display: block; font-family: 'Playfair Display', serif; font-size: clamp(22px, 4vw, 32px); line-height: 1.1; }
-.cd-unit small { font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; opacity: 0.85; font-weight: 600; }
-.cd-date-ctrl { margin-top: 12px; display: flex; justify-content: center; align-items: center; gap: 8px; font-size: 12px; opacity: 0.92; }
-.cd-date-ctrl input { background: rgba(255,255,255,0.2); border: 1px solid rgba(255,255,255,0.4); color: #fff; padding: 4px 10px; border-radius: 8px; font-size: 12px; width: auto; }
-.cd-date-ctrl input::-webkit-calendar-picker-indicator { filter: invert(1); }
+.route { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; align-items: center; margin-top: 24px; }
+.chip { background: var(--card); border: 1px solid var(--line); border-radius: 99px; padding: 8px 16px; font-size: 14px; font-weight: 700; display: inline-flex; align-items: center; gap: 8px; box-shadow: 0 2px 6px var(--shadow); color: var(--ink); transition: transform 0.2s;}
+.chip:hover { transform: translateY(-2px); border-color: var(--primary); }
+.chip i { width: 10px; height: 10px; border-radius: 50%; display: inline-block; }
+.arr { color: var(--primary); font-weight: bold; font-size: 16px; opacity: 0.7;}
 
-section { margin-top: 48px; }
-.card { background: var(--card); border: 1px solid var(--line); border-radius: 24px; padding: 32px; box-shadow: 0 12px 40px var(--shadow); }
-
-.stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 16px; margin-bottom: 24px; }
-.stat { background: var(--card); border: 1px solid var(--line); border-radius: 20px; padding: 20px; box-shadow: 0 4px 12px var(--shadow); position: relative; overflow: hidden; }
-.stat::after { content: ''; position: absolute; top: 0; left: 0; width: 4px; height: 100%; background: var(--primary); border-radius: 4px 0 0 4px; opacity: 0.8;}
-.stat:nth-child(2)::after { background: var(--ok); }
-.stat:nth-child(3)::after { background: #f59e0b; }
-.stat:nth-child(4)::after { background: #e15b64; }
-.stat small { display: block; color: var(--mut); font-size: 12px; font-weight: 700; text-transform: uppercase; margin-bottom: 6px; }
-.stat b { font-size: 24px; font-weight: 800; color: var(--ink); font-family: 'Playfair Display', serif; }
-
-.bar { height: 18px; background: var(--track); border-radius: 99px; overflow: hidden; margin: 16px 0 10px; box-shadow: inset 0 2px 4px rgba(0,0,0,0.03); }
-.bar i { display: block; height: 100%; background: linear-gradient(90deg, #d49598, var(--primary)); border-radius: 99px; transition: width 1s cubic-bezier(0.4, 0, 0.2, 1); }
-.row { display: flex; justify-content: space-between; color: var(--mut); font-size: 14px; font-weight: 600; }
-
-.sync-bar { display: flex; justify-content: center; align-items: center; gap: 12px; margin-top: 24px; flex-wrap: wrap; }
-.btn { font-family: inherit; font-size: 14px; font-weight: 700; padding: 12px 22px; border-radius: 14px; border: 1px solid var(--line); background: var(--card); color: var(--ink); cursor: pointer; display: inline-flex; align-items: center; gap: 8px; box-shadow: 0 2px 6px var(--shadow); text-decoration: none; transition: all 0.2s;}
-.btn:hover { border-color: var(--primary); transform: translateY(-2px); }
+.sync-bar { display: flex; justify-content: center; align-items: center; gap: 12px; margin-top: 28px; flex-wrap: wrap; }
+.sync-actions { display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; }
+.btn { font-family: inherit; font-size: 14px; font-weight: 700; padding: 12px 22px; border-radius: 14px; border: 1px solid var(--line); background: var(--card); color: var(--ink); cursor: pointer; display: inline-flex; align-items: center; gap: 8px; transition: all 0.2s; box-shadow: 0 2px 6px var(--shadow); text-decoration: none; }
+.btn:hover { border-color: var(--primary); transform: translateY(-2px); box-shadow: 0 4px 12px var(--shadow); }
+.btn:active { transform: scale(0.98); }
 .btn-primary { background: linear-gradient(135deg, var(--primary), var(--primary-hover)); color: white; border: none; box-shadow: 0 6px 20px rgba(155, 79, 83, 0.3); }
-.btn-sm { padding: 8px 14px; font-size: 12px; border-radius: 10px; }
+.btn-primary:hover { box-shadow: 0 8px 25px rgba(155, 79, 83, 0.4); opacity: 0.96;}
+.btn-sm { padding: 8px 14px; font-size: 13px; border-radius: 10px; }
 .spin svg { animation: rot 1s linear infinite; }
 @keyframes rot { to { transform: rotate(360deg); } }
 
 .sync-status { font-size: 13px; color: var(--mut); display: flex; align-items: center; gap: 8px; font-weight: 600; background: var(--card); padding: 6px 16px; border-radius: 99px; border: 1px solid var(--line);}
 .status-dot { width: 10px; height: 10px; border-radius: 50%; background: var(--ok); box-shadow: 0 0 10px rgba(16, 185, 129, 0.5); }
+.status-dot.err { background: #ef4444; box-shadow: 0 0 10px rgba(239, 68, 68, 0.5); }
+.status-dot.warn { background: #f59e0b; box-shadow: 0 0 10px rgba(245, 158, 11, 0.5); }
 
 .cfg-panel { margin-top: 16px; padding: 24px; border-radius: 20px; background: var(--card); border: 1px solid var(--line); display: none; box-shadow: 0 10px 30px var(--shadow); text-align: left; max-width: 600px; margin-left: auto; margin-right: auto;}
 .cfg-panel.show { display: block; }
 .cfg-row { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 16px; }
 .cfg-row input { flex: 1; min-width: 240px; font: inherit; font-size: 15px; padding: 12px 16px; border: 2px solid var(--line); border-radius: 14px; background: var(--bg); color: var(--ink); font-weight: 500;}
+.cfg-row input:focus { outline: none; border-color: var(--primary); }
 
-/* Clima & Fuso Horário das Cidades */
-.weather-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(175px, 1fr)); gap: 14px; }
-.w-card { background: var(--bg); border: 1px solid var(--line); border-radius: 18px; padding: 16px; text-align: center; transition: transform 0.2s; }
-.w-card:hover { transform: translateY(-2px); border-color: var(--primary); }
-.w-city { font-weight: 800; font-size: 15px; color: var(--ink); margin-bottom: 2px; }
-.w-time { font-size: 12px; color: var(--primary); font-weight: 700; margin-bottom: 8px; }
-.w-temp { font-family: 'Playfair Display', serif; font-size: 26px; font-weight: 800; color: var(--ink); line-height: 1.2; }
-.w-desc { font-size: 12px; color: var(--mut); font-weight: 600; margin-top: 4px; }
+/* Contagem Regressiva */
+.countdown-banner {
+  margin: 24px auto 0; max-width: 720px; background: linear-gradient(135deg, var(--primary), var(--primary-hover));
+  color: #fff; border-radius: 20px; padding: 18px 24px; display: flex; align-items: center; justify-content: space-between;
+  flex-wrap: wrap; gap: 16px; box-shadow: 0 10px 30px rgba(155, 79, 83, 0.25);
+}
+.cd-title { text-align: left; }
+.cd-title span { font-size: 11px; text-transform: uppercase; letter-spacing: 0.15em; opacity: 0.85; font-weight: 800; display: block; }
+.cd-title strong { font-family: 'Playfair Display', serif; font-size: 20px; }
+.cd-boxes { display: flex; gap: 10px; }
+.cd-box { background: rgba(255,255,255,0.16); backdrop-filter: blur(4px); border-radius: 12px; padding: 8px 14px; min-width: 64px; text-align: center; }
+.cd-box b { display: block; font-size: 22px; font-weight: 800; line-height: 1.1; }
+.cd-box small { font-size: 10px; text-transform: uppercase; opacity: 0.85; font-weight: 700; }
 
-/* Conversor BRL <-> EUR */
-.fx-bar { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; margin-bottom: 18px; padding-bottom: 14px; border-bottom: 1px solid var(--line); }
-.fx-rate-badge { background: var(--primary-light); color: var(--primary); font-weight: 700; font-size: 13px; padding: 6px 14px; border-radius: 99px; }
-.fx-grid { display: grid; grid-template-columns: 1fr auto 1fr; gap: 16px; align-items: center; }
-@media(max-width: 640px){ .fx-grid { grid-template-columns: 1fr; } .fx-swap { transform: rotate(90deg); justify-self: center; } }
-.fx-field { display: flex; flex-direction: column; gap: 6px; }
-.fx-field label { font-size: 12px; font-weight: 700; text-transform: uppercase; color: var(--mut); margin-bottom: 0; }
-.fx-field input { font: inherit; font-size: 20px; font-weight: 800; padding: 14px 16px; border-radius: 14px; border: 2px solid var(--line); background: var(--bg); color: var(--ink); }
-.fx-field input:focus { outline: none; border-color: var(--primary); }
-.fx-swap { font-size: 20px; color: var(--primary); font-weight: 800; padding-top: 18px; }
-.fx-quick { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 16px; }
-.fx-chip { font: inherit; font-size: 12px; font-weight: 700; padding: 6px 12px; border-radius: 99px; border: 1px solid var(--line); background: var(--bg); color: var(--mut); cursor: pointer; transition: all 0.2s; }
-.fx-chip:hover { border-color: var(--primary); color: var(--primary); }
+/* Clima & Fuso Horário nas Cidades */
+.weather-strip { display: grid; grid-template-columns: repeat(auto-fit, minmax(185px, 1fr)); gap: 12px; margin-bottom: 24px; }
+.weather-card { background: var(--card); border: 1px solid var(--line); border-radius: 18px; padding: 14px 16px; box-shadow: 0 4px 12px var(--shadow); display: flex; flex-direction: column; gap: 6px; }
+.weather-top { display: flex; align-items: center; justify-content: space-between; }
+.w-city { font-weight: 800; font-size: 14px; color: var(--ink); display: block; }
+.w-time { font-size: 12px; color: var(--mut); font-weight: 600; }
+.w-temp { font-family: 'Playfair Display', serif; font-size: 18px; font-weight: 700; color: var(--primary); }
+.w-jan { font-size: 11px; font-weight: 700; color: var(--primary); background: var(--primary-light); padding: 4px 8px; border-radius: 8px; text-align: center; }
 
-.grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; margin-top: 28px; }
+section { margin-top: 48px; }
+h2 { font-family: 'Playfair Display', Georgia, serif; font-size: 26px; font-weight: 700; letter-spacing: -0.01em; margin: 0 0 24px; color: var(--primary); display: flex; align-items: center; gap: 12px; }
+h3 { font-size: 18px; font-weight: 700; margin: 0 0 12px; letter-spacing: -0.01em; color: var(--ink); }
+
+.card { background: var(--card); border: 1px solid var(--line); border-radius: 24px; padding: 32px; box-shadow: 0 12px 40px var(--shadow); }
+@media (max-width: 640px) { .card { padding: 20px; border-radius: 20px; } }
+
+.stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 24px; }
+@media (max-width: 768px) { .stats { grid-template-columns: repeat(2, 1fr); } }
+.stat { background: var(--card); border: 1px solid var(--line); border-radius: 20px; padding: 22px; box-shadow: 0 4px 12px var(--shadow); position: relative; overflow: hidden; }
+.stat::after { content: ''; position: absolute; top: 0; left: 0; width: 4px; height: 100%; background: var(--primary); border-radius: 4px 0 0 4px; opacity: 0.8;}
+.stat:nth-child(2)::after { background: #3b82f6; }
+.stat:nth-child(3)::after { background: var(--ok); }
+.stat:nth-child(4)::after { background: #f59e0b; }
+.stat small { display: block; color: var(--mut); font-size: 12px; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; margin-bottom: 6px; }
+.stat b { font-size: 26px; font-weight: 800; letter-spacing: -0.02em; display: block; color: var(--ink); font-family: 'Playfair Display', serif;}
+
+.bar { height: 18px; background: var(--track); border-radius: 99px; overflow: hidden; margin: 16px 0 10px; box-shadow: inset 0 2px 4px rgba(0,0,0,0.03); }
+.bar i { display: block; height: 100%; background: linear-gradient(90deg, #d49598, var(--primary)); border-radius: 99px; transition: width 1s cubic-bezier(0.4, 0, 0.2, 1); }
+.row { display: flex; justify-content: space-between; color: var(--mut); font-size: 14px; font-weight: 600; }
+
+.grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; margin-top: 32px; }
 @media (max-width: 768px) { .grid2 { grid-template-columns: 1fr; } }
-.chartbox { overflow-x: auto; background: var(--bg); border-radius: 16px; padding: 16px; border: 1px solid var(--line); margin-bottom: 12px; }
-.chartbox svg { width: 100%; min-width: 440px; height: auto; display: block; }
-.note { font-size: 13px; color: var(--mut); font-weight: 500; margin-top: 10px;}
 
-/* Filtros por Cidade no Roteiro + Maps */
-.route { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin-bottom: 24px; justify-content: center; }
-.chip { border-radius: 99px; padding: 8px 16px; font-size: 14px; font-weight: 700; color: #fff; box-shadow: 0 4px 12px rgba(0,0,0,0.1); cursor: pointer; border: 2px solid transparent; transition: transform 0.2s, opacity 0.2s; }
-.chip:hover { transform: translateY(-2px); }
-.chip.dim { opacity: 0.45; }
-.chip-all { background: var(--card); color: var(--primary); border-color: var(--line); box-shadow: 0 2px 6px var(--shadow); }
-.chip-all.active { background: var(--primary); color: #fff; border-color: var(--primary); }
-.arrow { color: var(--mut); font-weight: 700; opacity: 0.5;}
+.chartbox { overflow-x: auto; -webkit-overflow-scrolling: touch; background: var(--bg); border-radius: 16px; padding: 16px; border: 1px solid var(--line); margin-bottom: 12px; }
+.chartbox svg { width: 100%; min-width: 340px; height: auto; display: block; }
+.note { font-size: 13px; color: var(--mut); margin: 10px 0 0; font-weight: 500; }
 
-.stage { margin-bottom: 32px; }
-.stage h3 { display: flex; align-items: center; gap: 12px; font-size: 20px; margin-bottom: 16px; font-family: 'Playfair Display', serif; color: var(--primary); }
-.dot { width: 14px; height: 14px; border-radius: 50%; flex: none; }
-.days { list-style: none; border-left: 3px solid var(--c); margin-left: 7px; padding-left: 24px; position: relative;}
-.days li { padding: 12px 0; display: flex; gap: 16px; position: relative; }
-.days li::before { content: ''; position: absolute; left: -31.5px; top: 20px; width: 12px; height: 12px; background: var(--c); border-radius: 50%; border: 3px solid var(--card); }
-.d { flex: none; width: 68px; color: var(--mut); font-size: 14px; font-weight: 800; padding-top: 2px; }
-.t { flex: 1; }
-.t b { font-weight: 700; font-size: 16px; display: block; color: var(--ink); }
-.t span { display: block; color: var(--mut); font-size: 14px; margin-top: 4px; }
-.map-pill { display: inline-flex; align-items: center; gap: 4px; margin-top: 6px; font-size: 12px; font-weight: 700; color: var(--primary); background: var(--primary-light); padding: 4px 10px; border-radius: 99px; text-decoration: none; transition: all 0.2s; }
-.map-pill:hover { background: var(--primary); color: #fff; }
+.field { display: flex; flex-direction: column; gap: 8px; margin-top: 12px; }
+.field label { font-size: 13px; font-weight: 700; color: var(--ink); }
+input[type="date"], input[type="number"], input[type="text"], select {
+  font: inherit; font-size: 15px; padding: 12px 16px; border: 2px solid var(--line); border-radius: 14px; background: var(--bg); color: var(--ink); min-height: 46px; font-weight: 600; transition: all 0.2s;
+}
+input:focus, select:focus { outline: none; border-color: var(--primary); background: var(--card); }
 
-/* Vouchers & Reservas Offline */
-.voucher-form { display: grid; grid-template-columns: 1fr 1.5fr 1fr auto; gap: 10px; margin-bottom: 20px; }
+.plan { margin-top: 20px; border-top: 1px solid var(--line); padding-top: 20px; font-size: 15px; }
+.plan .kv { display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px dashed var(--line); }
+.plan .kv:last-child { border-bottom: none; }
+.plan .kv b { font-weight: 800; color: var(--primary); font-size: 16px;}
+
+/* Timeline / Roteiro & Hospedagens Base */
+.lodging-box { background: var(--primary-light); border: 1px solid var(--line); border-radius: 20px; padding: 20px; margin-bottom: 24px; }
+.lodging-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 12px; margin-top: 12px; }
+.lodging-item label { font-size: 11px; font-weight: 800; text-transform: uppercase; color: var(--primary); display: block; margin-bottom: 4px; }
+.lodging-item input { width: 100%; padding: 8px 12px; min-height: 38px; font-size: 13px; border-radius: 10px; background: var(--card); }
+
+.day-filters { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 20px; }
+.filter-btn { font: inherit; font-size: 13px; font-weight: 700; padding: 8px 16px; border-radius: 99px; border: 1px solid var(--line); background: var(--card); color: var(--mut); cursor: pointer; transition: all 0.2s; }
+.filter-btn:hover { border-color: var(--primary); color: var(--primary); }
+.filter-btn.active { background: var(--primary); color: #fff; border-color: var(--primary); }
+
+.tl { position: relative; padding-left: 28px; }
+.tl::before { content: ""; position: absolute; left: 9px; top: 8px; bottom: 8px; width: 3px; background: var(--line); border-radius: 2px; }
+.leg { position: relative; margin-bottom: 28px; background: var(--card); border: 1px solid var(--line); border-radius: 20px; padding: 24px; box-shadow: 0 4px 16px var(--shadow); }
+.leg:last-child { margin-bottom: 0; }
+.leg .dot { position: absolute; left: -26px; top: 28px; width: 16px; height: 16px; border-radius: 50%; border: 3px solid var(--card); box-shadow: 0 0 0 2px var(--line); }
+.leg h3 { margin: 0 0 16px; font-size: 20px; color: var(--primary); font-family: 'Playfair Display', serif;}
+
+.days { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; }
+@media (max-width: 768px) { .days { grid-template-columns: 1fr; } }
+.day { background: var(--bg); border: 1px solid var(--line); border-radius: 16px; padding: 18px; display: flex; flex-direction: column; justify-content: space-between; gap: 12px; transition: transform 0.2s, border-color 0.2s; }
+.day:hover { border-color: var(--primary); transform: translateY(-2px); background: var(--card); box-shadow: 0 6px 20px var(--shadow);}
+.day b { font-size: 15px; display: block; margin-bottom: 6px; color: var(--ink); font-weight: 800;}
+.day b span { color: var(--primary); font-weight: 800; margin-right: 6px; font-size: 13px; text-transform: uppercase; letter-spacing: 0.05em; }
+.day p { margin: 0; font-size: 14px; color: var(--mut); line-height: 1.5; font-weight: 500; }
+
+/* Orçamento */
+.inputs { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 24px; }
+@media (max-width: 768px) { .inputs { grid-template-columns: repeat(2, 1fr); } }
+.inputs label { font-size: 12px; font-weight: 700; color: var(--mut); display: flex; flex-direction: column; gap: 6px; text-transform: uppercase;}
+.inputs input, .inputs select { width: 100%; }
+
+.tblwrap { overflow-x: auto; -webkit-overflow-scrolling: touch; border-radius: 16px; border: 1px solid var(--line); background: var(--bg); }
+table { width: 100%; border-collapse: collapse; font-size: 14px; }
+th, td { text-align: left; padding: 14px 16px; border-bottom: 1px solid var(--line); }
+th { background: var(--primary-light); color: var(--primary); font-weight: 800; font-size: 12px; text-transform: uppercase; letter-spacing: 0.05em; }
+tr:last-child td { border-bottom: none; }
+td.r, th.r { text-align: right; font-variant-numeric: tabular-nums; font-weight: 700; color: var(--ink); }
+tr.tot td { font-weight: 800; border-top: 2px solid var(--line); background: var(--primary-light); color: var(--primary); font-size: 16px; }
+
+.tag { display: inline-block; font-size: 11px; font-weight: 800; padding: 4px 10px; border-radius: 8px; background: var(--card); color: var(--primary); border: 1px solid var(--line); text-transform: uppercase;}
+
+.compare { margin-top: 24px; padding: 20px; border-radius: 16px; background: var(--primary-light); font-size: 15px; display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap; border: 1px solid var(--line); }
+.compare b { color: var(--primary); font-weight: 800; font-size: 17px;}
+
+/* Mala Inteligente + Vouchers + Checklist */
+.bag-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 20px; }
+.bag-cat { background: var(--bg); border: 1px solid var(--line); border-radius: 18px; padding: 18px; }
+.bag-cat h3 { font-size: 15px; color: var(--primary); margin-bottom: 12px; border-bottom: 1px dashed var(--line); padding-bottom: 8px; }
+.bag-item { display: flex; align-items: center; gap: 10px; font-size: 13px; padding: 6px 0; cursor: pointer; font-weight: 500; }
+.bag-item input { width: 16px; height: 16px; accent-color: var(--primary); }
+.bag-item.done span { text-decoration: line-through; color: var(--mut); }
+
+.voucher-form { display: grid; grid-template-columns: 1fr 1.5fr 1fr auto; gap: 10px; margin-bottom: 16px; }
 @media (max-width: 768px) { .voucher-form { grid-template-columns: 1fr; } }
-.voucher-list { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 14px; }
-.v-card { background: var(--bg); border: 1.5px dashed var(--line); border-radius: 16px; padding: 16px; position: relative; }
-.v-cat { font-size: 11px; font-weight: 800; text-transform: uppercase; color: var(--primary); letter-spacing: 0.06em; }
-.v-title { font-weight: 700; font-size: 15px; color: var(--ink); margin: 4px 0 8px; }
-.v-code-row { display: flex; align-items: center; justify-content: space-between; background: var(--card); padding: 8px 12px; border-radius: 10px; border: 1px solid var(--line); }
-.v-code { font-family: monospace; font-size: 15px; font-weight: 800; color: var(--ink); letter-spacing: 0.05em; }
-.v-del { position: absolute; top: 12px; right: 12px; background: none; border: none; color: var(--mut); cursor: pointer; font-size: 14px; }
-.v-del:hover { color: #ef4444; }
+.voucher-list { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 12px; }
+.voucher-card { background: var(--bg); border: 1px solid var(--line); border-radius: 16px; padding: 14px 16px; display: flex; justify-content: space-between; align-items: center; gap: 10px; }
+.v-info small { font-size: 11px; font-weight: 800; text-transform: uppercase; color: var(--primary); display: block; }
+.v-info strong { font-size: 14px; color: var(--ink); display: block; }
+.v-code { font-family: monospace; font-size: 13px; background: var(--card); border: 1px dashed var(--primary); padding: 4px 8px; border-radius: 8px; color: var(--primary); font-weight: 700; cursor: pointer; }
+.v-del { background: none; border: none; color: var(--mut); cursor: pointer; font-size: 14px; padding: 4px; }
 
-/* Checklist de Mala Inteligente */
-.bag-tabs { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 18px; }
-.bag-tab { font: inherit; font-size: 13px; font-weight: 700; padding: 8px 14px; border-radius: 99px; border: 1px solid var(--line); background: var(--bg); color: var(--mut); cursor: pointer; }
-.bag-tab.active { background: var(--primary); color: #fff; border-color: var(--primary); }
-.bag-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 12px; }
-.bag-item { display: flex; align-items: center; gap: 10px; background: var(--bg); padding: 10px 14px; border-radius: 12px; border: 1px solid var(--line); font-size: 14px; font-weight: 600; cursor: pointer; }
-.bag-item input { width: 18px; height: 18px; accent-color: var(--primary); }
-.bag-item.done span { text-decoration: line-through; color: var(--mut); font-weight: 400; }
+.chk { list-style: none; padding: 0; margin: 0; }
+.chk li { display: flex; gap: 16px; align-items: flex-start; padding: 16px 0; border-bottom: 1px solid var(--line); font-size: 15px; font-weight: 500; }
+.chk li:last-child { border-bottom: none; }
+.chk input { width: 22px; height: 22px; margin-top: 2px; accent-color: var(--primary); flex-shrink: 0; cursor: pointer; border-radius: 6px; }
+.chk li.done span { text-decoration: line-through; color: var(--mut); opacity: 0.7; }
 
-label { font-size: 14px; font-weight: 700; color: var(--ink); display: block; margin-bottom: 8px; }
-input[type=date], select, input[type=number], input[type=text] { font: inherit; font-size: 15px; font-weight: 500; padding: 12px 16px; border: 2px solid var(--line); border-radius: 14px; background: var(--bg); color: var(--ink); width: 100%; }
-.inputs { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 16px; margin-bottom: 24px; }
+.notes { padding-left: 20px; margin: 0; font-size: 15px; color: var(--mut); font-weight: 500; }
+.notes li { margin-bottom: 12px; line-height: 1.6;}
 
-.tblwrap { overflow-x: auto; border-radius: 16px; border: 1px solid var(--line); background: var(--bg); }
-table { width: 100%; border-collapse: collapse; font-size: 14px; min-width: 400px; }
-td { padding: 16px; border-bottom: 1px solid var(--line); vertical-align: top; font-weight: 500;}
-td.n { text-align: right; white-space: nowrap; font-variant-numeric: tabular-nums; font-weight: 700; color: var(--ink);}
-td small { display: block; color: var(--mut); font-size: 13px; margin-top: 4px; font-weight: 500;}
-tr.sec td { font-weight: 800; color: var(--primary); font-size: 12px; text-transform: uppercase; background: var(--primary-light); border-bottom: none; padding: 12px 16px;}
-tr.tot td { font-weight: 800; font-size: 18px; border-bottom: none; background: var(--card); padding: 20px 16px; border-top: 2px solid var(--line);}
-
-.cmp { margin-top: 20px; padding: 24px; border-radius: 16px; background: var(--bg); border: 2px dashed var(--line); font-size: 14px; font-weight: 500; color: var(--mut);}
-.cmp b { color: var(--ink); font-weight: 800; }
-
-ul.todo { list-style: none; }
-ul.todo li { padding: 14px 0; border-bottom: 1px solid var(--line); }
-ul.todo label { display: flex; gap: 16px; align-items: flex-start; color: var(--ink); font-size: 15px; cursor: pointer; margin: 0; font-weight: 600; }
-ul.todo input[type="checkbox"] { margin-top: 2px; width: 22px; height: 22px; accent-color: var(--primary); border-radius: 6px; cursor: pointer; flex: none;}
-ul.todo input:checked + span { text-decoration: line-through; color: var(--mut); font-weight: 500; }
-.prog { font-size: 14px; font-weight: 700; color: var(--primary); margin-bottom: 16px; display: inline-block; padding: 8px 16px; background: var(--primary-light); border-radius: 99px; }
-
-ul.ideas { margin: 0; padding-left: 24px; color: var(--ink); font-size: 15px; font-weight: 500;}
-footer { margin-top: 56px; color: var(--mut); font-size: 14px; text-align: center; font-weight: 600; font-family: 'Playfair Display', serif; }
-
-.memories-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 24px; }
-@media (max-width: 768px) { .memories-grid { grid-template-columns: 1fr; } }
-.mem-card { border-radius: 16px; overflow: hidden; border: 1px solid var(--line); background: var(--card); box-shadow: 0 4px 12px var(--shadow); }
-.mem-card img { width: 100%; height: 220px; object-fit: cover; display: block; }
+footer { margin-top: 56px; color: var(--mut); font-size: 14px; text-align: center; font-weight: 600; font-family: 'Playfair Display', serif;}
 
 /* Skeleton Loading */
 @keyframes shimmer {
@@ -214,262 +218,227 @@ footer { margin-top: 56px; color: var(--mut); font-size: 14px; text-align: cente
   user-select: none;
 }
 
-/* Base Hotel/Airbnb por Cidade no Roteiro */
-.stage-header-row { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; margin-bottom: 14px; }
-.stage-header-row h3 { margin-bottom: 0; }
-.base-lodging-bar { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; background: var(--card); border: 1px solid var(--line); padding: 8px 14px; border-radius: 14px; margin-bottom: 16px; box-shadow: 0 2px 8px var(--shadow); font-size: 13px; }
-.base-lodging-bar strong { color: var(--primary); white-space: nowrap; }
-.base-lodging-bar input { font: inherit; font-size: 13px; padding: 6px 10px; border: 1px solid var(--line); border-radius: 8px; background: var(--bg); color: var(--ink); flex: 1; min-width: 190px; }
-.map-actions-row { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 8px; }
-.map-pill-route { background: var(--card); border: 1px solid var(--primary); color: var(--primary); }
-.map-pill-route:hover { background: var(--primary); color: #fff; }
-
-/* Botão Câmbio Dinâmico no Orçamento */
-.fx-apply-box { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px; background: var(--primary-light); border: 1px solid var(--line); padding: 12px 16px; border-radius: 14px; margin-bottom: 18px; font-size: 13px; }
 .backup-box { margin-top: 18px; padding-top: 16px; border-top: 1px dashed var(--line); }
 .backup-btns { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 8px; }
-
 </style>
 </head>
 <body class="is-loading">
 <div class="wrap">
-<nav class="top-nav">
-  <a href="index.html" class="active">✈️ Lua de Mel</a>
-  <a href="apartamento.html">🏡 Nosso Apartamento</a>
-</nav>
+  <nav class="top-nav">
+    <a href="index.html" class="active">✈️ Lua de Mel</a>
+    <a href="apartamento.html">🏡 Nosso Apartamento</a>
+  </nav>
 
-<header>
-  <span class="eyebrow" id="hEyebrow">Nossa História de Amor</span>
-  <h1 id="hTitle">Flávio e Gabriela</h1>
-  <p class="sub" id="hSub">Rumo à nossa lua de mel: Confins → Roma → Florença → Milão → Paris → Lisboa → São Paulo</p>
-  
-  <!-- Contagem Regressiva em Tempo Real -->
-  <div class="countdown-box">
-    <div class="cd-title">✈️ Contagem Regressiva para o Embarque</div>
-    <div class="cd-grid">
-      <div class="cd-unit"><b id="cdDias">–</b><small>Dias</small></div>
-      <div class="cd-unit"><b id="cdHoras">–</b><small>Horas</small></div>
-      <div class="cd-unit"><b id="cdMin">–</b><small>Minutos</small></div>
-      <div class="cd-unit"><b id="cdSeg">–</b><small>Segundos</small></div>
-    </div>
-    <div class="cd-date-ctrl">
-      <span>Data do voo:</span>
-      <input type="date" id="flightDateInput" value="2028-01-15">
-    </div>
-  </div>
-
-  <!-- Bloco com 3 primeiras fotos no topo -->
-  <div class="hero-photos">
-    <div class="hero-photo-card"><img src="1000074499.jpg" alt="Flávio e Gabriela"></div>
-    <div class="hero-photo-card"><img src="1000074487.jpg" alt="O Pedido"></div>
-    <div class="hero-photo-card"><img src="1000074517.jpg" alt="Flores de Aço"></div>
-  </div>
-
-  <div class="sync-bar">
-    <div class="sync-actions" style="display:flex; gap:10px; flex-wrap:wrap; justify-content:center;">
-      <button type="button" class="btn btn-primary" id="btnSync">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width:18px;height:18px;"><path d="M21 12a9 9 0 0 0-9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/><path d="M3 12a9 9 0 0 0 9 9 9.75 9.75 0 0 0 6.74-2.74L21 16"/><path d="M16 16h5v5"/></svg>
-        <span>Atualizar Dados</span>
-      </button>
-      <a class="btn" id="btnOpenSheet" href="#" target="_blank">Abrir Planilha</a>
-      <button type="button" class="btn" id="btnToggleCfg">⚙ Configurar</button>
-    </div>
-    <div class="sync-status"><span class="status-dot" id="statusDot"></span><span id="statusText">Sincronizado</span></div>
-  </div>
-  <div class="alert-box" id="alertBox"></div>
-  <div class="cfg-panel" id="cfgPanel">
-    <h3 style="margin-top:0">Vínculo com Google Sheets</h3>
-    <label style="font-size:12px; color:var(--mut); display:block; margin-top:8px;">Link da Planilha (Leitura):</label>
-    <div class="cfg-row" style="margin-top:6px;">
-      <input type="text" id="sheetInput" placeholder="Cole o link do Google Sheets aqui">
-    </div>
-    <label style="font-size:12px; color:var(--mut); display:block; margin-top:14px;">URL do Web App Apps Script (deve terminar em <b>/exec</b>):</label>
-    <div class="cfg-row" style="margin-top:6px;">
-      <input type="text" id="webAppInput" placeholder="https://script.google.com/macros/s/.../exec">
-      <button type="button" class="btn" id="btnTestWebApp">Testar</button>
-      <button type="button" class="btn btn-primary" id="btnSaveSheet">Salvar</button>
-    </div>
-    <div id="webAppFeedback" style="font-size:12px; margin-top:8px; font-weight:600;"></div>
-    <div class="backup-box">
-      <label style="font-size:12px; color:var(--mut); display:block;">Compartilhar ou Backup Offline (WhatsApp / JSON):</label>
-      <div class="backup-btns">
-        <button type="button" class="btn btn-sm" id="btnCopyWhatsApp">📲 Copiar Resumo WhatsApp</button>
-        <button type="button" class="btn btn-sm" id="btnExportJson">⬇️ Exportar JSON</button>
-        <button type="button" class="btn btn-sm" id="btnImportJson">⬆️ Importar JSON</button>
-        <input type="file" id="fileImportJson" accept=".json" style="display:none;">
-      </div>
-      <div id="backupFeedback" style="font-size:12px; margin-top:6px; color:var(--ok); font-weight:600;"></div>
-    </div>
-  </div>
-</header>
-
-<!-- Painel de Clima e Fuso Horário das Cidades -->
-<section>
-  <h2>🌤️ Agora nas Nossas Cidades (Clima & Fuso)</h2>
-  <div class="card">
-    <div class="weather-grid" id="weatherGrid">
-      <!-- Preenchido via JS -->
-    </div>
-  </div>
-</section>
-
-<section>
-  <h2>💸 Dashboard do Cofrinho</h2>
-  <div class="stats">
-    <div class="stat"><small>Nossa Meta</small><b id="sMeta">–</b></div>
-    <div class="stat"><small>Saldo Atual</small><b id="sSaldo">–</b></div>
-    <div class="stat"><small>Progresso</small><b id="sPct">–</b></div>
-    <div class="stat"><small>Falta Guardar</small><b id="sFalta">–</b></div>
-  </div>
-  <div class="card">
-    <div class="row"><span id="barL">R$ 0</span><span id="barR">–</span></div>
-    <div class="bar"><i id="bar" style="width:0"></i></div>
+  <header>
+    <span class="eyebrow" id="txtEyebrow">Nossa Viagem</span>
+    <h1 id="txtTitle">Lua de mel de Flávio e Gabriela</h1>
+    <p class="sub" id="txtSub">Confins → Roma → Florença → Milão → Paris → Lisboa (stopover TAP) → São Paulo (Guarulhos)</p>
     
-    <div class="grid2">
-      <div>
-        <h3>Evolução dos Aportes</h3>
-        <div class="chartbox"><svg id="chart" viewBox="0 0 520 240"></svg></div>
-        <p class="note" id="insight"></p>
-      </div>
-      <div>
-        <h3>Simulador de Metas</h3>
-        <label for="dt">Quando queremos atingir o valor total?</label>
-        <input type="date" id="dt">
-        <div class="plan" id="plan"><p class="note" style="margin: 20px 0;">Escolha uma data limite para calcularmos os depósitos.</p></div>
-      </div>
-    </div>
-  </div>
-</section>
+    <div class="route" id="routeChips"></div>
 
-<!-- Conversor Rápido BRL <-> EUR -->
-<section>
-  <h2>💶 Conversor Rápido (Real ↔ Euro)</h2>
-  <div class="card">
-    <div class="fx-bar">
-      <span style="font-size: 14px; color: var(--mut); font-weight: 600;">Cotação comercial atualizada automaticamente</span>
-      <span class="fx-rate-badge" id="fxRateLabel">1 EUR = R$ 6,17</span>
-    </div>
-    <div class="fx-grid">
-      <div class="fx-field">
-        <label for="inpEur">Valor em Euro (€ EUR)</label>
-        <input type="number" id="inpEur" value="100" step="5">
+    <!-- Contagem Regressiva -->
+    <div class="countdown-banner">
+      <div class="cd-title">
+        <span>Contagem Regressiva • Embarque Previsto</span>
+        <strong id="cdDateLabel">Janeiro de 2028</strong>
       </div>
-      <div class="fx-swap">⇄</div>
-      <div class="fx-field">
-        <label for="inpBrl">Valor em Real (R$ BRL)</label>
-        <input type="number" id="inpBrl" value="617.00" step="10">
+      <div class="cd-boxes">
+        <div class="cd-box"><b id="cdDays">---</b><small>Dias</small></div>
+        <div class="cd-box"><b id="cdHours">--</b><small>Horas</small></div>
+        <div class="cd-box"><b id="cdMins">--</b><small>Min</small></div>
       </div>
     </div>
-    <div class="fx-quick">
-      <button type="button" class="fx-chip" data-eur="15">☕ Café/Lanche (€ 15)</button>
-      <button type="button" class="fx-chip" data-eur="45">🍝 Jantar Casal (€ 45)</button>
-      <button type="button" class="fx-chip" data-eur="70">🚄 Trem Alta Velocidade (€ 70)</button>
-      <button type="button" class="fx-chip" data-eur="120">🏛️ Passeios / Museus (€ 120)</button>
-    </div>
-  </div>
-</section>
 
-<!-- Bloco de Memórias com as outras 3 fotos -->
-<section>
-  <h2>❤️ Nossas Memórias Especiais</h2>
-  <div class="memories-grid">
-    <div class="mem-card"><img src="1000075949.jpg" alt="Momento a dois"></div>
-    <div class="mem-card"><img src="1000076525.jpg" alt="Passeio inesquecível"></div>
-    <div class="mem-card"><img src="1000077668.jpg" alt="Paisagem romântica"></div>
-  </div>
-</section>
-
-<section>
-  <h2 id="hRoteiro" style="justify-content:center;">🗺️ Nosso Roteiro Romântico</h2>
-  <p style="text-align:center; color:var(--mut); font-size:14px; margin-bottom:14px;">Clique em uma cidade para filtrar os dias ou abra direto no Google Maps:</p>
-  <div class="route" id="route"></div>
-  <div id="stages"></div>
-  <div class="card" style="margin-top:10px; display:none;" id="cardDecidir">
-    <h3>🤔 Pontos de Decisão</h3>
-    <ul class="ideas" id="ideasList"></ul>
-  </div>
-</section>
-
-<!-- Carteira de Vouchers e Códigos Offline -->
-<section>
-  <h2>🎟️ Carteira de Vouchers & Localizadores (Offline)</h2>
-  <div class="card">
-    <p style="color: var(--mut); font-size: 14px; margin-bottom: 16px;">Salve aqui os códigos PNR da TAP, bilhetes de trem e check-in dos Airbnbs para acesso rápido no aeroporto sem depender de internet.</p>
-    <div class="voucher-form">
-      <select id="vCat">
-        <option value="✈️ Voo">✈️ Voo</option>
-        <option value="🚄 Trem">🚄 Trem</option>
-        <option value="🏠 Airbnb">🏠 Airbnb</option>
-        <option value="🏛️ Ingresso">🏛️ Ingresso</option>
-        <option value="🛡️ Seguro">🛡️ Seguro</option>
-      </select>
-      <input type="text" id="vTitle" placeholder="Ex: TAP Confins → Roma">
-      <input type="text" id="vCode" placeholder="Código / PNR (Ex: X8K9LP)">
-      <button type="button" class="btn btn-primary" id="btnAddVoucher">+ Salvar</button>
-    </div>
-    <div class="voucher-list" id="voucherList"></div>
-  </div>
-</section>
-
-<!-- Checklist de Mala Inteligente -->
-<section>
-  <h2>🧳 Checklist de Mala Inteligente (Inverno Europeu)</h2>
-  <div class="card">
-    <div class="bag-tabs" id="bagTabs">
-      <button type="button" class="bag-tab active" data-bag="docs">📄 Documentos & Mochila de Mão</button>
-      <button type="button" class="bag-tab" data-bag="frio">🧥 Roupas & Camadas de Frio</button>
-      <button type="button" class="bag-tab" data-bag="eletronicos">🔌 Eletrônicos & Farmacinha</button>
-    </div>
-    <div class="bag-grid" id="bagGrid"></div>
-  </div>
-</section>
-
-<section>
-  <h2>📊 Visão Financeira Detalhada</h2>
-  <div class="card">
-    <div class="fx-apply-box">
-      <div>
-        <strong style="color:var(--primary);">💱 Câmbio ao Vivo + Wise:</strong>
-        <span id="liveWiseInfo" style="color:var(--mut); font-weight:600;">Buscando cotação comercial...</span>
+    <div class="sync-bar">
+      <div class="sync-actions">
+        <button type="button" class="btn btn-primary" id="btnSync">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width:18px;height:18px;"><path d="M21 12a9 9 0 0 0-9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/><path d="M3 12a9 9 0 0 0 9 9 9.75 9.75 0 0 0 6.74-2.74L21 16"/><path d="M16 16h5v5"/></svg>
+          <span>Atualizar Dados</span>
+        </button>
+        <a class="btn" id="btnOpenSheet" href="#" target="_blank">Abrir Planilha</a>
+        <button type="button" class="btn" id="btnToggleCfg">⚙ Configurar</button>
       </div>
-      <button type="button" class="btn btn-sm btn-primary" id="btnApplyLiveFx">Aplicar cotação de hoje (+ IOF/Spread Wise)</button>
+      <div class="sync-status"><span class="status-dot" id="statusDot"></span><span id="statusText">Sincronizado</span></div>
     </div>
-    <div class="inputs">
-      <div><label for="nv">Viajantes</label><select id="nv"><option value="2" selected>2 pessoas</option><option value="1">1 pessoa</option></select></div>
-      <div><label for="fv" id="lblVoo">Voo</label><select id="fv"><option value="t" selected>Preço total</option><option value="p">Por pessoa</option></select></div>
-      <div><label for="fx">Câmbio Base (Euro)</label><input type="number" id="fx" step="0.01" min="0" value="6.17"></div>
-      <div><label for="ex">Extras Livres (R$)</label><input type="number" id="ex" step="100" min="0" value="0"></div>
-      <div><label for="np">Parcelas</label><select id="np"><option value="12" selected>12x s/ juros</option></select></div>
-    </div>
-    <div class="tblwrap"><table id="tb"></table></div>
-    <div class="cmp" id="cmp"></div>
-  </div>
-</section>
 
-<section>
-  <h2>✅ Checklist de Preparação</h2>
-  <div class="card">
-    <div class="prog" id="prog"></div>
-    <ul class="todo" id="todo"></ul>
-  </div>
-</section>
-<footer id="footerText">Feito com muito amor para Flávio e Gabriela ❤️</footer>
+    <div class="cfg-panel" id="cfgPanel">
+      <h3 style="margin-top:0">Vínculo com Google Sheets (Planilha Unificada)</h3>
+      <p style="font-size:12px; color:var(--mut); margin-top:4px;">Ao salvar aqui, o link é compartilhado automaticamente com a aba Nosso Apartamento.</p>
+      <label style="font-size:12px; color:var(--mut); display:block; margin-top:10px;">Link da Planilha (Leitura):</label>
+      <div class="cfg-row" style="margin-top:6px;">
+        <input type="text" id="sheetInput" placeholder="Cole o link do Google Sheets aqui">
+      </div>
+      <label style="font-size:12px; color:var(--mut); display:block; margin-top:14px;">URL do Web App Apps Script (deve terminar em <b>/exec</b>):</label>
+      <div class="cfg-row" style="margin-top:6px;">
+        <input type="text" id="webAppInput" placeholder="https://script.google.com/macros/s/.../exec">
+        <button type="button" class="btn" id="btnTestWebApp">Testar</button>
+        <button type="button" class="btn btn-primary" id="btnSaveSheet">Salvar</button>
+      </div>
+      <div id="webAppFeedback" style="font-size:12px; margin-top:8px; font-weight:600;"></div>
+      <div class="backup-box">
+        <label style="font-size:12px; color:var(--mut); display:block;">Compartilhar ou Backup Offline (WhatsApp / JSON):</label>
+        <div class="backup-btns">
+          <button type="button" class="btn btn-sm" id="btnCopyWhatsApp">📲 Copiar Resumo WhatsApp</button>
+          <button type="button" class="btn btn-sm" id="btnExportJson">⬇️ Exportar JSON</button>
+          <button type="button" class="btn btn-sm" id="btnImportJson">⬆️ Importar JSON</button>
+          <input type="file" id="fileImportJson" accept=".json" style="display:none;">
+        </div>
+        <div id="backupFeedback" style="font-size:12px; margin-top:6px; color:var(--ok); font-weight:600;"></div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Clima & Fuso Horário nas Cidades + Média Histórica de Janeiro -->
+  <section style="margin-top: 24px;">
+    <h2 style="font-size: 20px; margin-bottom: 14px;">🌤️ Agora nas Nossas Cidades (Clima Atual & Média Janeiro)</h2>
+    <div class="weather-strip" id="weatherStrip"></div>
+  </section>
+
+  <!-- Seção 1: Cofrinho -->
+  <section>
+    <h2>🐷 Cofrinho • Reserva da Viagem</h2>
+    <div class="stats">
+      <div class="stat"><small>Meta Total</small><b id="sMeta">R$ 20.000,00</b></div>
+      <div class="stat"><small>Guardado</small><b id="sSaldo">R$ 1.359,62</b></div>
+      <div class="stat"><small>Falta Juntar</small><b id="sFalta">R$ 18.640,38</b></div>
+      <div class="stat"><small>Concluído</small><b id="sPct">6,8%</b></div>
+    </div>
+    <div class="card">
+      <div class="row"><span id="barL">R$ 1.359,62</span><span id="barR">Faltam R$ 18.640,38</span></div>
+      <div class="bar"><i id="bar" style="width:6.8%"></i></div>
+      <div class="grid2">
+        <div>
+          <h3>Evolução</h3>
+          <div class="chartbox"><svg id="chart" viewBox="0 0 520 220"></svg></div>
+          <p class="note" id="insight"></p>
+        </div>
+        <div>
+          <h3>Simulador de Aportes</h3>
+          <div class="field">
+            <label for="dt">Quando queremos fechar o valor?</label>
+            <input type="date" id="dt">
+          </div>
+          <div class="plan" id="plan"><p class="note" style="margin:0">Escolha uma data acima para calcular quanto guardar por mês e por semana.</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Seção 2: Roteiro + Rotas de Transporte -->
+  <section>
+    <h2 id="roteiroTitle">🗺️ Roteiro • 18 dias</h2>
+
+    <!-- Base de Hospedagens para Rotas Rápidas -->
+    <div class="lodging-box">
+      <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
+        <strong style="font-size:14px; color:var(--primary);">🏨 Endereços Base das Hospedagens (usado para traçar rotas no Google Maps)</strong>
+        <span style="font-size:12px; color:var(--mut);">Preencha quando fecharem os Airbnbs!</span>
+      </div>
+      <div class="lodging-grid" id="lodgingGrid"></div>
+    </div>
+
+    <!-- Filtros por Cidade -->
+    <div class="day-filters" id="dayFilters">
+      <button type="button" class="filter-btn active" data-city="all">Todos os dias</button>
+      <button type="button" class="filter-btn" data-city="roma">🇮🇹 Roma</button>
+      <button type="button" class="filter-btn" data-city="flor">🇮🇹 Florença</button>
+      <button type="button" class="filter-btn" data-city="mil">🇮🇹 Milão</button>
+      <button type="button" class="filter-btn" data-city="par">🇫🇷 Paris</button>
+      <button type="button" class="filter-btn" data-city="lis">🇵🇹 Lisboa</button>
+    </div>
+
+    <div class="tl" id="timeline"></div>
+  </section>
+
+  <!-- Seção 3: Custos -->
+  <section>
+    <h2>💶 Estimativa de Custos (A Parcelar)</h2>
+    <div class="card">
+      <div class="inputs">
+        <label>Cotação do Euro (R$) <input type="number" id="eur" step="0.01" min="1"></label>
+        <label>Valor Passagem TAP <input type="number" id="voo" step="10" min="0"></label>
+        <label>Tipo de Valor
+          <select id="vooTipo">
+            <option value="t">Total dos 2 viajantes</option>
+            <option value="p">Valor por pessoa</option>
+          </select>
+        </label>
+        <label>Parcelamento
+          <select id="parc">
+            <option value="1">À vista</option>
+            <option value="6">6x sem juros</option>
+            <option value="10">10x sem juros</option>
+            <option value="12" selected>12x sem juros</option>
+          </select>
+        </label>
+      </div>
+      <div class="tblwrap">
+        <table>
+          <thead><tr><th>Categoria</th><th>Item</th><th class="r">Qtd</th><th class="r">Unitário</th><th class="r">Subtotal</th></tr></thead>
+          <tbody id="tb"></tbody>
+        </table>
+      </div>
+      <div class="compare" id="cmp"></div>
+    </div>
+  </section>
+
+  <!-- Seção 4: Porta-Vouchers & Localizadores -->
+  <section>
+    <h2>🎟️ Porta-Vouchers & Localizadores</h2>
+    <div class="card">
+      <div class="voucher-form">
+        <select id="vCat">
+          <option value="✈️ Voo">✈️ Voo / TAP</option>
+          <option value="🏠 Airbnb">🏠 Airbnb / Hotel</option>
+          <option value="🚆 Trem">🚆 Trem (Trenitalia/TGV)</option>
+          <option value="🎟️ Ingresso">🎟️ Ingresso / Passeio</option>
+        </select>
+        <input type="text" id="vTitle" placeholder="Ex: Voo TAP CNF → Roma / Coliseu">
+        <input type="text" id="vCode" placeholder="Localizador (ex: XJ89KL)">
+        <button type="button" class="btn btn-primary" id="btnAddVoucher">+ Salvar</button>
+      </div>
+      <div class="voucher-list" id="voucherList"></div>
+    </div>
+  </section>
+
+  <!-- Seção 5: Checklist de Mala Inteligente -->
+  <section>
+    <h2>🧳 Mala Inteligente (Inverno Europeu • Janeiro)</h2>
+    <div class="card">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px; flex-wrap:wrap; gap:8px;">
+        <span style="font-size:14px; font-weight:700; color:var(--primary);">Progresso das malas:</span>
+        <strong id="bagProgress" style="font-size:14px; color:var(--ink);">0% pronto</strong>
+      </div>
+      <div class="bag-grid" id="bagGrid"></div>
+    </div>
+  </section>
+
+  <!-- Seção 6: Checklist -->
+  <section>
+    <h2>✅ Checklist da Viagem</h2>
+    <div class="card"><ul class="chk" id="chk"></ul></div>
+  </section>
+
+  <!-- Seção 7: Pontos a Decidir -->
+  <section>
+    <h2>📌 Pontos para Decidirmos</h2>
+    <div class="card"><ul class="notes" id="notesList"></ul></div>
+  </section>
+
+  <footer>Feito com muito amor para Flávio e Gabriela ❤️</footer>
 </div>
 
 <script>
 (function(){
-  var DEFAULT_SHEET_ID = "1wphEUtivVELIzz-vJTDJOUSCNxYotCaDpFAaUa74KIc";
-  var SHEET_KEY = "lua-de-mel-sheet-v10";
-  var WEBAPP_KEY = "lua-de-mel-webapp-v10";
-  var CACHE_KEY = "lua-de-mel-cache-v10";
-  var CK_KEY = "lua-de-mel-checklist-v10";
-  var DT_KEY = "lua-de-mel-data-v10";
-  var FLIGHT_DT_KEY = "lua-de-mel-flight-dt-v1";
-  var VOUCHER_KEY = "lua-de-mel-vouchers-v1";
-  var BAG_KEY = "lua-de-mel-bag-v1";
-  var LODGING_KEY = "lua-de-mel-lodging-v1";
+  var DEFAULT_SHEET_ID = "12BraMQBBj5ibVlncKVWJ1BtcWo3UH2P7n0oj1WaJI-c";
+  var SHEET_KEY = "flavio_gabriela_unified_sheet_v1";
+  var WEBAPP_KEY = "flavio_gabriela_unified_webapp_v1";
+  var CHK_KEY = "flavio_gabriela_chk_v1";
+  var BAG_KEY = "flavio_gabriela_bag_v1";
+  var VOUCHER_KEY = "flavio_gabriela_vouchers_v1";
+  var LODGING_KEY = "flavio_gabriela_lodging_v1";
 
-  var DEFAULT_WEBAPP_URL = "https://script.google.com/macros/s/AKfycbzoLT_dfkmOeYxyfsl4zENQgDXLzmmAbD5zi9qFzE9KPLrikNbMQvN5wiHnmGopKzvq/exec";
+  var DEFAULT_WEBAPP_URL = "https://script.google.com/macros/s/AKfycbx1HyO8kaXKpTV2ZdEnEgMpjFG7qE3tTigmLhgwNj7Z7fLbCOzmEghNJOAKVizS7BLU/exec";
   function getWebAppUrl(){
     try { return localStorage.getItem(WEBAPP_KEY) || DEFAULT_WEBAPP_URL; } catch(e){ return DEFAULT_WEBAPP_URL; }
   }
@@ -477,7 +446,7 @@ footer { margin-top: 56px; color: var(--mut); font-size: 14px; text-align: cente
   function postToSheets(payload){
     var url = getWebAppUrl();
     if(!url) return;
-    var txt = $("statusText");
+    var txt = document.getElementById("statusText");
     if(txt) txt.textContent = "Salvando...";
     fetch(url, {
       method: "POST",
@@ -491,158 +460,214 @@ footer { margin-top: 56px; color: var(--mut); font-size: 14px; text-align: cente
     });
   }
 
-  var $ = function(id){ return document.getElementById(id); };
-  var brl = function(v){ return (Number(v)||0).toLocaleString("pt-BR",{style:"currency",currency:"BRL"}); };
+  var CORES = { voo: "#786a68", roma: "#9b4f53", flor: "#b36a5e", mil: "#6d7f71", par: "#687a96", lis: "#c48a4f" };
 
   var DEFAULT_DATA = {
     config: {
-      meta_cofrinho: 20000,
-      cotacao_euro: 6.17,
-      valor_voo: 14531.48,
-      voo_tipo: "t",
-      viajantes: 2,
-      parcelas: 12,
-      extras_viagem: 0,
-      data_meta: "",
-      titulo_site: "Flávio e Gabriela",
-      subtitulo_site: "Confins → Roma → Florença → Milão → Paris → Lisboa → São Paulo",
-      eyebrow_site: "Nossa História de Amor"
+      meta_cofrinho: 20000, cotacao_euro: 6.17, valor_voo: 14531.48, voo_tipo: "t",
+      viajantes: 2, parcelas: 12, extras_viagem: 0, data_meta: "", data_embarque: "2028-01-15",
+      titulo_site: "Lua de mel de Flávio e Gabriela",
+      subtitulo_site: "Confins → Roma → Florença → Milão → Paris → Lisboa (stopover TAP) → São Paulo (Guarulhos)",
+      eyebrow_site: "Nossa Viagem"
     },
-    cofrinho: [
-      {data:"23/10/2026", saldo:553.45},{data:"24/10/2026", saldo:553.74},{data:"25/10/2026", saldo:553.74},
-      {data:"26/10/2026", saldo:553.74},{data:"27/10/2026", saldo:554.01},{data:"28/10/2026", saldo:554.29},
-      {data:"29/10/2026", saldo:554.61},{data:"30/10/2026", saldo:554.87},{data:"31/10/2026", saldo:555.43},
-      {data:"01/11/2026", saldo:555.43},{data:"02/11/2026", saldo:555.43},{data:"03/11/2026", saldo:555.43},
-      {data:"04/11/2026", saldo:555.43},{data:"05/11/2026", saldo:1205.32},{data:"06/11/2026", saldo:1206.55},
-      {data:"07/11/2026", saldo:1206.55},{data:"08/11/2026", saldo:1206.55},{data:"09/11/2026", saldo:1206.55},
-      {data:"10/11/2026", saldo:1208.38},{data:"11/11/2026", saldo:1208.38},{data:"12/11/2026", saldo:1208.38},
-      {data:"13/11/2026", saldo:2000.00}
+    historico: [
+      { data: "23/10/2026", saldo: 553.45 },
+      { data: "05/11/2026", saldo: 1205.32 },
+      { data: "13/11/2026", saldo: 1359.62 },
+      { data: "16/11/2026", saldo: 1359.62 }
     ],
     roteiro: [
-      {ordem:1, cor:"voo", chip:"CNF", etapa:"Ida", dia:"Dia 1", titulo:"Confins → Roma", desc:"Voo TAP com 1 escala; chegada em Roma no dia seguinte."},
-      {ordem:2, cor:"roma", chip:"Roma 5", etapa:"Roma · 5 dias", dia:"Dia 2", titulo:"Chegada e Trastevere", desc:"Check-in, passeio romântico e jantar no bairro histórico."},
-      {ordem:3, cor:"roma", chip:"Roma 5", etapa:"Roma · 5 dias", dia:"Dia 3", titulo:"Roma antiga", desc:"Coliseu, Fórum Romano e Palatino."},
-      {ordem:4, cor:"roma", chip:"Roma 5", etapa:"Roma · 5 dias", dia:"Dia 4", titulo:"Vaticano", desc:"Museus Vaticanos, Capela Sistina e Basílica de São Pedro."},
-      {ordem:5, cor:"roma", chip:"Roma 5", etapa:"Roma · 5 dias", dia:"Dia 5", titulo:"Centro histórico", desc:"Panteão, Fontana di Trevi e Praça Navona."},
-      {ordem:6, cor:"roma", chip:"Roma 5", etapa:"Roma · 5 dias", dia:"Dia 6", titulo:"Dia livre", desc:"Villa Borghese e momentos a dois."},
-      {ordem:7, cor:"flor", chip:"Florença 2", etapa:"Florença · 2 noites", dia:"Dia 7", titulo:"Roma → Florença", desc:"Trem de alta velocidade; Duomo e Ponte Vecchio."},
-      {ordem:8, cor:"flor", chip:"Florença 2", etapa:"Florença · 2 noites", dia:"Dia 8", titulo:"Florença", desc:"Uffizi e pôr do sol na Piazzale Michelangelo."},
-      {ordem:9, cor:"mil", chip:"Milão 2", etapa:"Milão · 2 noites", dia:"Dia 9", titulo:"Florença → Milão", desc:"Duomo de Milão e Galleria Vittorio Emanuele II."},
-      {ordem:10, cor:"mil", chip:"Milão 2", etapa:"Milão · 2 noites", dia:"Dia 10", titulo:"Milão", desc:"Castello Sforzesco e Navigli."},
-      {ordem:11, cor:"par", chip:"Paris 4", etapa:"Paris · 4 noites", dia:"Dia 11", titulo:"Milão → Paris", desc:"Viagem de trem panorâmica rumo à Cidade Luz."},
-      {ordem:12, cor:"par", chip:"Paris 4", etapa:"Paris · 4 noites", dia:"Dia 12", titulo:"Paris clássica", desc:"Torre Eiffel e passeio inesquecível pelo Rio Sena."},
-      {ordem:13, cor:"par", chip:"Paris 4", etapa:"Paris · 4 noites", dia:"Dia 13", titulo:"Louvre e Marais", desc:"Museu do Louvre e charme do bairro Marais."},
-      {ordem:14, cor:"par", chip:"Paris 4", etapa:"Paris · 4 noites", dia:"Dia 14", titulo:"Montmartre", desc:"Sacré-Cœur e vista panorâmica de Paris."},
-      {ordem:15, cor:"lis", chip:"Lisboa 3", etapa:"Lisboa · 3 noites", dia:"Dia 15", titulo:"Paris → Lisboa", desc:"Voo TAP para parada em Portugal; Alfama e Baixa."},
-      {ordem:16, cor:"lis", chip:"Lisboa 3", etapa:"Lisboa · 3 noites", dia:"Dia 16", titulo:"Sintra", desc:"Palácio da Pena e Quinta da Regaleira."},
-      {ordem:17, cor:"lis", chip:"Lisboa 3", etapa:"Lisboa · 3 noites", dia:"Dia 17", titulo:"Belém", desc:"Torre de Belém, pastéis de Belém e noite de fado."},
-      {ordem:18, cor:"voo", chip:"GRU", etapa:"Volta", dia:"Dia 18", titulo:"Lisboa → São Paulo", desc:"Voo de retorno ao Brasil com o coração cheio de recordações."}
+      { ordem:1, cor:"voo", chip:"CNF", etapa:"Ida", dia:"Dia 1", titulo:"Confins → Roma", desc:"Voo TAP com 1 escala (~13h40); chegada em Roma no dia 2." },
+      { ordem:2, cor:"roma", chip:"Roma 5", etapa:"Roma · 5 dias", dia:"Dia 2", titulo:"Chegada e Trastevere", desc:"Check-in, passeio leve e jantar no bairro." },
+      { ordem:3, cor:"roma", chip:"Roma 5", etapa:"Roma · 5 dias", dia:"Dia 3", titulo:"Roma antiga", desc:"Coliseu, Fórum Romano e Palatino (reserve os ingressos antes)." },
+      { ordem:4, cor:"roma", chip:"Roma 5", etapa:"Roma · 5 dias", dia:"Dia 4", titulo:"Vaticano", desc:"Museus Vaticanos, Capela Sistina e Basílica de São Pedro." },
+      { ordem:5, cor:"roma", chip:"Roma 5", etapa:"Roma · 5 dias", dia:"Dia 5", titulo:"Centro histórico", desc:"Panteão, Fontana di Trevi, Praça Navona e Praça de Espanha." },
+      { ordem:6, cor:"roma", chip:"Roma 5", etapa:"Roma · 5 dias", dia:"Dia 6", titulo:"Dia livre", desc:"Villa Borghese ou bate-volta (Tivoli/Ostia Antica)." },
+      { ordem:7, cor:"flor", chip:"Florença 2", etapa:"Florença · 2 noites", dia:"Dia 7", titulo:"Roma → Florença", desc:"Trem de ~1h30; Duomo e Ponte Vecchio no fim da tarde." },
+      { ordem:8, cor:"flor", chip:"Florença 2", etapa:"Florença · 2 noites", dia:"Dia 8", titulo:"Florença", desc:"Uffizi, Accademia e pôr do sol na Piazzale Michelangelo." },
+      { ordem:9, cor:"mil", chip:"Milão 2", etapa:"Milão · 2 noites", dia:"Dia 9", titulo:"Florença → Milão", desc:"Trem de ~1h30; Duomo e Galleria Vittorio Emanuele II." },
+      { ordem:10, cor:"mil", chip:"Milão 2", etapa:"Milão · 2 noites", dia:"Dia 10", titulo:"Milão", desc:"Castello Sforzesco, Navigli e aperitivo." },
+      { ordem:11, cor:"par", chip:"Paris 4", etapa:"Paris · 4 noites", dia:"Dia 11", titulo:"Milão → Paris", desc:"Trem de ~7h40, ocupa o dia todo; chegada à noite." },
+      { ordem:12, cor:"par", chip:"Paris 4", etapa:"Paris · 4 noites", dia:"Dia 12", titulo:"Paris clássica", desc:"Torre Eiffel, Trocadéro e passeio pelo Sena." },
+      { ordem:13, cor:"par", chip:"Paris 4", etapa:"Paris · 4 noites", dia:"Dia 13", titulo:"Louvre e Marais", desc:"Museu do Louvre, Île de la Cité e Marais." },
+      { ordem:14, cor:"par", chip:"Paris 4", etapa:"Paris · 4 noites", dia:"Dia 14", titulo:"Montmartre", desc:"Sacré-Cœur e Montmartre; Versalhes se sobrar energia." },
+      { ordem:15, cor:"lis", chip:"Lisboa 3", etapa:"Lisboa (stopover TAP) · 3 noites", dia:"Dia 15", titulo:"Paris → Lisboa", desc:"Voo TAP saindo de Orly; Alfama e Baixa." },
+      { ordem:16, cor:"lis", chip:"Lisboa 3", etapa:"Lisboa (stopover TAP) · 3 noites", dia:"Dia 16", titulo:"Sintra", desc:"Palácio da Pena e Quinta da Regaleira." },
+      { ordem:17, cor:"lis", chip:"Lisboa 3", etapa:"Lisboa (stopover TAP) · 3 noites", dia:"Dia 17", titulo:"Belém", desc:"Torre de Belém, Jerónimos, pastéis de Belém e fado à noite." },
+      { ordem:18, cor:"voo", chip:"GRU", etapa:"Volta", dia:"Dia 18", titulo:"Lisboa → São Paulo (GRU)", desc:"Voo direto de cerca de 10h." }
     ],
     orcamento: [
-      {cat:"Hospedagem", item:"Roma", detalhe:"Airbnb", qtd:5, unit:625, moeda:"BRL"},
-      {cat:"Hospedagem", item:"Florença", detalhe:"Airbnb", qtd:2, unit:625, moeda:"BRL"},
-      {cat:"Hospedagem", item:"Milão", detalhe:"Airbnb", qtd:2, unit:625, moeda:"BRL"},
-      {cat:"Hospedagem", item:"Paris", detalhe:"Airbnb", qtd:4, unit:750, moeda:"BRL"},
-      {cat:"Hospedagem", item:"Lisboa", detalhe:"Airbnb", qtd:3, unit:450, moeda:"BRL"},
-      {cat:"Trem", item:"Roma → Florença", detalhe:"1h30", qtd:1, unit:40, moeda:"EUR"},
-      {cat:"Trem", item:"Florença → Milão", detalhe:"1h30", qtd:1, unit:60, moeda:"EUR"},
-      {cat:"Trem", item:"Milão → Paris", detalhe:"7h40", qtd:1, unit:80, moeda:"EUR"}
+      { cat:"Hospedagem", item:"Roma", detalhe:"Diária média Airbnb (5 noites · base R$ 625/noite)", qtd:5, unit:625, moeda:"BRL" },
+      { cat:"Hospedagem", item:"Florença", detalhe:"Diária média Airbnb (2 noites · base R$ 625/noite)", qtd:2, unit:625, moeda:"BRL" },
+      { cat:"Hospedagem", item:"Milão", detalhe:"Diária média Airbnb (2 noites · base R$ 625/noite)", qtd:2, unit:625, moeda:"BRL" },
+      { cat:"Hospedagem", item:"Paris", detalhe:"Diária média Airbnb (4 noites · base R$ 750/noite)", qtd:4, unit:750, moeda:"BRL" },
+      { cat:"Hospedagem", item:"Lisboa", detalhe:"Diária média Airbnb (3 noites · base R$ 450/noite)", qtd:3, unit:450, moeda:"BRL" },
+      { cat:"Trem", item:"Roma → Florença", detalhe:"Trem alta velocidade (~1h30) · valor por pessoa", qtd:1, unit:40, moeda:"EUR" },
+      { cat:"Trem", item:"Florença → Milão", detalhe:"Trem alta velocidade (~1h30) · valor por pessoa", qtd:1, unit:60, moeda:"EUR" },
+      { cat:"Trem", item:"Milão → Paris", detalhe:"Trem panorâmico (~7h40) · valor por pessoa", qtd:1, unit:80, moeda:"EUR" }
     ],
     checklist: [
-      {tipo:"Checklist", texto:"Conferir validade dos passaportes e exigências de entrada", done:false},
-      {tipo:"Checklist", texto:"Definir datas da viagem", done:false},
-      {tipo:"Checklist", texto:"Comprar passagens TAP", done:false},
-      {tipo:"Checklist", texto:"Reservar hospedagens românticas", done:false},
-      {tipo:"Checklist", texto:"Reservar passagens de trem na Europa", done:false},
-      {tipo:"Checklist", texto:"Comprar ingressos para atrações principais", done:false},
-      {tipo:"Checklist", texto:"Contratar seguro viagem", done:false},
-      {tipo:"Checklist", texto:"Organizar câmbio e cartão internacional", done:false},
-      {tipo:"Decidir", texto:"Aproveitar cada momento único desta viagem inesquecível.", done:false}
+      "Conferir validade dos passaportes e exigências de entrada (ex.: ETIAS)",
+      "Definir as datas da viagem",
+      "Comprar passagens TAP (CNF–Roma, Paris–Lisboa, Lisboa–GRU) e conferir bagagem",
+      "Reservar hospedagens (Roma, Florença, Milão, Paris, Lisboa)",
+      "Reservar trens (Roma–Florença–Milão–Paris)",
+      "Comprar ingressos: Coliseu, Vaticano, Uffizi",
+      "Contratar seguro viagem",
+      "Organizar câmbio e cartão para uso no exterior",
+      "Chip internacional ou eSIM"
+    ],
+    decidir: [
+      "Florença com 2 noites não deixa tempo para a Toscana (Siena, San Gimignano); vale decidir se algum dia sai de outra cidade.",
+      "O trem Milão → Paris (~7h40) consome o dia 11 inteiro; confirmar horários e se há opção direta na data escolhida.",
+      "Confirmar na tarifa Discount da TAP se há bagagem despachada e as regras de alteração (Paris → Lisboa → GRU)."
     ]
   };
 
   var STATE = JSON.parse(JSON.stringify(DEFAULT_DATA));
-  var selectedCityChip = "ALL";
+  var cityFilter = "all";
 
-  /* 1. Contagem Regressiva em Tempo Real */
-  var flightInput = $("flightDateInput");
-  try {
-    var savedFlight = localStorage.getItem(FLIGHT_DT_KEY);
-    if(savedFlight) flightInput.value = savedFlight;
-  } catch(e){}
-
-  flightInput.addEventListener("change", function(){
-    try { localStorage.setItem(FLIGHT_DT_KEY, flightInput.value); } catch(e){}
-    updateCountdown();
-  });
-
-  function updateCountdown(){
-    var val = flightInput.value || "2028-01-15";
-    var target = new Date(val + "T18:00:00").getTime();
-    var now = Date.now();
-    var diff = Math.max(target - now, 0);
-
-    var d = Math.floor(diff / (1000 * 60 * 60 * 24));
-    var h = Math.floor((diff / (1000 * 60 * 60)) % 24);
-    var m = Math.floor((diff / 1000 / 60) % 60);
-    var s = Math.floor((diff / 1000) % 60);
-
-    $("cdDias").textContent = d;
-    $("cdHoras").textContent = ("0" + h).slice(-2);
-    $("cdMin").textContent = ("0" + m).slice(-2);
-    $("cdSeg").textContent = ("0" + s).slice(-2);
+  /* Contagem Regressiva (Jan 2028) */
+  function startCountdown(){
+    var targetStr = STATE.config.data_embarque || "2028-01-15";
+    var targetDate = new Date(targetStr + "T12:00:00");
+    if(!isNaN(targetDate.getTime())){
+      var mesesPt = ["Janeiro","Fevereiro","Março","Abril","Maio","Junho","Julho","Agosto","Setembro","Outubro","Novembro","Dezembro"];
+      document.getElementById("cdDateLabel").textContent = ("0"+targetDate.getDate()).slice(-2) + " de " + mesesPt[targetDate.getMonth()] + " de " + targetDate.getFullYear();
+    }
+    function update(){
+      var now = new Date();
+      var diff = targetDate - now;
+      if(diff <= 0) return;
+      var d = Math.floor(diff / 86400000);
+      var h = Math.floor((diff % 86400000) / 3600000);
+      var m = Math.floor((diff % 3600000) / 60000);
+      document.getElementById("cdDays").textContent = d;
+      document.getElementById("cdHours").textContent = ("0"+h).slice(-2);
+      document.getElementById("cdMins").textContent = ("0"+m).slice(-2);
+    }
+    update();
+    setInterval(update, 60000);
   }
-  updateCountdown();
-  setInterval(updateCountdown, 1000);
 
-  /* 2. Clima & Fuso Horário das Cidades (Open-Meteo API gratuita sem chave) */
+  /* Clima & Fuso Horário nas 5 Cidades + Média Histórica de Janeiro */
   var CITIES_WEATHER = [
-    { name: "Roma 🇮🇹", lat: 41.9028, lon: 12.4964, tz: "Europe/Rome" },
-    { name: "Florença 🇮🇹", lat: 43.7696, lon: 11.2558, tz: "Europe/Rome" },
-    { name: "Milão 🇮🇹", lat: 45.4642, lon: 9.1900, tz: "Europe/Rome" },
-    { name: "Paris 🇫🇷", lat: 48.8566, lon: 2.3522, tz: "Europe/Paris" },
-    { name: "Lisboa 🇵🇹", lat: 38.7223, lon: -9.1393, tz: "Europe/Lisbon" }
+    { name: "Roma", flag: "🇮🇹", lat: 41.9028, lon: 12.4964, tz: "Europe/Rome", janAvg: "❄️ Jan: 3°C a 12°C" },
+    { name: "Florença", flag: "🇮🇹", lat: 43.7696, lon: 11.2558, tz: "Europe/Rome", janAvg: "❄️ Jan: 2°C a 11°C" },
+    { name: "Milão", flag: "🇮🇹", lat: 45.4642, lon: 9.1900, tz: "Europe/Rome", janAvg: "❄️ Jan: -1°C a 7°C" },
+    { name: "Paris", flag: "🇫🇷", lat: 48.8566, lon: 2.3522, tz: "Europe/Paris", janAvg: "❄️ Jan: 2°C a 7°C" },
+    { name: "Lisboa", flag: "🇵🇹", lat: 38.7223, lon: -9.1393, tz: "Europe/Lisbon", janAvg: "❄️ Jan: 8°C a 15°C" }
   ];
 
-  function weatherDesc(code){
-    if(code === 0) return "☀️ Céu limpo";
-    if(code <= 3) return "⛅ Parc. nublado";
-    if(code <= 48) return "🌫️ Neblina";
-    if(code <= 67) return "🌧️ Chuva";
-    if(code <= 77) return "❄️ Neve";
-    return "🌦️ Instável";
-  }
-
-  function renderWeather(){
-    var grid = $("weatherGrid");
-    grid.innerHTML = CITIES_WEATHER.map(function(c, idx){
+  async function loadWeather(){
+    var strip = document.getElementById("weatherStrip");
+    strip.innerHTML = CITIES_WEATHER.map(function(c, i){
       var localTime = new Date().toLocaleTimeString("pt-BR", { timeZone: c.tz, hour: "2-digit", minute: "2-digit" });
-      return '<div class="w-card">' +
-        '<div class="w-city">' + c.name + '</div>' +
-        '<div class="w-time">🕒 ' + localTime + ' (local)</div>' +
-        '<div class="w-temp" id="wTemp'+idx+'">--°C</div>' +
-        '<div class="w-desc" id="wDesc'+idx+'">Carregando...</div>' +
+      return '<div class="weather-card">' +
+        '<div class="weather-top">' +
+          '<div><span class="w-city">' + c.flag + ' ' + c.name + '</span><span class="w-time">🕒 Agora: ' + localTime + '</span></div>' +
+          '<span class="w-temp" id="wtemp-'+i+'">--°C</span>' +
+        '</div>' +
+        '<div class="w-jan">' + c.janAvg + '</div>' +
       '</div>';
     }).join("");
 
-    CITIES_WEATHER.forEach(function(c, idx){
-      fetch("https://api.open-meteo.com/v1/forecast?latitude=" + c.lat + "&longitude=" + c.lon + "&current_weather=true")
+    CITIES_WEATHER.forEach(function(c, i){
+      fetch("https://api.open-meteo.com/v1/forecast?latitude="+c.lat+"&longitude="+c.lon+"&current_weather=true")
         .then(function(r){ return r.json(); })
-        .then(function(data){
-          if(data && data.current_weather){
-            var t = Math.round(data.current_weather.temperature);
-            $("wTemp"+idx).textContent = t + "°C";
-            $("wDesc"+idx).textContent = weatherDesc(data.current_weather.weathercode);
+        .then(function(d){
+          if(d && d.current_weather){
+            var el = document.getElementById("wtemp-"+i);
+            if(el) el.textContent = Math.round(d.current_weather.temperature) + "°C";
           }
-        })
-        .catch(function(){
-          $("wDesc"+idx).textContent = "Clima indisponível";
-        });
+        }).catch(function(){});
     });
   }
-  renderWeather();
 
-  /* 3. Carteira de Vouchers & Localizadores Offline */
+  /* Endereços Base das Hospedagens */
+  var DEFAULT_LODGING = {
+    roma: "Trastevere, Roma, Itália",
+    flor: "Centro Histórico, Florença, Itália",
+    mil: "Navigli / Duomo, Milão, Itália",
+    par: "Le Marais, Paris, França",
+    lis: "Baixa / Chiado, Lisboa, Portugal"
+  };
+  var LODGING_LABELS = {
+    roma: "🇮🇹 Roma",
+    flor: "🇮🇹 Florença",
+    mil: "🇮🇹 Milão",
+    par: "🇫🇷 Paris",
+    lis: "🇵🇹 Lisboa"
+  };
+  var cityLodgings = {};
+  try {
+    cityLodgings = Object.assign({}, DEFAULT_LODGING, JSON.parse(localStorage.getItem(LODGING_KEY) || "{}"));
+  } catch(e){ cityLodgings = Object.assign({}, DEFAULT_LODGING); }
+
+  function renderLodgings(){
+    var grid = document.getElementById("lodgingGrid");
+    grid.innerHTML = Object.keys(LODGING_LABELS).map(function(k){
+      return '<div class="lodging-item">' +
+        '<label>' + LODGING_LABELS[k] + '</label>' +
+        '<input type="text" data-lodg="'+k+'" value="'+(cityLodgings[k]||"").replace(/"/g,'&quot;')+'" placeholder="Endereço do Airbnb/Hotel">' +
+      '</div>';
+    }).join("");
+
+    grid.querySelectorAll("input").forEach(function(inp){
+      inp.addEventListener("change", function(){
+        var k = inp.getAttribute("data-lodg");
+        cityLodgings[k] = inp.value.trim();
+        try { localStorage.setItem(LODGING_KEY, JSON.stringify(cityLodgings)); } catch(e){}
+        postToSheets({ action: "sync_lodging", lodgings: cityLodgings });
+        renderTimeline();
+      });
+    });
+  }
+
+  function isTransferDay(d){
+    var t = (d.titulo || "").toLowerCase();
+    return t.indexOf("→") > -1 || d.cor === "voo";
+  }
+
+  function buildTransitRouteUrl(d){
+    var cityKey = d.cor;
+    var cityNameMap = { roma: "Roma, Itália", flor: "Florença, Itália", mil: "Milão, Itália", par: "Paris, França", lis: "Lisboa, Portugal" };
+    var titleLower = (d.titulo || "").toLowerCase();
+
+    // Se for dia de deslocamento entre cidades, traça rota da hospedagem até a estação de trem ou aeroporto principal!
+    if(titleLower.indexOf("roma → florença") > -1){
+      var origR = cityLodgings.roma || "Trastevere, Roma, Itália";
+      return "https://www.google.com/maps/dir/?api=1&origin=" + encodeURIComponent(origR) + "&destination=" + encodeURIComponent("Stazione di Roma Termini, Roma, Itália") + "&travelmode=transit";
+    }
+    if(titleLower.indexOf("florença → milão") > -1){
+      var origF = cityLodgings.flor || "Centro Histórico, Florença, Itália";
+      return "https://www.google.com/maps/dir/?api=1&origin=" + encodeURIComponent(origF) + "&destination=" + encodeURIComponent("Stazione di Firenze Santa Maria Novella, Firenze, Itália") + "&travelmode=transit";
+    }
+    if(titleLower.indexOf("milão → paris") > -1){
+      var origM = cityLodgings.mil || "Navigli, Milão, Itália";
+      return "https://www.google.com/maps/dir/?api=1&origin=" + encodeURIComponent(origM) + "&destination=" + encodeURIComponent("Stazione di Milano Centrale, Milano, Itália") + "&travelmode=transit";
+    }
+    if(titleLower.indexOf("paris → lisboa") > -1){
+      var origP = cityLodgings.par || "Le Marais, Paris, França";
+      return "https://www.google.com/maps/dir/?api=1&origin=" + encodeURIComponent(origP) + "&destination=" + encodeURIComponent("Aéroport de Paris-Orly, Paris, França") + "&travelmode=transit";
+    }
+    if(titleLower.indexOf("lisboa → são paulo") > -1){
+      var origL = cityLodgings.lis || "Baixa, Lisboa, Portugal";
+      return "https://www.google.com/maps/dir/?api=1&origin=" + encodeURIComponent(origL) + "&destination=" + encodeURIComponent("Aeroporto Humberto Delgado, Lisboa, Portugal") + "&travelmode=transit";
+    }
+    if(d.cor === "voo"){
+      return "https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent(d.titulo);
+    }
+
+    var origin = cityLodgings[cityKey] || cityNameMap[cityKey] || "";
+    var dest = d.titulo + ", " + (cityNameMap[cityKey] || "");
+    if(origin){
+      return "https://www.google.com/maps/dir/?api=1&origin=" + encodeURIComponent(origin) + "&destination=" + encodeURIComponent(dest) + "&travelmode=transit";
+    }
+    return "https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent(dest);
+  }
+
+  /* Porta-Vouchers */
   var DEFAULT_VOUCHERS = [
     { cat: "✈️ Voo", title: "TAP Air Portugal (Ida e Volta)", code: "AGUARDANDO PNR" },
     { cat: "🏠 Airbnb", title: "Hospedagem Roma (Trastevere)", code: "EM BREVE" }
@@ -653,179 +678,111 @@ footer { margin-top: 56px; color: var(--mut); font-size: 14px; text-align: cente
     vouchers = Array.isArray(svV) && svV.length ? svV : DEFAULT_VOUCHERS;
   } catch(e){ vouchers = DEFAULT_VOUCHERS; }
 
-  function saveVouchers(syncRemote){
-    try { localStorage.setItem(VOUCHER_KEY, JSON.stringify(vouchers)); } catch(e){}
-    if(syncRemote) postToSheets({ action: "sync_vouchers", items: vouchers });
-  }
-
   function renderVouchers(){
-    var list = $("voucherList");
-    if(!vouchers.length){
-      list.innerHTML = '<p style="color:var(--mut); font-size:14px;">Nenhum voucher cadastrado ainda.</p>';
-      return;
-    }
+    var list = document.getElementById("voucherList");
     list.innerHTML = vouchers.map(function(v, idx){
-      return '<div class="v-card">' +
-        '<button type="button" class="v-del" data-vdel="'+idx+'" title="Remover">✕</button>' +
-        '<div class="v-cat">' + v.cat + '</div>' +
-        '<div class="v-title">' + v.title + '</div>' +
-        '<div class="v-code-row">' +
-          '<span class="v-code">' + v.code + '</span>' +
-          '<button type="button" class="btn btn-sm" data-vcopy="'+v.code+'">Copiar</button>' +
+      return '<div class="voucher-card">' +
+        '<div class="v-info"><small>' + v.cat + '</small><strong>' + v.title + '</strong></div>' +
+        '<div style="display:flex; align-items:center; gap:6px;">' +
+          '<span class="v-code" title="Clique para copiar" data-copy="'+v.code+'">' + v.code + '</span>' +
+          '<button type="button" class="v-del" data-del="'+idx+'" title="Remover">✕</button>' +
         '</div>' +
       '</div>';
     }).join("");
 
-    list.querySelectorAll("[data-vdel]").forEach(function(btn){
-      btn.addEventListener("click", function(){
-        vouchers.splice(Number(btn.getAttribute("data-vdel")), 1);
-        saveVouchers(true);
-        renderVouchers();
+    list.querySelectorAll("[data-copy]").forEach(function(el){
+      el.addEventListener("click", function(){
+        var c = el.getAttribute("data-copy");
+        if(navigator.clipboard) navigator.clipboard.writeText(c);
+        var orig = el.textContent;
+        el.textContent = "Copiado!";
+        setTimeout(function(){ el.textContent = orig; }, 1200);
       });
     });
 
-    list.querySelectorAll("[data-vcopy]").forEach(function(btn){
+    list.querySelectorAll("[data-del]").forEach(function(btn){
       btn.addEventListener("click", function(){
-        var code = btn.getAttribute("data-vcopy");
-        if(navigator.clipboard) navigator.clipboard.writeText(code);
-        var orig = btn.textContent;
-        btn.textContent = "Copiado!";
-        setTimeout(function(){ btn.textContent = orig; }, 1200);
+        vouchers.splice(Number(btn.getAttribute("data-del")), 1);
+        try { localStorage.setItem(VOUCHER_KEY, JSON.stringify(vouchers)); } catch(e){}
+        postToSheets({ action: "sync_vouchers", vouchers: vouchers });
+        renderVouchers();
       });
     });
   }
 
-  $("btnAddVoucher").addEventListener("click", function(){
-    var cat = $("vCat").value;
-    var title = $("vTitle").value.trim();
-    var code = $("vCode").value.trim().toUpperCase();
+  document.getElementById("btnAddVoucher").addEventListener("click", function(){
+    var cat = document.getElementById("vCat").value;
+    var title = document.getElementById("vTitle").value.trim();
+    var code = document.getElementById("vCode").value.trim().toUpperCase();
     if(!title || !code) return;
     vouchers.push({ cat: cat, title: title, code: code });
-    $("vTitle").value = "";
-    $("vCode").value = "";
-    saveVouchers(true);
+    document.getElementById("vTitle").value = "";
+    document.getElementById("vCode").value = "";
+    try { localStorage.setItem(VOUCHER_KEY, JSON.stringify(vouchers)); } catch(e){}
+    postToSheets({ action: "sync_vouchers", vouchers: vouchers });
     renderVouchers();
   });
-  renderVouchers();
 
-  /* 4. Checklist de Mala Inteligente */
-  var BAG_ITEMS = {
-    docs: [
+  /* Mala Inteligente */
+  var BAG_ITEMS = [
+    { cat: "🛂 Documentos & Mochila de Mão", key: "docs", items: [
       "Passaportes válidos (mín. 6 meses)",
       "Apólice Seguro Viagem (Tratado de Schengen €30k)",
       "Comprovantes de hospedagem (Airbnbs)",
       "Passagens aéreas e de trem impressas/PDF",
       "Cartão internacional (Wise/Nomad) + Euros em espécie",
       "CNH física (caso aluguem carro na Toscana)"
-    ],
-    frio: [
+    ]},
+    { cat: "🧥 Roupas & Camadas de Frio (Jan/Inverno)", key: "frio", items: [
       "Segunda pele térmica (blusas e calças)",
       "Casaco corta-vento / impermeável pesado",
       "Suéteres de lã ou fleece",
       "Calças jeans / sarja encorpada",
       "Meias térmicas e calçado confortável impermeável",
       "Cachecol, gorro e luvas touch"
-    ],
-    eletronicos: [
+    ]},
+    { cat: "🔌 Eletrônicos & Farmacinha", key: "eletronicos", items: [
       "Adaptador universal de tomada (Padrão Europeu Tipo C/F)",
       "Power bank (sempre na bagagem de mão!)",
       "Cabos de celular, smartwatch e fones",
       "Remédios de uso contínuo com receita em inglês",
       "Analgésicos, antitérmico e curativos para bolhas nos pés",
       "Hidratante labial e creme para frio seco"
-    ]
-  };
-  var activeBagTab = "docs";
-  var bagChecked = {};
-  try { bagChecked = JSON.parse(localStorage.getItem(BAG_KEY) || "{}"); } catch(e){}
+    ]}
+  ];
 
   function renderBag(){
-    var items = BAG_ITEMS[activeBagTab] || [];
-    $("bagGrid").innerHTML = items.map(function(txt){
-      var key = activeBagTab + ":" + txt;
-      var isDone = !!bagChecked[key];
-      return '<label class="bag-item'+(isDone?' done':'')+'">' +
-        '<input type="checkbox" data-bkey="'+key+'"'+(isDone?' checked':'')+'>' +
-        '<span>' + txt + '</span>' +
-      '</label>';
+    var saved = {};
+    try { saved = JSON.parse(localStorage.getItem(BAG_KEY) || "{}"); } catch(e){}
+    var grid = document.getElementById("bagGrid");
+    var total = 0, done = 0;
+
+    grid.innerHTML = BAG_ITEMS.map(function(group){
+      var itemsHtml = group.items.map(function(txt){
+        var id = group.key + ":" + txt;
+        total++;
+        if(saved[id]) done++;
+        return '<label class="bag-item'+(saved[id]?' done':'')+'">' +
+          '<input type="checkbox" data-bagid="'+id.replace(/"/g,'&quot;')+'"'+(saved[id]?' checked':'')+'>' +
+          '<span>' + txt + '</span>' +
+        '</label>';
+      }).join("");
+      return '<div class="bag-cat"><h3>' + group.cat + '</h3>' + itemsHtml + '</div>';
     }).join("");
 
-    $("bagGrid").querySelectorAll("input[type='checkbox']").forEach(function(cb){
+    var pct = total > 0 ? Math.round((done / total) * 100) : 0;
+    document.getElementById("bagProgress").textContent = done + "/" + total + " itens (" + pct + "% pronto)";
+
+    grid.querySelectorAll("input").forEach(function(cb){
       cb.addEventListener("change", function(){
-        var k = cb.getAttribute("data-bkey");
-        bagChecked[k] = cb.checked;
-        cb.parentElement.classList.toggle("done", cb.checked);
-        try { localStorage.setItem(BAG_KEY, JSON.stringify(bagChecked)); } catch(e){}
-        postToSheets({ action: "sync_mala", items: bagChecked });
+        var id = cb.getAttribute("data-bagid");
+        saved[id] = cb.checked;
+        try { localStorage.setItem(BAG_KEY, JSON.stringify(saved)); } catch(e){}
+        postToSheets({ action: "sync_mala", items: saved });
+        renderBag();
       });
     });
   }
-
-  $("bagTabs").querySelectorAll(".bag-tab").forEach(function(btn){
-    btn.addEventListener("click", function(){
-      $("bagTabs").querySelectorAll(".bag-tab").forEach(function(b){ b.classList.remove("active"); });
-      btn.classList.add("active");
-      activeBagTab = btn.getAttribute("data-bag");
-      renderBag();
-    });
-  });
-  renderBag();
-
-  /* Conversor BRL <-> EUR */
-  var eurRate = 6.17;
-  var inpEur = $("inpEur");
-  var inpBrl = $("inpBrl");
-
-  function syncFromEur(){
-    var e = parseFloat(inpEur.value) || 0;
-    inpBrl.value = (e * eurRate).toFixed(2);
-  }
-  function syncFromBrl(){
-    var b = parseFloat(inpBrl.value) || 0;
-    inpEur.value = eurRate > 0 ? (b / eurRate).toFixed(2) : "0.00";
-  }
-
-  inpEur.addEventListener("input", syncFromEur);
-  inpBrl.addEventListener("input", syncFromBrl);
-
-  document.querySelectorAll(".fx-chip").forEach(function(chip){
-    chip.addEventListener("click", function(){
-      inpEur.value = chip.getAttribute("data-eur");
-      syncFromEur();
-    });
-  });
-
-  var liveWiseRate = 6.26;
-  function updateWiseBanner(){
-    liveWiseRate = +(eurRate * 1.015).toFixed(2);
-    var info = $("liveWiseInfo");
-    if(info){
-      info.textContent = "Comercial R$ " + eurRate.toFixed(2).replace(".", ",") + " → Wise (+1,5% IOF/Spread): R$ " + liveWiseRate.toFixed(2).replace(".", ",");
-    }
-  }
-  updateWiseBanner();
-
-  fetch("https://economia.awesomeapi.com.br/last/EUR-BRL")
-    .then(function(r){ return r.json(); })
-    .then(function(data){
-      if(data && data.EURBRL && data.EURBRL.bid){
-        eurRate = parseFloat(data.EURBRL.bid);
-        $("fxRateLabel").textContent = "1 EUR = R$ " + eurRate.toFixed(2).replace(".", ",");
-        syncFromEur();
-        updateWiseBanner();
-      }
-    })
-    .catch(function(){});
-
-  $("btnApplyLiveFx").addEventListener("click", function(){
-    updateWiseBanner();
-    $("fx").value = liveWiseRate.toFixed(2);
-    renderOrcamento();
-    var btn = $("btnApplyLiveFx");
-    var orig = btn.textContent;
-    btn.textContent = "✅ Cotação R$ " + liveWiseRate.toFixed(2).replace(".", ",") + " aplicada!";
-    setTimeout(function(){ btn.textContent = orig; }, 2200);
-  });
 
   function getSheetId(){
     try { return localStorage.getItem(SHEET_KEY) || DEFAULT_SHEET_ID; } catch(e){ return DEFAULT_SHEET_ID; }
@@ -839,9 +796,9 @@ footer { margin-top: 56px; color: var(--mut); font-size: 14px; text-align: cente
   }
   function updateSheetLinks(){
     var id = getSheetId();
-    $("btnOpenSheet").href = "https://docs.google.com/spreadsheets/d/" + id + "/edit";
-    $("sheetInput").value = "https://docs.google.com/spreadsheets/d/" + id + "/edit";
-    $("webAppInput").value = getWebAppUrl();
+    document.getElementById("btnOpenSheet").href = "https://docs.google.com/spreadsheets/d/" + id + "/edit";
+    document.getElementById("sheetInput").value = "https://docs.google.com/spreadsheets/d/" + id + "/edit";
+    document.getElementById("webAppInput").value = getWebAppUrl();
   }
 
   function cellStr(c){
@@ -853,7 +810,6 @@ footer { margin-top: 56px; color: var(--mut); font-size: 14px; text-align: cente
     if(dm) return ("0" + dm[3]).slice(-2) + "/" + ("0" + (Number(dm[2]) + 1)).slice(-2) + "/" + dm[1];
     return s;
   }
-
   function cellNum(c){
     if(!c) return 0;
     if(typeof c.v === "number") return c.v;
@@ -861,11 +817,6 @@ footer { margin-top: 56px; color: var(--mut); font-size: 14px; text-align: cente
     if(raw.indexOf(",") > -1 && raw.indexOf(".") > -1){ raw = raw.replace(/\./g, "").replace(",", "."); } 
     else if(raw.indexOf(",") > -1){ raw = raw.replace(",", "."); }
     var n = parseFloat(raw); return isNaN(n) ? 0 : n;
-  }
-
-  function shortDate(str){
-    var m = str.match(/^(\d{1,2}\/\d{1,2})\/\d{2,4}$/);
-    return m ? m[1] : str;
   }
 
   async function fetchTab(sheetId, tabName){
@@ -880,368 +831,190 @@ footer { margin-top: 56px; color: var(--mut); font-size: 14px; text-align: cente
     return (json.table.rows || []).map(function(r){ return r.c || []; });
   }
 
-  function parseAllTabs(raw){
-    var next = JSON.parse(JSON.stringify(DEFAULT_DATA));
-    if(raw.Config && raw.Config.length){
-      var cfgMap = {};
-      raw.Config.forEach(function(r, idx){
-        var k = cellStr(r[0]).toLowerCase(); if(idx===0||!k) return;
-        cfgMap[k] = { str: cellStr(r[1]), num: cellNum(r[1]) };
-      });
-      if(cfgMap.meta_cofrinho && cfgMap.meta_cofrinho.num > 0) next.config.meta_cofrinho = cfgMap.meta_cofrinho.num;
-      if(cfgMap.cotacao_euro && cfgMap.cotacao_euro.num > 0) next.config.cotacao_euro = cfgMap.cotacao_euro.num;
-      if(cfgMap.valor_voo && cfgMap.valor_voo.num >= 0) next.config.valor_voo = cfgMap.valor_voo.num;
-      if(cfgMap.voo_tipo && cfgMap.voo_tipo.str) next.config.voo_tipo = cfgMap.voo_tipo.str.toLowerCase().charAt(0) === "p" ? "p" : "t";
-      if(cfgMap.viajantes && cfgMap.viajantes.num > 0) next.config.viajantes = Math.round(cfgMap.viajantes.num);
-      if(cfgMap.parcelas && cfgMap.parcelas.num > 0) next.config.parcelas = Math.round(cfgMap.parcelas.num);
-      if(cfgMap.extras_viagem) next.config.extras_viagem = cfgMap.extras_viagem.num;
-      if(cfgMap.data_meta) next.config.data_meta = cfgMap.data_meta.str;
-      if(cfgMap.titulo_site && cfgMap.titulo_site.str) next.config.titulo_site = cfgMap.titulo_site.str;
-      if(cfgMap.subtitulo_site && cfgMap.subtitulo_site.str) next.config.subtitulo_site = cfgMap.subtitulo_site.str;
-      if(cfgMap.eyebrow_site && cfgMap.eyebrow_site.str) next.config.eyebrow_site = cfgMap.eyebrow_site.str;
-    }
-    if(raw.Cofrinho && raw.Cofrinho.length){
-      var cof = [];
-      raw.Cofrinho.forEach(function(r, idx){
-        var d = cellStr(r[0]); if(idx===0||!d) return;
-        cof.push({ data: d, saldo: cellNum(r[1]) });
-      });
-      if(cof.length) next.cofrinho = cof;
-    }
-    if(raw.Roteiro && raw.Roteiro.length){
-      var rot = [];
-      raw.Roteiro.forEach(function(r, idx){
-        if(idx===0) return;
-        var dia = cellStr(r[4]); var titulo = cellStr(r[5]); if(!dia && !titulo) return;
-        rot.push({
-          ordem: cellNum(r[0]) || (idx + 1), cor: cellStr(r[1]) || "voo", chip: cellStr(r[2]) || "",
-          etapa: cellStr(r[3]) || "Etapa", dia: dia, titulo: titulo, desc: cellStr(r[6]) || ""
-        });
-      });
-      if(rot.length){ rot.sort(function(a,b){ return a.ordem - b.ordem; }); next.roteiro = rot; }
-    }
-    if(raw.Orcamento && raw.Orcamento.length){
-      var orc = [];
-      raw.Orcamento.forEach(function(r, idx){
-        var cat = cellStr(r[0]); if(idx===0) return;
-        var item = cellStr(r[1]); if(!cat && !item) return;
-        orc.push({
-          cat: cat || "Extra", item: item, detalhe: cellStr(r[2]),
-          qtd: cellNum(r[3]) || 1, unit: cellNum(r[4]), moeda: (cellStr(r[5]) || "BRL").toUpperCase()
-        });
-      });
-      if(orc.length) next.orcamento = orc;
-    }
-    if(raw.Checklist && raw.Checklist.length){
-      var chk = [];
-      raw.Checklist.forEach(function(r, idx){
-        var tipo = cellStr(r[0]); if(idx===0) return;
-        var texto = cellStr(r[1]); if(!texto) return;
-        var st = cellStr(r[2]).toUpperCase();
-        chk.push({
-          tipo: tipo.toLowerCase() === "decidir" ? "Decidir" : "Checklist",
-          texto: texto, done: (st === "SIM" || st === "TRUE" || st === "OK" || st === "X" || st === "1")
-        });
-      });
-      if(chk.length) next.checklist = chk;
-    }
-    return next;
-  }
+  var brl = function(v){ return (Number(v)||0).toLocaleString("pt-BR",{style:"currency",currency:"BRL"}); };
+  var eur = function(v){ return "€ " + (Number(v)||0).toLocaleString("pt-BR",{minimumFractionDigits:2,maximumFractionDigits:2}); };
+  var shortDate = function(str){ var m = str.match(/^(\d{1,2}\/\d{1,2})\/\d{2,4}$/); return m ? m[1] : str; };
 
-  /* 5. Roteiro com Logística Real: Hospedagem Base + Rota a pé/metrô */
-  var DEFAULT_LODGING = {
-    "Roma": "Trastevere, Roma, Itália",
-    "Florença": "Centro Histórico, Florença, Itália",
-    "Milão": "Navigli / Duomo, Milão, Itália",
-    "Paris": "Le Marais, Paris, França",
-    "Lisboa": "Baixa / Chiado, Lisboa, Portugal"
-  };
-  var cityLodgings = {};
-  try {
-    cityLodgings = Object.assign({}, DEFAULT_LODGING, JSON.parse(localStorage.getItem(LODGING_KEY) || "{}"));
-  } catch(e){ cityLodgings = Object.assign({}, DEFAULT_LODGING); }
-
-  function getCityKey(etapa){
-    var raw = etapa.split("·")[0].replace("(stopover TAP)", "").trim();
-    if(raw === "Ida" || raw === "Volta") return "";
-    return raw;
-  }
-
-  function buildMapsUrl(etapa, titulo, desc){
-    var cityClean = getCityKey(etapa);
-    var query = (titulo + " " + cityClean + " " + desc.split(";")[0]).trim();
-    return "https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent(query);
-  }
-
-  function buildTransitRouteUrl(etapa, titulo, desc){
-    var cityClean = getCityKey(etapa);
-    var origin = cityLodgings[cityClean] || cityClean;
-    var dest = (titulo + " " + cityClean + " " + desc.split(";")[0]).trim();
-    return "https://www.google.com/maps/dir/?api=1&origin=" + encodeURIComponent(origin) + "&destination=" + encodeURIComponent(dest) + "&travelmode=transit";
-  }
-
-  function renderRoteiro(stages){
-    var C = {roma:"#e15b64", flor:"#f59e0b", mil:"#3b82f6", par:"#10b981", lis:"#8b5cf6", voo:"#8c7d7a"};
-    var resolveColor = function(code){
-      if(!code) return "#8c7d7a";
-      var lc = code.toLowerCase().trim();
-      return C[lc] || (lc.charAt(0) === "#" ? lc : "#9b4f53");
-    };
-
-    var chipsHtml = '<button type="button" class="chip chip-all'+(selectedCityChip==="ALL"?" active":"")+'" data-chip="ALL">Todos ('+STATE.roteiro.length+' dias)</button>';
-    stages.filter(function(st){ return st.chip; }).forEach(function(st){
-      var dimClass = (selectedCityChip !== "ALL" && selectedCityChip !== st.chip) ? " dim" : "";
-      chipsHtml += '<span class="arrow">→</span><button type="button" class="chip'+dimClass+'" data-chip="'+st.chip+'" style="background:'+resolveColor(st.cor)+'">'+st.chip+'</button>';
+  function renderHeader(){
+    var c = STATE.config;
+    document.getElementById("txtEyebrow").textContent = c.eyebrow_site || "Nossa Viagem";
+    document.getElementById("txtTitle").textContent = c.titulo_site || "Lua de mel de Flávio e Gabriela";
+    document.getElementById("txtSub").textContent = c.subtitulo_site || "";
+    var chips = [], lastChip = "";
+    STATE.roteiro.forEach(function(r){
+      var ch = (r.chip || "").trim();
+      if(ch && ch !== lastChip){ chips.push({ label: ch, cor: CORES[r.cor] || r.cor || "#9b4f53" }); lastChip = ch; }
     });
-    $("route").innerHTML = chipsHtml;
-
-    $("route").querySelectorAll("button[data-chip]").forEach(function(btn){
-      btn.addEventListener("click", function(){
-        var val = btn.getAttribute("data-chip");
-        selectedCityChip = (selectedCityChip === val && val !== "ALL") ? "ALL" : val;
-        renderRoteiro(stages);
-      });
-    });
-
-    var filteredStages = selectedCityChip === "ALL"
-      ? stages
-      : stages.filter(function(st){ return st.chip === selectedCityChip; });
-
-    $("stages").innerHTML = filteredStages.map(function(st){
-      var col = resolveColor(st.cor);
-      var cityKey = getCityKey(st.etapa);
-      var baseHtml = "";
-      if(cityKey){
-        var curBase = cityLodgings[cityKey] || "";
-        baseHtml = '<div class="base-lodging-bar">' +
-          '<strong>🏨 Base em ' + cityKey + ':</strong>' +
-          '<input type="text" data-city-base="' + cityKey + '" value="' + curBase.replace(/"/g, '&quot;') + '" placeholder="Cole o endereço do Airbnb/Hotel em ' + cityKey + '">' +
-        '</div>';
-      }
-
-      return '<div class="stage" style="--c:'+col+'">' +
-        '<div class="stage-header-row"><h3><span class="dot" style="background:'+col+'"></span>'+st.etapa+'</h3></div>' +
-        baseHtml +
-        '<ul class="days">' +
-        st.days.map(function(x){
-          var mapsHref = buildMapsUrl(st.etapa, x.titulo, x.desc);
-          var routeHref = cityKey ? buildTransitRouteUrl(st.etapa, x.titulo, x.desc) : "";
-          var routeBtn = cityKey ? '<a href="'+routeHref+'" target="_blank" class="map-pill map-pill-route">🚇 Traçar rota a pé/metrô da hospedagem</a>' : '';
-          return '<li><div class="d">'+x.dia+'</div><div class="t"><b>'+x.titulo+'</b><span>'+x.desc+'</span>' +
-            '<div class="map-actions-row"><a href="'+mapsHref+'" target="_blank" class="map-pill">📍 Ver no Google Maps</a>' + routeBtn + '</div>' +
-          '</div></li>';
-        }).join("") + '</ul></div>';
+    document.getElementById("routeChips").innerHTML = chips.map(function(ch, idx){
+      return (idx > 0 ? '<span class="arr">→</span>' : '') + '<span class="chip"><i style="background:' + ch.cor + '"></i>' + ch.label + '</span>';
     }).join("");
-
-    $("stages").querySelectorAll("input[data-city-base]").forEach(function(inp){
-      inp.addEventListener("change", function(){
-        var cKey = inp.getAttribute("data-city-base");
-        cityLodgings[cKey] = inp.value.trim();
-        try { localStorage.setItem(LODGING_KEY, JSON.stringify(cityLodgings)); } catch(e){}
-        postToSheets({ action: "sync_lodging", items: cityLodgings });
-        renderRoteiro(stages);
-      });
-    });
   }
 
-  function renderAll(applyConfigToInputs){
-    var cfg = STATE.config;
-    var H = STATE.cofrinho;
-    var META = cfg.meta_cofrinho || 20000;
-    var SALDO = H.length ? H[H.length - 1].saldo : 0;
-    var FALTA = Math.max(META - SALDO, 0);
-    var PCT = META > 0 ? (SALDO / META * 100) : 0;
+  function renderCofrinho(){
+    var H = STATE.historico.length ? STATE.historico : [{ data: "Hoje", saldo: 0 }];
+    var META = Number(STATE.config.meta_cofrinho) || 20000;
+    var last = H[H.length - 1];
+    var falta = Math.max(META - last.saldo, 0);
+    var pct = META > 0 ? (last.saldo / META * 100) : 0;
 
-    $("hEyebrow").textContent = cfg.eyebrow_site || "Nossa História de Amor";
-    $("hTitle").textContent = cfg.titulo_site || "Flávio e Gabriela";
-    document.title = "Lua de mel • Flávio e Gabriela";
-    $("hSub").textContent = cfg.subtitulo_site;
-    $("hRoteiro").innerHTML = "🗺️ Nosso Roteiro Romântico (" + STATE.roteiro.length + " dias)";
+    document.getElementById("sMeta").textContent = brl(META);
+    document.getElementById("sSaldo").textContent = brl(last.saldo);
+    document.getElementById("sFalta").textContent = brl(falta);
+    document.getElementById("sPct").textContent = pct.toFixed(1).replace(".", ",") + "%";
+    document.getElementById("barL").textContent = brl(last.saldo);
+    document.getElementById("barR").textContent = "Faltam " + brl(falta);
+    document.getElementById("bar").style.width = Math.min(pct, 100).toFixed(2) + "%";
 
-    $("sMeta").textContent = brl(META);
-    $("sSaldo").textContent = brl(SALDO);
-    $("sPct").textContent = PCT.toFixed(1).replace(".",",") + "%";
-    $("sFalta").textContent = brl(FALTA);
-    $("bar").style.width = Math.min(PCT, 100).toFixed(2) + "%";
-    $("barL").textContent = brl(SALDO);
-    $("barR").textContent = "Faltam " + brl(FALTA);
+    var first = H[0], ganho = last.saldo - first.saldo;
+    document.getElementById("insight").textContent = "Evolução de " + brl(first.saldo) + " (" + shortDate(first.data) + ") para " + brl(last.saldo) + " (" + shortDate(last.data) + ") — total de +" + brl(ganho) + ".";
 
+    var W = 520, Ht = 220, L = 66, R = 16, T = 18, B = 28;
+    var maxSal = H.reduce(function(m, p){ return Math.max(m, p.saldo); }, 100);
+    var ymax = Math.ceil(maxSal / 250) * 250;
+    var step = ymax / 4;
+    var x = function(i){ return H.length <= 1 ? (L + W - R) / 2 : L + (W - L - R) * i / (H.length - 1); };
+    var y = function(v){ return T + (Ht - T - B) * (1 - v / ymax); };
+    var s = "";
+    for(var t = 0; t <= 4; t++){
+      var tv = t * step;
+      s += '<line x1="'+L+'" x2="'+(W-R)+'" y1="'+y(tv)+'" y2="'+y(tv)+'" stroke="var(--line)"/>';
+      s += '<text x="'+(L-8)+'" y="'+(y(tv)+4)+'" text-anchor="end" font-size="11" font-weight="600" fill="var(--mut)">'+Math.round(tv)+'</text>';
+    }
+    var pts = H.map(function(p, i){ return x(i).toFixed(1) + "," + y(p.saldo).toFixed(1); });
     if(H.length > 1){
-      var best = 0, bi = 0;
-      for(var i=1; i<H.length; i++){
-        var d = H[i].saldo - H[i-1].saldo;
-        if(d > best){ best = d; bi = i; }
-      }
-      $("insight").textContent = (best > 0 ? "🏆 Maior aporte: " + brl(best) + " em " + shortDate(H[bi].data) + ". " : "") +
-        "Já crescemos " + brl(SALDO - H[0].saldo) + " desde o início.";
+      s += '<polygon points="'+x(0)+','+y(0)+' '+pts.join(" ")+' '+x(H.length-1)+','+y(0)+'" fill="var(--primary)" opacity=".15"/>';
+      s += '<polyline points="'+pts.join(" ")+'" fill="none" stroke="var(--primary)" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>';
     }
-
-    // Gráfico SVG
-    (function(){
-      var W=520, Ht=240, L=58, R=14, T=16, B=30;
-      var maxVal = H.reduce(function(m, p){ return Math.max(m, p.saldo); }, 100);
-      var rawStep = maxVal / 4;
-      var mag = Math.pow(10, Math.floor(Math.log10(rawStep || 1)));
-      var norm = rawStep / mag;
-      var step = (norm <= 1 ? 1 : norm <= 2 ? 2 : norm <= 2.5 ? 2.5 : norm <= 5 ? 5 : 10) * mag;
-      var ymax = Math.ceil(maxVal / step) * step; if(ymax <= 0) ymax = 1000;
-      var x = function(i){ return H.length <= 1 ? (L + W - R)/2 : L + (W - L - R) * i / (H.length - 1); };
-      var y = function(v){ return T + (Ht - T - B) * (1 - v / ymax); };
-      var s = "";
-      var ticks = Math.round(ymax / step);
-      for(var t=0; t<=ticks; t++){
-        var tv = t * step;
-        s += '<line x1="'+L+'" x2="'+(W-R)+'" y1="'+y(tv)+'" y2="'+y(tv)+'" stroke="var(--line)"/>';
-        s += '<text x="'+(L-8)+'" y="'+(y(tv)+4)+'" text-anchor="end" font-size="12" font-weight="600" fill="var(--mut)">'+tv.toLocaleString("pt-BR")+'</text>';
+    H.forEach(function(p, i){
+      var isLast = (i === H.length - 1);
+      if(isLast || H.length <= 10 || i === 0){
+        s += '<circle cx="'+x(i)+'" cy="'+y(p.saldo)+'" r="'+(isLast?6:4)+'" fill="#fff" stroke="var(--primary)" stroke-width="3"/>';
       }
-      if(H.length > 0){
-        var pts = H.map(function(p,i){ return x(i).toFixed(1)+","+y(p.saldo).toFixed(1); });
-        if(H.length > 1){
-          s += '<polygon points="'+x(0)+','+y(0)+' '+pts.join(" ")+' '+x(H.length-1)+','+y(0)+'" fill="var(--primary)" opacity=".1"/>';
-          s += '<polyline points="'+pts.join(" ")+'" fill="none" stroke="var(--primary)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>';
-        }
-        s += '<circle cx="'+x(H.length-1)+'" cy="'+y(SALDO)+'" r="6" fill="#fff" stroke="var(--primary)" stroke-width="3"/>';
-        var labelIndices = [];
-        if(H.length <= 5){ for(var k=0; k<H.length; k++) labelIndices.push(k); } 
-        else { for(var k=0; k<4; k++) labelIndices.push(Math.round(k * (H.length - 1) / 3)); }
-        labelIndices.forEach(function(idx){
-          s += '<text x="'+x(idx)+'" y="'+(Ht-6)+'" text-anchor="middle" font-size="12" font-weight="600" fill="var(--mut)">'+shortDate(H[idx].data)+'</text>';
-        });
-      }
-      $("chart").innerHTML = s;
-    })();
-
-    var inp = $("dt");
-    if(applyConfigToInputs && cfg.data_meta){ inp.value = cfg.data_meta; } 
-    else { try { var sv = localStorage.getItem(DT_KEY); if(sv && !inp.value) inp.value = sv; } catch(e){} }
-    calcSimulador(inp.value, FALTA);
-
-    // Roteiro
-    var stages = [];
-    STATE.roteiro.forEach(function(item){
-      var last = stages[stages.length - 1];
-      if(last && last.etapa === item.etapa){ last.days.push(item); } 
-      else { stages.push({ etapa: item.etapa, cor: item.cor, chip: item.chip, days: [item] }); }
     });
-    renderRoteiro(stages);
-
-    var ideias = STATE.checklist.filter(function(c){ return c.tipo === "Decidir"; });
-    if(ideias.length){
-      $("cardDecidir").style.display = "block";
-      $("ideasList").innerHTML = ideias.map(function(i){ return "<li>" + i.texto + "</li>"; }).join("");
-    } else { $("cardDecidir").style.display = "none"; }
-
-    // Orçamento
-    if(applyConfigToInputs){
-      $("nv").value = String(cfg.viajantes || 2);
-      $("fv").value = cfg.voo_tipo || "t";
-      $("fx").value = cfg.cotacao_euro || 6.17;
-      $("ex").value = cfg.extras_viagem || 0;
-    }
-    $("lblVoo").textContent = "Voo de " + brl(cfg.valor_voo) + " é";
-    renderOrcamento();
-
-    // Checklist
-    var todos = STATE.checklist.filter(function(c){ return c.tipo === "Checklist"; });
-    var localSt = {}; try { localSt = JSON.parse(localStorage.getItem(CK_KEY) || "{}") || {}; } catch(e){}
-
-    function updateProg(){
-      var doneCount = todos.filter(function(item){ return item.done || !!localSt[item.texto]; }).length;
-      $("prog").textContent = doneCount + " de " + todos.length + " tarefas concluídas";
-    }
-
-    $("todo").innerHTML = todos.map(function(item, i){
-      var checked = item.done || !!localSt[item.texto];
-      return '<li><label><input type="checkbox" data-idx="'+i+'"'+(checked?' checked':'')+'><span>'+item.texto+'</span></label></li>';
-    }).join("");
-
-    $("todo").onchange = function(e){
-      var idx = Number(e.target.getAttribute("data-idx")); var item = todos[idx];
-      if(!item) return;
-      item.done = e.target.checked; localSt[item.texto] = e.target.checked;
-      try { localStorage.setItem(CK_KEY, JSON.stringify(localSt)); } catch(err){}
-      updateProg();
-      postToSheets({ action: "toggle_checklist", texto: item.texto, done: item.done });
-    };
-    updateProg();
-
-    var lastDate = H.length ? H[H.length - 1].data : "13/11/2026";
-    $("footerText").innerHTML = "Feito com muito amor para <b>Flávio e Gabriela</b> ❤️ • Atualizado até " + lastDate;
+    var labelIndices = H.length <= 4 ? H.map(function(_, i){ return i; }) : [0, Math.floor((H.length-1)/2), H.length-1];
+    labelIndices.forEach(function(idx){
+      s += '<text x="'+x(idx)+'" y="'+(Ht-6)+'" text-anchor="middle" font-size="11" font-weight="600" fill="var(--mut)">'+shortDate(H[idx].data)+'</text>';
+    });
+    document.getElementById("chart").innerHTML = s;
+    calcSimulador(document.getElementById("dt").value, falta);
   }
 
-  function calcSimulador(v, falta){
-    var box = $("plan");
-    if(!v){ box.innerHTML = '<p class="note" style="margin: 20px 0;">Escolha uma data para ver os valores.</p>'; return; }
+  function calcSimulador(dateVal, falta){
+    var plan = document.getElementById("plan");
+    if(!dateVal){ plan.innerHTML = '<p class="note" style="margin:0">Escolha uma data acima para calcular quanto guardar por mês e por semana.</p>'; return; }
     var now = new Date(); now.setHours(12,0,0,0);
-    var tgt = new Date(v + "T12:00:00");
+    var tgt = new Date(dateVal + "T12:00:00");
     var dias = Math.round((tgt - now) / 86400000);
-    if(dias < 7){ box.innerHTML = '<p class="note" style="margin: 20px 0;">Escolha uma data futura válida.</p>'; return; }
+    if(dias < 7){ plan.innerHTML = '<p class="note" style="margin:0">Escolha uma data futura válida.</p>'; return; }
     var meses = dias / 30.44, sem = dias / 7;
-    box.innerHTML =
-      '<div style="display:flex; justify-content:space-between; border-bottom:1px dashed var(--line); padding-bottom:8px; margin-top:16px;"><span>Dias até lá</span><b style="color:var(--primary)">'+dias+' dias</b></div>'+
-      '<div style="display:flex; justify-content:space-between; border-bottom:1px dashed var(--line); padding-bottom:8px; margin-top:8px;"><span>Meta por Mês</span><b style="color:var(--primary)">'+brl(falta / meses)+'</b></div>'+
-      '<div style="display:flex; justify-content:space-between; margin-top:8px;"><span>Meta por Semana</span><b style="color:var(--primary)">'+brl(falta / sem)+'</b></div>';
+    plan.innerHTML =
+      '<div class="kv"><span>Dias até lá</span><b>'+dias+' dias</b></div>' +
+      '<div class="kv"><span>Meta por Mês</span><b>'+brl(falta / meses)+'</b></div>' +
+      '<div class="kv"><span>Meta por Semana</span><b>'+brl(falta / sem)+'</b></div>';
   }
 
-  function renderOrcamento(){
-    var cfg = STATE.config; var H = STATE.cofrinho;
-    var META = cfg.meta_cofrinho || 20000; var SALDO = H.length ? H[H.length - 1].saldo : 0;
-    var n = +$("nv").value || 2; var fx = +$("fx").value || 0; var exInput = +$("ex").value || 0;
-    var porP = $("fv").value === "p"; var VOO = cfg.valor_voo || 0; var voo = porP ? VOO * n : VOO;
-
-    var hospItems = STATE.orcamento.filter(function(x){ return x.cat.toLowerCase() === "hospedagem"; });
-    var tremItems = STATE.orcamento.filter(function(x){ return x.cat.toLowerCase() === "trem"; });
-    var extraItems = STATE.orcamento.filter(function(x){ return x.cat.toLowerCase() !== "hospedagem" && x.cat.toLowerCase() !== "trem"; });
-
-    var toBRL = function(val, moeda){ return moeda === "EUR" ? val * fx : val; };
-    var hospVals = hospItems.map(function(c){ return toBRL(c.qtd * c.unit, c.moeda); });
-    var tremVals = tremItems.map(function(t){ return toBRL(t.qtd * t.unit * n, t.moeda); });
-    var extraSheetVals = extraItems.map(function(e){ return toBRL(e.qtd * e.unit, e.moeda); });
-
-    var hs = hospVals.reduce(function(a,b){ return a+b; }, 0);
-    var ts = tremVals.reduce(function(a,b){ return a+b; }, 0);
-    var es = extraSheetVals.reduce(function(a,b){ return a+b; }, 0) + exInput;
-
-    var sec = function(t,v){ return '<tr class="sec"><td>'+t+'</td><td class="n">'+brl(v)+'</td></tr>'; };
-    var row = function(a,b,v){ return '<tr><td>'+a+'<small>'+b+'</small></td><td class="n">'+brl(v)+'</td></tr>'; };
-
-    var h = sec("A parcelar · Passagens Aéreas", voo) + row("TAP · Voos Internacionais", porP ? n + " × " + brl(VOO) : "Total da cotação", voo);
-    h += sec("A parcelar · Hospedagem (Airbnb)", hs);
-    hospItems.forEach(function(c, i){
-      var unitTxt = c.moeda === "EUR" ? ("€ " + c.unit.toFixed(2).replace(".",",")) : brl(c.unit);
-      h += row(c.item + " · " + c.qtd + (c.qtd === 1 ? " noite" : " noites"), unitTxt + " por noite", hospVals[i]);
+  function renderTimeline(){
+    var totalDias = STATE.roteiro.length;
+    document.getElementById("roteiroTitle").textContent = "🗺️ Roteiro • " + totalDias + " dias";
+    var legs = [], cur = null;
+    STATE.roteiro.forEach(function(r){
+      if(cityFilter !== "all" && r.cor !== cityFilter) return;
+      var et = (r.etapa || "Etapa").trim();
+      if(!cur || cur.etapa !== et){ cur = { etapa: et, cor: CORES[r.cor] || r.cor || "#9b4f53", dias: [] }; legs.push(cur); }
+      cur.dias.push(r);
     });
-    h += sec("A parcelar · Trens ("+n+" pax)", ts);
-    tremItems.forEach(function(t, i){
-      var sub = t.moeda === "EUR" ? ("€ " + t.unit + " × " + n + " × R$ " + fx.toFixed(2).replace(".",",")) : (brl(t.unit) + " × " + n);
-      h += row(t.item, sub, tremVals[i]);
+    document.getElementById("timeline").innerHTML = legs.map(function(l){
+      var dHtml = l.dias.map(function(d){
+        var mapsUrl = buildTransitRouteUrl(d);
+        var transfer = isTransferDay(d);
+        var btnLabel = transfer ? "🚉 Rota até estação / aeroporto" : "🚇 Rota a pé / metrô da hospedagem";
+        return '<div class="day">' +
+          '<div><b><span>' + d.dia + '</span>' + d.titulo + '</b><p>' + d.desc + '</p></div>' +
+          '<a href="' + mapsUrl + '" target="_blank" class="btn btn-sm" style="margin-top:8px; justify-content:center;">' + btnLabel + '</a>' +
+        '</div>';
+      }).join("");
+      return '<div class="leg"><span class="dot" style="background:' + l.cor + '"></span><h3>' + l.etapa + '</h3><div class="days">' + dHtml + '</div></div>';
+    }).join("");
+  }
+
+  function calcOrcamento(){
+    var eurRate = +document.getElementById("eur").value || Number(STATE.config.cotacao_euro) || 6.17;
+    var vooBase = +document.getElementById("voo").value || Number(STATE.config.valor_voo) || 0;
+    var vooTipo = document.getElementById("vooTipo").value;
+    var parcelas = +document.getElementById("parc").value || Number(STATE.config.parcelas) || 12;
+    var viaj = Number(STATE.config.viajantes) || 2;
+    var totalVoo = vooTipo === "p" ? vooBase * viaj : vooBase;
+
+    var linhas = [{ cat: "Aéreo", item: "Passagens TAP (" + viaj + " viajantes)", qtd: "1", unit: brl(totalVoo), sub: totalVoo }];
+    STATE.orcamento.forEach(function(o){
+      var q = Number(o.qtd) || 1;
+      var u = Number(o.unit) || 0;
+      var m = (o.moeda || "BRL").toUpperCase();
+      var multViaj = (o.cat && o.cat.toLowerCase() === "trem") ? viaj : 1;
+      var subBrl = m === "EUR" ? (q * u * multViaj * eurRate) : (q * u * multViaj);
+      var unitFmt = m === "EUR" ? (eur(u) + (multViaj > 1 ? " × " + multViaj : "")) : brl(u);
+      linhas.push({ cat: o.cat, item: o.item + (o.detalhe ? " (" + o.detalhe + ")" : ""), qtd: String(q), unit: unitFmt, sub: subBrl });
     });
 
-    if(es > 0){
-      h += sec("Cofrinho · Outros gastos", es);
-      extraItems.forEach(function(e, i){ h += row(e.item, e.detalhe || "", extraSheetVals[i]); });
-      if(exInput > 0) h += row("Reserva Adicional", "Informado manualmente", exInput);
-    }
+    var tot = linhas.reduce(function(s, l){ return s + l.sub; }, 0);
+    document.getElementById("tb").innerHTML = linhas.map(function(l){
+      return '<tr><td><span class="tag">' + l.cat + '</span></td><td>' + l.item + '</td><td class="r">' + l.qtd + '</td><td class="r">' + l.unit + '</td><td class="r">' + brl(l.sub) + '</td></tr>';
+    }).join("") + '<tr class="tot"><td colspan="4">Total Estimado a Parcelar (R$)</td><td class="r">' + brl(tot) + '</td></tr>';
 
-    var par = voo + hs + ts;
-    h += '<tr class="tot"><td>TOTAL A PARCELAR</td><td class="n">'+brl(par)+'</td></tr>';
-    $("tb").innerHTML = h;
+    var metaCof = Number(STATE.config.meta_cofrinho) || 20000;
+    var custoConsolidado = tot + metaCof;
+    var totalDias = STATE.roteiro.length || 18;
+    var diasEfetivosEuropa = Math.max(totalDias - 1, 1);
 
-    var np = +$("np").value || 12; var sobra = Math.max(META - es, 0); var totalDias = STATE.roteiro.length || 18;
-    $("cmp").innerHTML =
-      '<b>Parcelado:</b> Hospedagem e transportes somam '+brl(par)+', que ficam em <b>'+np+'x de '+brl(par/np)+'</b>.<br><br>'+
-      '<b>Cofrinho:</b> Da nossa meta de '+brl(META)+' temos <b>'+brl(sobra)+'</b> para gastar lá.<br>Isso dá uma média confortável de <b>'+brl(sobra/totalDias)+' por dia</b> nos '+totalDias+' dias de viagem!';
+    document.getElementById("cmp").innerHTML =
+      '<span>Custo Total Consolidado: <b>' + brl(custoConsolidado) + '</b> <span style="font-size:13px; color:var(--mut);">(Parcelado: ' + brl(tot) + ' em ' + parcelas + 'x de <b>' + brl(tot/parcelas) + '</b>)</span></span>' +
+      '<span>Cofrinho Livre: <b>' + brl(metaCof) + '</b> (~<b>' + brl(metaCof / diasEfetivosEuropa) + '</b>/dia nos ' + diasEfetivosEuropa + ' dias na Europa)</span>';
+  }
+
+  function renderChecklist(){
+    var saved = {};
+    try { saved = JSON.parse(localStorage.getItem(CHK_KEY) || "{}"); } catch(e){}
+    document.getElementById("chk").innerHTML = STATE.checklist.map(function(t){
+      var checked = !!saved[t];
+      return '<li class="' + (checked ? 'done' : '') + '"><input type="checkbox" data-txt="' + t.replace(/"/g, '&quot;') + '"' + (checked ? ' checked' : '') + '><span>' + t + '</span></li>';
+    }).join("");
+    document.querySelectorAll("#chk input").forEach(function(cb){
+      cb.addEventListener("change", function(){
+        var k = cb.getAttribute("data-txt");
+        saved[k] = cb.checked;
+        cb.parentElement.classList.toggle("done", cb.checked);
+        try { localStorage.setItem(CHK_KEY, JSON.stringify(saved)); } catch(e){}
+        postToSheets({ action: "toggle_checklist", item: k, done: cb.checked });
+      });
+    });
+    document.getElementById("notesList").innerHTML = STATE.decidir.map(function(n){ return '<li>' + n + '</li>'; }).join("");
+  }
+
+  function applyConfigToInputs(){
+    var c = STATE.config;
+    document.getElementById("eur").value = c.cotacao_euro || 6.17;
+    document.getElementById("voo").value = c.valor_voo || 14531.48;
+    document.getElementById("vooTipo").value = c.voo_tipo || "t";
+    document.getElementById("parc").value = String(c.parcelas || 12);
+    if(c.data_meta && !document.getElementById("dt").value) document.getElementById("dt").value = c.data_meta;
+  }
+
+  function renderAll(){
+    renderHeader(); renderCofrinho(); renderTimeline(); calcOrcamento(); renderChecklist();
+    renderLodgings(); renderVouchers(); renderBag();
   }
 
   async function syncFromSheets(){
-    var btn = $("btnSync"); var dot = $("statusDot"); var txt = $("statusText");
+    var btn = document.getElementById("btnSync");
+    var dot = document.getElementById("statusDot");
+    var txt = document.getElementById("statusText");
     var sheetId = getSheetId();
 
     btn.classList.add("spin"); btn.disabled = true;
+    dot.className = "status-dot warn";
     txt.textContent = "Sincronizando...";
 
     try {
-      var tabs = ["Config", "Cofrinho", "Roteiro", "Orcamento", "Checklist"];
       var results = await Promise.all([
         fetchTab(sheetId, "Config"),
         fetchTab(sheetId, "Cofrinho"),
@@ -1249,68 +1022,160 @@ footer { margin-top: 56px; color: var(--mut); font-size: 14px; text-align: cente
         fetchTab(sheetId, "Orcamento"),
         fetchTab(sheetId, "Checklist"),
         fetchTab(sheetId, "Vouchers").catch(function(){ return null; }),
-        fetchTab(sheetId, "Mala").catch(function(){ return null; })
+        fetchTab(sheetId, "Mala").catch(function(){ return null; }),
+        fetchTab(sheetId, "Hospedagens").catch(function(){ return null; })
       ]);
-      STATE = parseAllTabs({Config: results[0], Cofrinho: results[1], Roteiro: results[2], Orcamento: results[3], Checklist: results[4]});
-      try { localStorage.setItem(CACHE_KEY, JSON.stringify({ ts: Date.now(), data: STATE })); } catch(e){}
 
-      var vRows = results[5];
-      if(vRows && vRows.length > 1){
-        var sheetV = [];
-        for(var vi = 1; vi < vRows.length; vi++){
-          var vr = vRows[vi];
-          var vTit = cellStr(vr[1]);
-          var vCod = cellStr(vr[2]);
-          if(vTit && vCod){
-            sheetV.push({ cat: cellStr(vr[0]) || "✈️ Voo", title: vTit, code: vCod });
+      var cfgRows = results[0];
+      if(cfgRows.length > 1){
+        cfgRows.slice(1).forEach(function(r){
+          var k = cellStr(r[0]), vStr = cellStr(r[1]), vNum = cellNum(r[1]);
+          if(!k) return;
+          if(["meta_cofrinho","cotacao_euro","valor_voo","viajantes","parcelas","extras_viagem"].indexOf(k) > -1){
+            if(vNum > 0 || k === "extras_viagem") STATE.config[k] = vNum;
+          } else { STATE.config[k] = vStr; }
+        });
+      }
+
+      var cofRows = results[1];
+      if(cofRows.length > 1){
+        var hist = [];
+        cofRows.slice(1).forEach(function(r){
+          var d = cellStr(r[0]), s = cellNum(r[1]);
+          if(d && s > 0) hist.push({ data: d, saldo: s });
+        });
+        if(hist.length) STATE.historico = hist;
+      }
+
+      var rotRows = results[2];
+      if(rotRows.length > 1){
+        var rot = [];
+        rotRows.slice(1).forEach(function(r, idx){
+          var tit = cellStr(r[5]);
+          if(!tit) return;
+          rot.push({
+            ordem: cellNum(r[0]) || (idx + 1),
+            cor: cellStr(r[1]) || "roma",
+            chip: cellStr(r[2]),
+            etapa: cellStr(r[3]) || "Etapa",
+            dia: cellStr(r[4]) || ("Dia " + (idx + 1)),
+            titulo: tit,
+            desc: cellStr(r[6])
+          });
+        });
+        if(rot.length){ rot.sort(function(a,b){ return a.ordem - b.ordem; }); STATE.roteiro = rot; }
+      }
+
+      var orcRows = results[3];
+      if(orcRows.length > 1){
+        var orc = [];
+        orcRows.slice(1).forEach(function(r){
+          var cat = cellStr(r[0]), it = cellStr(r[1]);
+          if(!it || cat.toUpperCase().indexOf("TOTAL") > -1) return;
+          orc.push({
+            cat: cat || "Outros", item: it, detalhe: cellStr(r[2]),
+            qtd: cellNum(r[3]) || 1, unit: cellNum(r[4]), moeda: cellStr(r[5]) || "BRL"
+          });
+        });
+        if(orc.length) STATE.orcamento = orc;
+      }
+
+      var chkRows = results[4];
+      if(chkRows.length > 1){
+        var chk = [], dec = [];
+        var saved = {};
+        try { saved = JSON.parse(localStorage.getItem(CHK_KEY) || "{}"); } catch(e){}
+        chkRows.slice(1).forEach(function(r){
+          var tp = cellStr(r[0]).toLowerCase(), texto = cellStr(r[1]), conc = cellStr(r[2]).toUpperCase();
+          if(!texto) return;
+          if(tp === "decidir"){ dec.push(texto); } 
+          else {
+            chk.push(texto);
+            if(conc === "SIM" || conc === "TRUE" || conc === "OK") saved[texto] = true;
+            else if(conc === "NÃO" || conc === "NAO" || conc === "FALSE") delete saved[texto];
           }
-        }
-        if(sheetV.length > 0){
-          vouchers = sheetV;
-          saveVouchers(false);
-          renderVouchers();
+        });
+        if(chk.length) STATE.checklist = chk;
+        if(dec.length) STATE.decidir = dec;
+        try { localStorage.setItem(CHK_KEY, JSON.stringify(saved)); } catch(e){}
+      }
+
+      var vouRows = results[5];
+      if(vouRows && vouRows.length > 1){
+        var sheetVou = [];
+        vouRows.slice(1).forEach(function(r){
+          var vCat = cellStr(r[0]), vTit = cellStr(r[1]), vCod = cellStr(r[2]);
+          if(vTit) sheetVou.push({ cat: vCat || "🎟️ Voucher", title: vTit, code: vCod || "—" });
+        });
+        if(sheetVou.length > 0){
+          vouchers = sheetVou;
+          try { localStorage.setItem(VOUCHER_KEY, JSON.stringify(vouchers)); } catch(e){}
         }
       }
 
-      var mRows = results[6];
-      if(mRows && mRows.length > 1){
+      var malaRows = results[6];
+      if(malaRows && malaRows.length > 1){
         var remoteBag = {};
-        for(var mi = 1; mi < mRows.length; mi++){
-          var mr = mRows[mi];
-          var mKey = cellStr(mr[0]);
-          var mDone = cellStr(mr[1]).toUpperCase();
-          if(mKey && (mDone === "SIM" || mDone === "TRUE" || mDone === "OK")){
-            remoteBag[mKey] = true;
-          }
-        }
-        bagChecked = remoteBag;
-        try { localStorage.setItem(BAG_KEY, JSON.stringify(bagChecked)); } catch(e){}
-        renderBag();
+        malaRows.slice(1).forEach(function(r){
+          var mKey = cellStr(r[0]);
+          // Suporta tanto 2 colunas (Chave, Concluido) quanto 4 colunas (Chave, Categoria, Item, Concluido)
+          var mDone = cellStr(r[3] !== undefined ? r[3] : r[1]).toUpperCase();
+          if(mKey && (mDone === "SIM" || mDone === "TRUE" || mDone === "OK")) remoteBag[mKey] = true;
+        });
+        try { localStorage.setItem(BAG_KEY, JSON.stringify(remoteBag)); } catch(e){}
       }
 
-      renderAll(true);
-      dot.className = "status-dot ok"; txt.textContent = "Sincronizado";
+      var hospRows = results[7];
+      if(hospRows && hospRows.length > 1){
+        var nameToKey = { "roma": "roma", "florença": "flor", "florenca": "flor", "milão": "mil", "milao": "mil", "paris": "par", "lisboa": "lis" };
+        hospRows.slice(1).forEach(function(r){
+          var cName = cellStr(r[0]).toLowerCase();
+          var addr = cellStr(r[1]);
+          var k = nameToKey[cName] || cName;
+          if(k && addr) cityLodgings[k] = addr;
+        });
+        try { localStorage.setItem(LODGING_KEY, JSON.stringify(cityLodgings)); } catch(e){}
+      }
+
+      applyConfigToInputs();
+      renderAll();
+      startCountdown();
+
+      dot.className = "status-dot";
+      txt.textContent = "Sincronizado";
     } catch(err) {
-      dot.className = "status-dot ok"; txt.textContent = "Modo Local";
-      renderAll(false);
-    } finally { btn.classList.remove("spin"); btn.disabled = false; document.body.classList.remove("is-loading"); }
+      dot.className = "status-dot";
+      txt.textContent = "Modo Local";
+    } finally {
+      btn.classList.remove("spin");
+      btn.disabled = false;
+      document.body.classList.remove("is-loading");
+    }
   }
 
   updateSheetLinks();
-  try { var cached = JSON.parse(localStorage.getItem(CACHE_KEY) || "null"); if(cached && cached.data) STATE = cached.data; } catch(e){}
-  renderAll(true);
+  applyConfigToInputs();
+  renderAll();
+  startCountdown();
+  loadWeather();
 
-  $("dt").addEventListener("change", function(){
-    try { localStorage.setItem(DT_KEY, $("dt").value); } catch(e){}
-    var META = STATE.config.meta_cofrinho || 20000; var SALDO = STATE.cofrinho.length ? STATE.cofrinho[STATE.cofrinho.length - 1].saldo : 0;
-    calcSimulador($("dt").value, Math.max(META - SALDO, 0));
+  /* Filtros por Cidade no Roteiro */
+  document.querySelectorAll("#dayFilters .filter-btn").forEach(function(btn){
+    btn.addEventListener("click", function(){
+      document.querySelectorAll("#dayFilters .filter-btn").forEach(function(b){ b.classList.remove("active"); });
+      btn.classList.add("active");
+      cityFilter = btn.getAttribute("data-city");
+      renderTimeline();
+    });
   });
 
-  ["nv","fv","fx","ex","np"].forEach(function(id){ $(id).addEventListener("input", renderOrcamento); $(id).addEventListener("change", renderOrcamento); });
-  $("btnSync").addEventListener("click", function(){ syncFromSheets(); });
-  $("btnToggleCfg").addEventListener("click", function(){ $("cfgPanel").classList.toggle("show"); });
+  document.getElementById("btnSync").addEventListener("click", syncFromSheets);
+  document.getElementById("btnToggleCfg").addEventListener("click", function(){
+    document.getElementById("cfgPanel").classList.toggle("show");
+  });
+
   function validateWebAppUrl(u){
-    var fb = $("webAppFeedback");
+    var fb = document.getElementById("webAppFeedback");
     if(!u){ fb.textContent = ""; return true; }
     if(u.indexOf("/projects/") > -1 || u.indexOf("/edit") > -1){
       fb.style.color = "#ef4444";
@@ -1327,9 +1192,9 @@ footer { margin-top: 56px; color: var(--mut); font-size: 14px; text-align: cente
     return true;
   }
 
-  $("btnTestWebApp").addEventListener("click", function(){
-    var u = $("webAppInput").value.trim();
-    var fb = $("webAppFeedback");
+  document.getElementById("btnTestWebApp").addEventListener("click", function(){
+    var u = document.getElementById("webAppInput").value.trim();
+    var fb = document.getElementById("webAppFeedback");
     if(!validateWebAppUrl(u)) return;
     if(!u){ fb.style.color = "#ef4444"; fb.textContent = "Cole a URL /exec primeiro."; return; }
     fb.style.color = "var(--mut)";
@@ -1351,47 +1216,48 @@ footer { margin-top: 56px; color: var(--mut); font-size: 14px; text-align: cente
       });
   });
 
-  $("btnSaveSheet").addEventListener("click", function(){
-    var newId = extractSheetId($("sheetInput").value);
-    var newWebApp = $("webAppInput").value.trim();
+  document.getElementById("btnSaveSheet").addEventListener("click", function(){
+    var newId = extractSheetId(document.getElementById("sheetInput").value);
+    var newWebApp = document.getElementById("webAppInput").value.trim();
     if(!validateWebAppUrl(newWebApp)) return;
     try {
       localStorage.setItem(SHEET_KEY, newId);
       localStorage.setItem(WEBAPP_KEY, newWebApp);
     } catch(e){}
-    updateSheetLinks(); $("cfgPanel").classList.remove("show"); syncFromSheets();
+    updateSheetLinks();
+    document.getElementById("cfgPanel").classList.remove("show");
+    syncFromSheets();
   });
 
   /* Exportar Resumo WhatsApp & Backup JSON */
-  $("btnCopyWhatsApp").addEventListener("click", function(){
-    var META = STATE.config.meta_cofrinho || 20000;
-    var SALDO = STATE.cofrinho.length ? STATE.cofrinho[STATE.cofrinho.length - 1].saldo : 0;
-    var PCT = META > 0 ? (SALDO / META * 100).toFixed(1).replace(".", ",") : "0,0";
-    var todos = STATE.checklist.filter(function(c){ return c.tipo === "Checklist"; });
-    var localSt = {}; try { localSt = JSON.parse(localStorage.getItem(CK_KEY) || "{}") || {}; } catch(e){}
-    var doneCount = todos.filter(function(item){ return item.done || !!localSt[item.texto]; }).length;
+  document.getElementById("btnCopyWhatsApp").addEventListener("click", function(){
+    var H = STATE.historico.length ? STATE.historico : [{ data: "Hoje", saldo: 0 }];
+    var last = H[H.length - 1];
+    var META = Number(STATE.config.meta_cofrinho) || 20000;
+    var pct = META > 0 ? (last.saldo / META * 100).toFixed(1).replace(".", ",") : "0,0";
+    var chkSaved = {};
+    try { chkSaved = JSON.parse(localStorage.getItem(CHK_KEY) || "{}"); } catch(e){}
+    var chkDone = STATE.checklist.filter(function(t){ return !!chkSaved[t]; }).length;
 
     var msg = "✈️ *Resumo Lua de Mel — Flávio & Gabriela*\n" +
-      "💰 *Cofrinho:* " + brl(SALDO) + " / " + brl(META) + " (" + PCT + "%)\n" +
-      "📉 *Falta guardar:* " + brl(Math.max(META - SALDO, 0)) + "\n" +
-      "💱 *Cotação Wise hoje:* R$ " + liveWiseRate.toFixed(2).replace(".", ",") + "\n" +
-      "✅ *Checklist:* " + doneCount + " de " + todos.length + " concluídas\n" +
+      "🐷 *Cofrinho:* " + brl(last.saldo) + " / " + brl(META) + " (" + pct + "%)\n" +
+      "📉 *Falta guardar:* " + brl(Math.max(META - last.saldo, 0)) + "\n" +
+      "✅ *Checklist:* " + chkDone + "/" + STATE.checklist.length + " concluídos\n" +
       "🎟️ *Vouchers salvos:* " + vouchers.length;
 
     if(navigator.clipboard) navigator.clipboard.writeText(msg);
-    var fb = $("backupFeedback");
+    var fb = document.getElementById("backupFeedback");
     fb.textContent = "✅ Resumo copiado! Agora é só colar no WhatsApp da Gabriela.";
     setTimeout(function(){ fb.textContent = ""; }, 3500);
   });
 
-  $("btnExportJson").addEventListener("click", function(){
+  document.getElementById("btnExportJson").addEventListener("click", function(){
     var backup = {
       exportedAt: new Date().toISOString(),
+      checklist: JSON.parse(localStorage.getItem(CHK_KEY) || "{}"),
+      bag: JSON.parse(localStorage.getItem(BAG_KEY) || "{}"),
       vouchers: vouchers,
-      bagChecked: bagChecked,
-      cityLodgings: cityLodgings,
-      flightDate: $("flightDateInput").value,
-      checklistLocal: JSON.parse(localStorage.getItem(CK_KEY) || "{}")
+      lodgings: cityLodgings
     };
     var blob = new Blob([JSON.stringify(backup, null, 2)], { type: "application/json" });
     var a = document.createElement("a");
@@ -1400,29 +1266,38 @@ footer { margin-top: 56px; color: var(--mut); font-size: 14px; text-align: cente
     a.click();
   });
 
-  $("btnImportJson").addEventListener("click", function(){
-    $("fileImportJson").click();
+  document.getElementById("btnImportJson").addEventListener("click", function(){
+    document.getElementById("fileImportJson").click();
   });
 
-  $("fileImportJson").addEventListener("change", function(e){
+  document.getElementById("fileImportJson").addEventListener("change", function(e){
     var file = e.target.files[0];
     if(!file) return;
     var reader = new FileReader();
     reader.onload = function(ev){
       try {
         var data = JSON.parse(ev.target.result);
-        if(data.vouchers){ vouchers = data.vouchers; saveVouchers(true); renderVouchers(); }
-        if(data.bagChecked){ bagChecked = data.bagChecked; localStorage.setItem(BAG_KEY, JSON.stringify(bagChecked)); renderBag(); }
-        if(data.cityLodgings){ cityLodgings = Object.assign({}, DEFAULT_LODGING, data.cityLodgings); localStorage.setItem(LODGING_KEY, JSON.stringify(cityLodgings)); }
-        if(data.flightDate){ $("flightDateInput").value = data.flightDate; localStorage.setItem(FLIGHT_DT_KEY, data.flightDate); updateCountdown(); }
-        if(data.checklistLocal){ localStorage.setItem(CK_KEY, JSON.stringify(data.checklistLocal)); }
-        renderAll(false);
-        $("backupFeedback").textContent = "✅ Backup JSON restaurado com sucesso!";
+        if(data.checklist) localStorage.setItem(CHK_KEY, JSON.stringify(data.checklist));
+        if(data.bag) localStorage.setItem(BAG_KEY, JSON.stringify(data.bag));
+        if(data.vouchers){ vouchers = data.vouchers; localStorage.setItem(VOUCHER_KEY, JSON.stringify(vouchers)); postToSheets({ action: "sync_vouchers", vouchers: vouchers }); }
+        if(data.lodgings){ cityLodgings = data.lodgings; localStorage.setItem(LODGING_KEY, JSON.stringify(cityLodgings)); postToSheets({ action: "sync_lodging", lodgings: cityLodgings }); }
+        renderAll();
+        document.getElementById("backupFeedback").textContent = "✅ Backup JSON restaurado com sucesso!";
       } catch(err){
-        $("backupFeedback").textContent = "❌ Arquivo JSON inválido.";
+        document.getElementById("backupFeedback").textContent = "❌ Arquivo JSON inválido.";
       }
     };
     reader.readAsText(file);
+  });
+
+  document.getElementById("dt").addEventListener("change", function(e){
+    var last = STATE.historico.length ? STATE.historico[STATE.historico.length - 1] : { saldo: 0 };
+    var META = Number(STATE.config.meta_cofrinho) || 20000;
+    calcSimulador(e.target.value, Math.max(META - last.saldo, 0));
+  });
+  ["eur","voo","vooTipo","parc"].forEach(function(id){
+    document.getElementById(id).addEventListener("input", calcOrcamento);
+    document.getElementById(id).addEventListener("change", calcOrcamento);
   });
 
   syncFromSheets();
