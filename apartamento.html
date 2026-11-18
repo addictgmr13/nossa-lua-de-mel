@@ -159,9 +159,32 @@ details.visit-guide[open] summary::after { content: '−'; }
 .chk-item.done span { text-decoration: line-through; color: var(--mut); }
 
 footer { margin-top: 56px; color: var(--mut); font-size: 14px; text-align: center; font-weight: 600; font-family: 'Playfair Display', serif; }
+
+/* Skeleton Loading */
+@keyframes shimmer {
+  0% { background-position: -400px 0; }
+  100% { background-position: 400px 0; }
+}
+.is-loading .stat b,
+.is-loading #barL,
+.is-loading #barR {
+  color: transparent !important;
+  background: linear-gradient(90deg, #f3e9e7 25%, #e8d8d5 50%, #f3e9e7 75%);
+  background-size: 800px 100%;
+  animation: shimmer 1.4s infinite linear;
+  border-radius: 8px;
+  user-select: none;
+}
+
+.search-sort-bar { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 14px; align-items: center; }
+.search-sort-bar input { flex: 1; min-width: 220px; font: inherit; font-size: 14px; padding: 10px 14px; border-radius: 12px; border: 1.5px solid var(--line); background: var(--bg); color: var(--ink); }
+.search-sort-bar input:focus { outline: none; border-color: var(--primary); }
+.backup-box { margin-top: 18px; padding-top: 16px; border-top: 1px dashed var(--line); }
+.backup-btns { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 8px; }
+
 </style>
 </head>
-<body>
+<body class="is-loading">
 <div class="wrap">
   <nav class="top-nav">
     <a href="index.html">✈️ Lua de Mel</a>
@@ -197,6 +220,16 @@ footer { margin-top: 56px; color: var(--mut); font-size: 14px; text-align: cente
         <button type="button" class="btn btn-primary" id="btnSaveSheet">Salvar</button>
       </div>
       <div id="webAppFeedback" style="font-size:12px; margin-top:8px; font-weight:600;"></div>
+      <div class="backup-box">
+        <label style="font-size:12px; color:var(--mut); display:block;">Compartilhar ou Backup Offline (WhatsApp / JSON):</label>
+        <div class="backup-btns">
+          <button type="button" class="btn btn-sm" id="btnCopyWhatsApp">📲 Copiar Resumo WhatsApp</button>
+          <button type="button" class="btn btn-sm" id="btnExportJson">⬇️ Exportar JSON</button>
+          <button type="button" class="btn btn-sm" id="btnImportJson">⬆️ Importar JSON</button>
+          <input type="file" id="fileImportJson" accept=".json" style="display:none;">
+        </div>
+        <div id="backupFeedback" style="font-size:12px; margin-top:6px; color:var(--ok); font-weight:600;"></div>
+      </div>
     </div>
   </header>
 
@@ -224,8 +257,12 @@ footer { margin-top: 56px; color: var(--mut); font-size: 14px; text-align: cente
           <input type="number" id="simValor" value="350000" step="5000">
         </div>
         <div class="field">
-          <label for="simEntrada">Valor da Entrada (R$)</label>
+          <label for="simEntrada">Entrada em Dinheiro (R$)</label>
           <input type="number" id="simEntrada" value="70000" step="5000">
+        </div>
+        <div class="field">
+          <label for="simFgts">Uso de FGTS na Entrada (R$)</label>
+          <input type="number" id="simFgts" value="0" step="1000">
         </div>
         <div class="field">
           <label for="simJuros">Taxa de Juros (% a.a.)</label>
@@ -244,6 +281,8 @@ footer { margin-top: 56px; color: var(--mut); font-size: 14px; text-align: cente
       <div class="sim-results">
         <div class="sim-res-item"><small>Valor Financiado</small><b id="resFinanciado">R$ 280.000,00</b></div>
         <div class="sim-res-item"><small>1ª Parcela (SAC)</small><b id="resSac">R$ 3.046,67</b></div>
+        <div class="sim-res-item"><small>Média 5 Primeiros Anos (SAC)</small><b id="resSac5Anos">R$ 2.880,00</b></div>
+        <div class="sim-res-item"><small>Última Parcela (SAC)</small><b id="resSacUltima">R$ 672,10</b></div>
         <div class="sim-res-item"><small>Parcela Fixa (PRICE)</small><b id="resPrice">R$ 2.448,32</b></div>
         <div class="sim-res-item"><small>Renda Mínima Sugerida</small><b id="resRenda">R$ 10.155,56</b></div>
       </div>
@@ -276,6 +315,13 @@ footer { margin-top: 56px; color: var(--mut); font-size: 14px; text-align: cente
     <div class="card">
       <p style="color: var(--mut); margin-bottom: 16px; font-size: 15px;">Acompanhe os imóveis selecionados na planilha e marque até 3 opções na coluna <strong>Cmp</strong> para comparar valores e parcelas lado a lado.</p>
       
+      <div class="search-sort-bar">
+        <input type="text" id="searchBairroInput" placeholder="🔍 Buscar por bairro, quartos ou observação (ex: Monsenhor Messias, 3 quartos)...">
+        <button type="button" class="btn btn-sm" id="btnSortAsc">💲 Menor Preço</button>
+        <button type="button" class="btn btn-sm" id="btnSortDesc">💲 Maior Preço</button>
+        <button type="button" class="btn btn-sm" id="btnSortReset">↺ Ordem Planilha</button>
+      </div>
+
       <div class="filter-bar" id="filterBar">
         <div class="filter-group">
           <button type="button" class="filter-btn active" data-filter="todos">Todos</button>
@@ -292,6 +338,7 @@ footer { margin-top: 56px; color: var(--mut); font-size: 14px; text-align: cente
               <th style="width:40px;">Cmp</th>
               <th>Imóvel / Bairro</th>
               <th>Valor Estimado</th>
+              <th>Cond. + IPTU</th>
               <th>Interesse</th>
               <th>Visita</th>
               <th>Data</th>
@@ -366,8 +413,9 @@ footer { margin-top: 56px; color: var(--mut); font-size: 14px; text-align: cente
   var CHK_KEY = "flavio_gabriela_visit_chk_v1";
   var ENXOVAL_KEY = "flavio_gabriela_enxoval_v1";
 
+  var DEFAULT_WEBAPP_URL = "https://script.google.com/macros/s/AKfycbx1HyO8kaXKpTV2ZdEnEgMpjFG7qE3tTigmLhgwNj7Z7fLbCOzmEghNJOAKVizS7BLU/exec";
   function getWebAppUrl(){
-    try { return localStorage.getItem(WEBAPP_KEY) || ""; } catch(e){ return ""; }
+    try { return localStorage.getItem(WEBAPP_KEY) || DEFAULT_WEBAPP_URL; } catch(e){ return DEFAULT_WEBAPP_URL; }
   }
 
   function postToSheets(payload){
@@ -394,6 +442,8 @@ footer { margin-top: 56px; color: var(--mut); font-size: 14px; text-align: cente
     saldo: 68939.40,
     aptos: [],
     filtroAtual: "todos",
+    buscaTexto: "",
+    ordemPreco: "none",
     selecionadosCmp: []
   };
 
@@ -444,22 +494,37 @@ footer { margin-top: 56px; color: var(--mut); font-size: 14px; text-align: cente
 
   var brl = function(v){ return (Number(v)||0).toLocaleString("pt-BR",{style:"currency",currency:"BRL"}); };
 
-  /* Simulador de Financiamento + Documentação BH */
+  /* Simulador de Financiamento + FGTS + SAC Decrescente + Documentação BH */
   function calcSimulador(){
     var valor = parseFloat(document.getElementById("simValor").value) || 0;
     var entrada = parseFloat(document.getElementById("simEntrada").value) || 0;
+    var fgts = parseFloat(document.getElementById("simFgts").value) || 0;
     var taxaAnual = parseFloat(document.getElementById("simJuros").value) || 0;
     var anos = parseInt(document.getElementById("simPrazo").value) || 35;
 
-    var financiado = Math.max(valor - entrada, 0);
+    var entradaTotal = entrada + fgts;
+    var financiado = Math.max(valor - entradaTotal, 0);
     var meses = anos * 12;
     var taxaMensal = Math.pow(1 + taxaAnual / 100, 1 / 12) - 1;
 
     var sac1 = 0;
+    var sacUltima = 0;
+    var sacMedia5Anos = 0;
     var price = 0;
+
     if(financiado > 0 && meses > 0){
       var amort = financiado / meses;
       sac1 = amort + (financiado * taxaMensal);
+      sacUltima = amort + (amort * taxaMensal);
+
+      var meses5 = Math.min(60, meses);
+      var soma5 = 0;
+      for(var m = 0; m < meses5; m++){
+        var saldoDevedor = financiado - (amort * m);
+        soma5 += amort + (saldoDevedor * taxaMensal);
+      }
+      sacMedia5Anos = soma5 / meses5;
+
       if(taxaMensal > 0){
         price = financiado * (taxaMensal * Math.pow(1 + taxaMensal, meses)) / (Math.pow(1 + taxaMensal, meses) - 1);
       } else {
@@ -469,6 +534,8 @@ footer { margin-top: 56px; color: var(--mut); font-size: 14px; text-align: cente
 
     document.getElementById("resFinanciado").textContent = brl(financiado);
     document.getElementById("resSac").textContent = brl(sac1);
+    document.getElementById("resSac5Anos").textContent = brl(sacMedia5Anos);
+    document.getElementById("resSacUltima").textContent = brl(sacUltima);
     document.getElementById("resPrice").textContent = brl(price);
     document.getElementById("resRenda").textContent = brl(sac1 / 0.30);
 
@@ -492,6 +559,7 @@ footer { margin-top: 56px; color: var(--mut); font-size: 14px; text-align: cente
       return;
     }
 
+    var entradaTotal = (parseFloat(document.getElementById("simEntrada").value) || STATE.metaEntrada) + (parseFloat(document.getElementById("simFgts").value) || 0);
     var taxaAnual = parseFloat(document.getElementById("simJuros").value) || 10.2;
     var anos = parseInt(document.getElementById("simPrazo").value) || 35;
     var meses = anos * 12;
@@ -499,14 +567,18 @@ footer { margin-top: 56px; color: var(--mut); font-size: 14px; text-align: cente
 
     var selectedObjs = STATE.aptos.filter(function(a){ return STATE.selecionadosCmp.indexOf(a.uid) > -1; });
     grid.innerHTML = selectedObjs.map(function(item){
-      var fin = Math.max((item.preco || 0) - STATE.metaEntrada, 0);
+      var fin = Math.max((item.preco || 0) - entradaTotal, 0);
       var sac1 = fin > 0 ? (fin / meses) + (fin * taxaMensal) : 0;
+      var condIptu = item.condIptu || 0;
+      var custoMensalTotal = sac1 + condIptu;
       var docEst = (item.preco || 0) * 0.045;
 
       return '<div class="cmp-card">' +
         '<h4>' + item.titulo + '</h4>' +
         '<div class="cmp-row"><span>Valor do Imóvel</span><strong>' + (item.preco ? brl(item.preco) : 'N/I') + '</strong></div>' +
         '<div class="cmp-row"><span>1ª Parcela SAC Est.</span><strong>' + brl(sac1) + '</strong></div>' +
+        '<div class="cmp-row"><span>Condomínio + IPTU</span><strong>' + (condIptu > 0 ? brl(condIptu) : 'Não inf.') + '</strong></div>' +
+        '<div class="cmp-row" style="background:var(--primary-light); padding:8px; border-radius:8px; margin-top:4px;"><span><strong>Custo Mensal Total</strong></span><strong style="color:var(--primary);">' + brl(custoMensalTotal) + '/mês</strong></div>' +
         '<div class="cmp-row"><span>Doc. BH (4,5%)</span><strong>' + brl(docEst) + '</strong></div>' +
         '<div class="cmp-row"><span>Status</span><strong>' + (item.status || 'Analisando') + '</strong></div>' +
         (item.obs ? '<p style="font-size:12px; color:var(--mut); margin-top:8px;">' + item.obs + '</p>' : '') +
@@ -544,22 +616,31 @@ footer { margin-top: 56px; color: var(--mut); font-size: 14px; text-align: cente
     document.getElementById("cVisitas").textContent = visitasAgendadas;
     document.getElementById("cMedia").textContent = brl(mediaPrecos);
 
-    /* Filtragem da Tabela */
+    /* Filtragem & Ordenação da Tabela */
+    var q = (STATE.buscaTexto || "").toLowerCase().trim();
     var aptosFiltrados = todosAptos.filter(function(item){
-      if(STATE.filtroAtual === "visita"){
-        return (item.visita || "").toLowerCase() === "sim";
-      }
+      if(STATE.filtroAtual === "visita" && (item.visita || "").toLowerCase() !== "sim") return false;
       if(STATE.filtroAtual === "alto"){
         var s = (item.status || "").toLowerCase();
-        return s.indexOf("amamos") > -1 || s.indexOf("alto") > -1;
+        if(s.indexOf("amamos") === -1 && s.indexOf("alto") === -1) return false;
+      }
+      if(q){
+        var hay = (item.titulo + " " + (item.obs || "") + " " + (item.status || "")).toLowerCase();
+        if(hay.indexOf(q) === -1) return false;
       }
       return true;
-    });
+    }).slice();
+
+    if(STATE.ordemPreco === "asc"){
+      aptosFiltrados.sort(function(a, b){ return (a.preco || 999999999) - (b.preco || 999999999); });
+    } else if(STATE.ordemPreco === "desc"){
+      aptosFiltrados.sort(function(a, b){ return (b.preco || 0) - (a.preco || 0); });
+    }
 
     var tbody = document.getElementById("listaAptos");
     
     if(aptosFiltrados.length === 0){
-      tbody.innerHTML = '<tr><td colspan="7" style="text-align: center; color: var(--mut); padding: 24px;">Nenhum imóvel encontrado para este filtro.</td></tr>';
+      tbody.innerHTML = '<tr><td colspan="8" style="text-align: center; color: var(--mut); padding: 24px;">Nenhum imóvel encontrado para este filtro.</td></tr>';
       return;
     }
 
@@ -583,6 +664,7 @@ footer { margin-top: 56px; color: var(--mut); font-size: 14px; text-align: cente
         : '<span class="sem-data">—</span>';
 
       var obsHtml = item.obs ? '<span class="obs-sub">' + item.obs + '</span>' : '';
+      var condHtml = item.condIptu > 0 ? brl(item.condIptu) + '/mês' : '<span class="sem-data">—</span>';
 
       var cleanLink = item.link || "#";
       if(cleanLink && cleanLink !== "#" && !cleanLink.startsWith("http")) cleanLink = "https://" + cleanLink;
@@ -593,6 +675,7 @@ footer { margin-top: 56px; color: var(--mut); font-size: 14px; text-align: cente
         '<td><input type="checkbox" class="cmp-check" data-cmptit="'+item.uid.replace(/"/g,'&quot;')+'"'+(isCmpChecked?' checked':'')+'></td>' +
         '<td><strong>' + item.titulo + '</strong>' + obsHtml + '</td>' +
         '<td style="white-space: nowrap;">' + (item.preco ? brl(item.preco) : 'Não informado') + '</td>' +
+        '<td style="white-space: nowrap;">' + condHtml + '</td>' +
         '<td><span class="badge ' + badgeClass + '">' + badgeText + '</span></td>' +
         '<td>' + visBadge + '</td>' +
         '<td>' + dataHtml + '</td>' +
@@ -760,11 +843,17 @@ footer { margin-top: 56px; color: var(--mut); font-size: 14px; text-align: cente
           var dataVisita = cellStr(r[4]);
           var lnk = cellStr(r[5]);
           var obs = cellStr(r[6]);
+          var condIptu = cellNum(r[7]);
+          if(!condIptu && obs){
+            var mCond = obs.match(/(?:cond|condom[ií]nio|iptu)[^0-9]*([0-9.,]+)/i);
+            if(mCond) condIptu = parseFloat(mCond[1].replace(/\./g, "").replace(",", ".")) || 0;
+          }
 
           sheetImov.push({
             uid: tit + "|" + preco + "|" + (lnk || j),
             titulo: tit,
             preco: preco,
+            condIptu: condIptu,
             status: st,
             visita: visita,
             data: dataVisita,
@@ -828,6 +917,7 @@ footer { margin-top: 56px; color: var(--mut); font-size: 14px; text-align: cente
     } finally {
       btn.classList.remove("spin");
       btn.disabled = false;
+      document.body.classList.remove("is-loading");
       render();
     }
   }
@@ -857,8 +947,29 @@ footer { margin-top: 56px; color: var(--mut); font-size: 14px; text-align: cente
   initChecklist();
   render();
 
-  ["simValor", "simEntrada", "simJuros", "simPrazo"].forEach(function(id){
-    document.getElementById(id).addEventListener("input", calcSimulador);
+  ["simValor", "simEntrada", "simFgts", "simJuros", "simPrazo"].forEach(function(id){
+    document.getElementById(id).addEventListener("input", function(){
+      calcSimulador();
+      renderComparePanel();
+    });
+  });
+
+  document.getElementById("searchBairroInput").addEventListener("input", function(e){
+    STATE.buscaTexto = e.target.value;
+    render();
+  });
+
+  document.getElementById("btnSortAsc").addEventListener("click", function(){
+    STATE.ordemPreco = "asc";
+    render();
+  });
+  document.getElementById("btnSortDesc").addEventListener("click", function(){
+    STATE.ordemPreco = "desc";
+    render();
+  });
+  document.getElementById("btnSortReset").addEventListener("click", function(){
+    STATE.ordemPreco = "none";
+    render();
   });
 
   document.querySelectorAll("#filterBar .filter-btn").forEach(function(btn){
@@ -934,7 +1045,141 @@ footer { margin-top: 56px; color: var(--mut); font-size: 14px; text-align: cente
     } catch(e){}
     updateSheetLinks();
     document.getElementById("cfgPanel").classList.remove("show");
-    syncFromSheets();
+    /* Exportar Resumo WhatsApp & Backup JSON */
+  document.getElementById("btnCopyWhatsApp").addEventListener("click", function(){
+    var metaTotal = STATE.metaEntrada + STATE.metaDoc;
+    var pct = metaTotal > 0 ? (STATE.saldo / metaTotal * 100).toFixed(1).replace(".", ",") : "0,0";
+    var visitas = STATE.aptos.filter(function(a){ return (a.visita || "").toLowerCase() === "sim"; }).length;
+
+    var msg = "🏡 *Resumo Nosso Apartamento — Flávio & Gabriela*\n" +
+      "🐷 *Cofrinho Inter:* " + brl(STATE.saldo) + " / " + brl(metaTotal) + " (" + pct + "%)\n" +
+      "📉 *Falta guardar:* " + brl(Math.max(metaTotal - STATE.saldo, 0)) + "\n" +
+      "🏢 *Imóveis avaliados:* " + STATE.aptos.length + " (" + visitas + " visitas agendadas)\n" +
+      "🛋️ *Itens no Enxoval:* " + enxovalItems.length;
+
+    if(navigator.clipboard) navigator.clipboard.writeText(msg);
+    var fb = document.getElementById("backupFeedback");
+    fb.textContent = "✅ Resumo copiado! Agora é só colar no WhatsApp da Gabriela.";
+    setTimeout(function(){ fb.textContent = ""; }, 3500);
+  });
+
+  document.getElementById("btnExportJson").addEventListener("click", function(){
+    var backup = {
+      exportedAt: new Date().toISOString(),
+      enxovalItems: enxovalItems,
+      visitChecklist: JSON.parse(localStorage.getItem(CHK_KEY) || "{}"),
+      simulador: {
+        valor: document.getElementById("simValor").value,
+        entrada: document.getElementById("simEntrada").value,
+        fgts: document.getElementById("simFgts").value,
+        juros: document.getElementById("simJuros").value,
+        prazo: document.getElementById("simPrazo").value
+      }
+    };
+    var blob = new Blob([JSON.stringify(backup, null, 2)], { type: "application/json" });
+    var a = document.createElement("a");
+    a.href = URL.createObjectURL(blob);
+    a.download = "backup_apartamento.json";
+    a.click();
+  });
+
+  document.getElementById("btnImportJson").addEventListener("click", function(){
+    document.getElementById("fileImportJson").click();
+  });
+
+  document.getElementById("fileImportJson").addEventListener("change", function(e){
+    var file = e.target.files[0];
+    if(!file) return;
+    var reader = new FileReader();
+    reader.onload = function(ev){
+      try {
+        var data = JSON.parse(ev.target.result);
+        if(data.enxovalItems){ enxovalItems = data.enxovalItems; saveEnxoval(true); renderEnxoval(); }
+        if(data.visitChecklist){ localStorage.setItem(CHK_KEY, JSON.stringify(data.visitChecklist)); initChecklist(); }
+        if(data.simulador){
+          if(data.simulador.valor) document.getElementById("simValor").value = data.simulador.valor;
+          if(data.simulador.entrada) document.getElementById("simEntrada").value = data.simulador.entrada;
+          if(data.simulador.fgts) document.getElementById("simFgts").value = data.simulador.fgts;
+          if(data.simulador.juros) document.getElementById("simJuros").value = data.simulador.juros;
+          if(data.simulador.prazo) document.getElementById("simPrazo").value = data.simulador.prazo;
+          calcSimulador();
+        }
+        document.getElementById("backupFeedback").textContent = "✅ Backup JSON restaurado com sucesso!";
+      } catch(err){
+        document.getElementById("backupFeedback").textContent = "❌ Arquivo JSON inválido.";
+      }
+    };
+    reader.readAsText(file);
+  });
+
+  syncFromSheets();
+  });
+
+  /* Exportar Resumo WhatsApp & Backup JSON */
+  document.getElementById("btnCopyWhatsApp").addEventListener("click", function(){
+    var metaTotal = STATE.metaEntrada + STATE.metaDoc;
+    var pct = metaTotal > 0 ? (STATE.saldo / metaTotal * 100).toFixed(1).replace(".", ",") : "0,0";
+    var visitas = STATE.aptos.filter(function(a){ return (a.visita || "").toLowerCase() === "sim"; }).length;
+
+    var msg = "🏡 *Resumo Nosso Apartamento — Flávio & Gabriela*\n" +
+      "🐷 *Cofrinho Inter:* " + brl(STATE.saldo) + " / " + brl(metaTotal) + " (" + pct + "%)\n" +
+      "📉 *Falta guardar:* " + brl(Math.max(metaTotal - STATE.saldo, 0)) + "\n" +
+      "🏢 *Imóveis avaliados:* " + STATE.aptos.length + " (" + visitas + " visitas agendadas)\n" +
+      "🛋️ *Itens no Enxoval:* " + enxovalItems.length;
+
+    if(navigator.clipboard) navigator.clipboard.writeText(msg);
+    var fb = document.getElementById("backupFeedback");
+    fb.textContent = "✅ Resumo copiado! Agora é só colar no WhatsApp da Gabriela.";
+    setTimeout(function(){ fb.textContent = ""; }, 3500);
+  });
+
+  document.getElementById("btnExportJson").addEventListener("click", function(){
+    var backup = {
+      exportedAt: new Date().toISOString(),
+      enxovalItems: enxovalItems,
+      visitChecklist: JSON.parse(localStorage.getItem(CHK_KEY) || "{}"),
+      simulador: {
+        valor: document.getElementById("simValor").value,
+        entrada: document.getElementById("simEntrada").value,
+        fgts: document.getElementById("simFgts").value,
+        juros: document.getElementById("simJuros").value,
+        prazo: document.getElementById("simPrazo").value
+      }
+    };
+    var blob = new Blob([JSON.stringify(backup, null, 2)], { type: "application/json" });
+    var a = document.createElement("a");
+    a.href = URL.createObjectURL(blob);
+    a.download = "backup_apartamento.json";
+    a.click();
+  });
+
+  document.getElementById("btnImportJson").addEventListener("click", function(){
+    document.getElementById("fileImportJson").click();
+  });
+
+  document.getElementById("fileImportJson").addEventListener("change", function(e){
+    var file = e.target.files[0];
+    if(!file) return;
+    var reader = new FileReader();
+    reader.onload = function(ev){
+      try {
+        var data = JSON.parse(ev.target.result);
+        if(data.enxovalItems){ enxovalItems = data.enxovalItems; saveEnxoval(true); renderEnxoval(); }
+        if(data.visitChecklist){ localStorage.setItem(CHK_KEY, JSON.stringify(data.visitChecklist)); initChecklist(); }
+        if(data.simulador){
+          if(data.simulador.valor) document.getElementById("simValor").value = data.simulador.valor;
+          if(data.simulador.entrada) document.getElementById("simEntrada").value = data.simulador.entrada;
+          if(data.simulador.fgts) document.getElementById("simFgts").value = data.simulador.fgts;
+          if(data.simulador.juros) document.getElementById("simJuros").value = data.simulador.juros;
+          if(data.simulador.prazo) document.getElementById("simPrazo").value = data.simulador.prazo;
+          calcSimulador();
+        }
+        document.getElementById("backupFeedback").textContent = "✅ Backup JSON restaurado com sucesso!";
+      } catch(err){
+        document.getElementById("backupFeedback").textContent = "❌ Arquivo JSON inválido.";
+      }
+    };
+    reader.readAsText(file);
   });
 
   syncFromSheets();

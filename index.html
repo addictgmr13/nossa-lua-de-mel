@@ -197,9 +197,41 @@ footer { margin-top: 56px; color: var(--mut); font-size: 14px; text-align: cente
 @media (max-width: 768px) { .memories-grid { grid-template-columns: 1fr; } }
 .mem-card { border-radius: 16px; overflow: hidden; border: 1px solid var(--line); background: var(--card); box-shadow: 0 4px 12px var(--shadow); }
 .mem-card img { width: 100%; height: 220px; object-fit: cover; display: block; }
+
+/* Skeleton Loading */
+@keyframes shimmer {
+  0% { background-position: -400px 0; }
+  100% { background-position: 400px 0; }
+}
+.is-loading .stat b,
+.is-loading #barL,
+.is-loading #barR {
+  color: transparent !important;
+  background: linear-gradient(90deg, #f3e9e7 25%, #e8d8d5 50%, #f3e9e7 75%);
+  background-size: 800px 100%;
+  animation: shimmer 1.4s infinite linear;
+  border-radius: 8px;
+  user-select: none;
+}
+
+/* Base Hotel/Airbnb por Cidade no Roteiro */
+.stage-header-row { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; margin-bottom: 14px; }
+.stage-header-row h3 { margin-bottom: 0; }
+.base-lodging-bar { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; background: var(--card); border: 1px solid var(--line); padding: 8px 14px; border-radius: 14px; margin-bottom: 16px; box-shadow: 0 2px 8px var(--shadow); font-size: 13px; }
+.base-lodging-bar strong { color: var(--primary); white-space: nowrap; }
+.base-lodging-bar input { font: inherit; font-size: 13px; padding: 6px 10px; border: 1px solid var(--line); border-radius: 8px; background: var(--bg); color: var(--ink); flex: 1; min-width: 190px; }
+.map-actions-row { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 8px; }
+.map-pill-route { background: var(--card); border: 1px solid var(--primary); color: var(--primary); }
+.map-pill-route:hover { background: var(--primary); color: #fff; }
+
+/* Botão Câmbio Dinâmico no Orçamento */
+.fx-apply-box { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px; background: var(--primary-light); border: 1px solid var(--line); padding: 12px 16px; border-radius: 14px; margin-bottom: 18px; font-size: 13px; }
+.backup-box { margin-top: 18px; padding-top: 16px; border-top: 1px dashed var(--line); }
+.backup-btns { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 8px; }
+
 </style>
 </head>
-<body>
+<body class="is-loading">
 <div class="wrap">
 <nav class="top-nav">
   <a href="index.html" class="active">✈️ Lua de Mel</a>
@@ -258,6 +290,16 @@ footer { margin-top: 56px; color: var(--mut); font-size: 14px; text-align: cente
       <button type="button" class="btn btn-primary" id="btnSaveSheet">Salvar</button>
     </div>
     <div id="webAppFeedback" style="font-size:12px; margin-top:8px; font-weight:600;"></div>
+    <div class="backup-box">
+      <label style="font-size:12px; color:var(--mut); display:block;">Compartilhar ou Backup Offline (WhatsApp / JSON):</label>
+      <div class="backup-btns">
+        <button type="button" class="btn btn-sm" id="btnCopyWhatsApp">📲 Copiar Resumo WhatsApp</button>
+        <button type="button" class="btn btn-sm" id="btnExportJson">⬇️ Exportar JSON</button>
+        <button type="button" class="btn btn-sm" id="btnImportJson">⬆️ Importar JSON</button>
+        <input type="file" id="fileImportJson" accept=".json" style="display:none;">
+      </div>
+      <div id="backupFeedback" style="font-size:12px; margin-top:6px; color:var(--ok); font-weight:600;"></div>
+    </div>
   </div>
 </header>
 
@@ -385,6 +427,13 @@ footer { margin-top: 56px; color: var(--mut); font-size: 14px; text-align: cente
 <section>
   <h2>📊 Visão Financeira Detalhada</h2>
   <div class="card">
+    <div class="fx-apply-box">
+      <div>
+        <strong style="color:var(--primary);">💱 Câmbio ao Vivo + Wise:</strong>
+        <span id="liveWiseInfo" style="color:var(--mut); font-weight:600;">Buscando cotação comercial...</span>
+      </div>
+      <button type="button" class="btn btn-sm btn-primary" id="btnApplyLiveFx">Aplicar cotação de hoje (+ IOF/Spread Wise)</button>
+    </div>
     <div class="inputs">
       <div><label for="nv">Viajantes</label><select id="nv"><option value="2" selected>2 pessoas</option><option value="1">1 pessoa</option></select></div>
       <div><label for="fv" id="lblVoo">Voo</label><select id="fv"><option value="t" selected>Preço total</option><option value="p">Por pessoa</option></select></div>
@@ -418,9 +467,11 @@ footer { margin-top: 56px; color: var(--mut); font-size: 14px; text-align: cente
   var FLIGHT_DT_KEY = "lua-de-mel-flight-dt-v1";
   var VOUCHER_KEY = "lua-de-mel-vouchers-v1";
   var BAG_KEY = "lua-de-mel-bag-v1";
+  var LODGING_KEY = "lua-de-mel-lodging-v1";
 
+  var DEFAULT_WEBAPP_URL = "https://script.google.com/macros/s/AKfycbzoLT_dfkmOeYxyfsl4zENQgDXLzmmAbD5zi9qFzE9KPLrikNbMQvN5wiHnmGopKzvq/exec";
   function getWebAppUrl(){
-    try { return localStorage.getItem(WEBAPP_KEY) || ""; } catch(e){ return ""; }
+    try { return localStorage.getItem(WEBAPP_KEY) || DEFAULT_WEBAPP_URL; } catch(e){ return DEFAULT_WEBAPP_URL; }
   }
 
   function postToSheets(payload){
@@ -744,6 +795,16 @@ footer { margin-top: 56px; color: var(--mut); font-size: 14px; text-align: cente
     });
   });
 
+  var liveWiseRate = 6.26;
+  function updateWiseBanner(){
+    liveWiseRate = +(eurRate * 1.015).toFixed(2);
+    var info = $("liveWiseInfo");
+    if(info){
+      info.textContent = "Comercial R$ " + eurRate.toFixed(2).replace(".", ",") + " → Wise (+1,5% IOF/Spread): R$ " + liveWiseRate.toFixed(2).replace(".", ",");
+    }
+  }
+  updateWiseBanner();
+
   fetch("https://economia.awesomeapi.com.br/last/EUR-BRL")
     .then(function(r){ return r.json(); })
     .then(function(data){
@@ -751,9 +812,20 @@ footer { margin-top: 56px; color: var(--mut); font-size: 14px; text-align: cente
         eurRate = parseFloat(data.EURBRL.bid);
         $("fxRateLabel").textContent = "1 EUR = R$ " + eurRate.toFixed(2).replace(".", ",");
         syncFromEur();
+        updateWiseBanner();
       }
     })
     .catch(function(){});
+
+  $("btnApplyLiveFx").addEventListener("click", function(){
+    updateWiseBanner();
+    $("fx").value = liveWiseRate.toFixed(2);
+    renderOrcamento();
+    var btn = $("btnApplyLiveFx");
+    var orig = btn.textContent;
+    btn.textContent = "✅ Cotação R$ " + liveWiseRate.toFixed(2).replace(".", ",") + " aplicada!";
+    setTimeout(function(){ btn.textContent = orig; }, 2200);
+  });
 
   function getSheetId(){
     try { return localStorage.getItem(SHEET_KEY) || DEFAULT_SHEET_ID; } catch(e){ return DEFAULT_SHEET_ID; }
@@ -876,12 +948,36 @@ footer { margin-top: 56px; color: var(--mut); font-size: 14px; text-align: cente
     return next;
   }
 
-  /* 5. Roteiro com Filtro por Cidade + Links diretos no Google Maps */
+  /* 5. Roteiro com Logística Real: Hospedagem Base + Rota a pé/metrô */
+  var DEFAULT_LODGING = {
+    "Roma": "Trastevere, Roma, Itália",
+    "Florença": "Centro Histórico, Florença, Itália",
+    "Milão": "Navigli / Duomo, Milão, Itália",
+    "Paris": "Le Marais, Paris, França",
+    "Lisboa": "Baixa / Chiado, Lisboa, Portugal"
+  };
+  var cityLodgings = {};
+  try {
+    cityLodgings = Object.assign({}, DEFAULT_LODGING, JSON.parse(localStorage.getItem(LODGING_KEY) || "{}"));
+  } catch(e){ cityLodgings = Object.assign({}, DEFAULT_LODGING); }
+
+  function getCityKey(etapa){
+    var raw = etapa.split("·")[0].replace("(stopover TAP)", "").trim();
+    if(raw === "Ida" || raw === "Volta") return "";
+    return raw;
+  }
+
   function buildMapsUrl(etapa, titulo, desc){
-    var cityClean = etapa.split("·")[0].trim();
-    if(cityClean === "Ida" || cityClean === "Volta") cityClean = "";
+    var cityClean = getCityKey(etapa);
     var query = (titulo + " " + cityClean + " " + desc.split(";")[0]).trim();
     return "https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent(query);
+  }
+
+  function buildTransitRouteUrl(etapa, titulo, desc){
+    var cityClean = getCityKey(etapa);
+    var origin = cityLodgings[cityClean] || cityClean;
+    var dest = (titulo + " " + cityClean + " " + desc.split(";")[0]).trim();
+    return "https://www.google.com/maps/dir/?api=1&origin=" + encodeURIComponent(origin) + "&destination=" + encodeURIComponent(dest) + "&travelmode=transit";
   }
 
   function renderRoteiro(stages){
@@ -893,7 +989,7 @@ footer { margin-top: 56px; color: var(--mut); font-size: 14px; text-align: cente
     };
 
     var chipsHtml = '<button type="button" class="chip chip-all'+(selectedCityChip==="ALL"?" active":"")+'" data-chip="ALL">Todos ('+STATE.roteiro.length+' dias)</button>';
-    stages.filter(function(st){ return st.chip; }).forEach(function(st, i){
+    stages.filter(function(st){ return st.chip; }).forEach(function(st){
       var dimClass = (selectedCityChip !== "ALL" && selectedCityChip !== st.chip) ? " dim" : "";
       chipsHtml += '<span class="arrow">→</span><button type="button" class="chip'+dimClass+'" data-chip="'+st.chip+'" style="background:'+resolveColor(st.cor)+'">'+st.chip+'</button>';
     });
@@ -913,14 +1009,39 @@ footer { margin-top: 56px; color: var(--mut); font-size: 14px; text-align: cente
 
     $("stages").innerHTML = filteredStages.map(function(st){
       var col = resolveColor(st.cor);
-      return '<div class="stage" style="--c:'+col+'"><h3><span class="dot" style="background:'+col+'"></span>'+st.etapa+'</h3><ul class="days">'+
+      var cityKey = getCityKey(st.etapa);
+      var baseHtml = "";
+      if(cityKey){
+        var curBase = cityLodgings[cityKey] || "";
+        baseHtml = '<div class="base-lodging-bar">' +
+          '<strong>🏨 Base em ' + cityKey + ':</strong>' +
+          '<input type="text" data-city-base="' + cityKey + '" value="' + curBase.replace(/"/g, '&quot;') + '" placeholder="Cole o endereço do Airbnb/Hotel em ' + cityKey + '">' +
+        '</div>';
+      }
+
+      return '<div class="stage" style="--c:'+col+'">' +
+        '<div class="stage-header-row"><h3><span class="dot" style="background:'+col+'"></span>'+st.etapa+'</h3></div>' +
+        baseHtml +
+        '<ul class="days">' +
         st.days.map(function(x){
           var mapsHref = buildMapsUrl(st.etapa, x.titulo, x.desc);
+          var routeHref = cityKey ? buildTransitRouteUrl(st.etapa, x.titulo, x.desc) : "";
+          var routeBtn = cityKey ? '<a href="'+routeHref+'" target="_blank" class="map-pill map-pill-route">🚇 Traçar rota a pé/metrô da hospedagem</a>' : '';
           return '<li><div class="d">'+x.dia+'</div><div class="t"><b>'+x.titulo+'</b><span>'+x.desc+'</span>' +
-            '<a href="'+mapsHref+'" target="_blank" class="map-pill">📍 Ver no Google Maps</a>' +
+            '<div class="map-actions-row"><a href="'+mapsHref+'" target="_blank" class="map-pill">📍 Ver no Google Maps</a>' + routeBtn + '</div>' +
           '</div></li>';
         }).join("") + '</ul></div>';
     }).join("");
+
+    $("stages").querySelectorAll("input[data-city-base]").forEach(function(inp){
+      inp.addEventListener("change", function(){
+        var cKey = inp.getAttribute("data-city-base");
+        cityLodgings[cKey] = inp.value.trim();
+        try { localStorage.setItem(LODGING_KEY, JSON.stringify(cityLodgings)); } catch(e){}
+        postToSheets({ action: "sync_lodging", items: cityLodgings });
+        renderRoteiro(stages);
+      });
+    });
   }
 
   function renderAll(applyConfigToInputs){
@@ -1172,7 +1293,7 @@ footer { margin-top: 56px; color: var(--mut); font-size: 14px; text-align: cente
     } catch(err) {
       dot.className = "status-dot ok"; txt.textContent = "Modo Local";
       renderAll(false);
-    } finally { btn.classList.remove("spin"); btn.disabled = false; }
+    } finally { btn.classList.remove("spin"); btn.disabled = false; document.body.classList.remove("is-loading"); }
   }
 
   updateSheetLinks();
@@ -1239,6 +1360,69 @@ footer { margin-top: 56px; color: var(--mut); font-size: 14px; text-align: cente
       localStorage.setItem(WEBAPP_KEY, newWebApp);
     } catch(e){}
     updateSheetLinks(); $("cfgPanel").classList.remove("show"); syncFromSheets();
+  });
+
+  /* Exportar Resumo WhatsApp & Backup JSON */
+  $("btnCopyWhatsApp").addEventListener("click", function(){
+    var META = STATE.config.meta_cofrinho || 20000;
+    var SALDO = STATE.cofrinho.length ? STATE.cofrinho[STATE.cofrinho.length - 1].saldo : 0;
+    var PCT = META > 0 ? (SALDO / META * 100).toFixed(1).replace(".", ",") : "0,0";
+    var todos = STATE.checklist.filter(function(c){ return c.tipo === "Checklist"; });
+    var localSt = {}; try { localSt = JSON.parse(localStorage.getItem(CK_KEY) || "{}") || {}; } catch(e){}
+    var doneCount = todos.filter(function(item){ return item.done || !!localSt[item.texto]; }).length;
+
+    var msg = "✈️ *Resumo Lua de Mel — Flávio & Gabriela*\n" +
+      "💰 *Cofrinho:* " + brl(SALDO) + " / " + brl(META) + " (" + PCT + "%)\n" +
+      "📉 *Falta guardar:* " + brl(Math.max(META - SALDO, 0)) + "\n" +
+      "💱 *Cotação Wise hoje:* R$ " + liveWiseRate.toFixed(2).replace(".", ",") + "\n" +
+      "✅ *Checklist:* " + doneCount + " de " + todos.length + " concluídas\n" +
+      "🎟️ *Vouchers salvos:* " + vouchers.length;
+
+    if(navigator.clipboard) navigator.clipboard.writeText(msg);
+    var fb = $("backupFeedback");
+    fb.textContent = "✅ Resumo copiado! Agora é só colar no WhatsApp da Gabriela.";
+    setTimeout(function(){ fb.textContent = ""; }, 3500);
+  });
+
+  $("btnExportJson").addEventListener("click", function(){
+    var backup = {
+      exportedAt: new Date().toISOString(),
+      vouchers: vouchers,
+      bagChecked: bagChecked,
+      cityLodgings: cityLodgings,
+      flightDate: $("flightDateInput").value,
+      checklistLocal: JSON.parse(localStorage.getItem(CK_KEY) || "{}")
+    };
+    var blob = new Blob([JSON.stringify(backup, null, 2)], { type: "application/json" });
+    var a = document.createElement("a");
+    a.href = URL.createObjectURL(blob);
+    a.download = "backup_lua_de_mel.json";
+    a.click();
+  });
+
+  $("btnImportJson").addEventListener("click", function(){
+    $("fileImportJson").click();
+  });
+
+  $("fileImportJson").addEventListener("change", function(e){
+    var file = e.target.files[0];
+    if(!file) return;
+    var reader = new FileReader();
+    reader.onload = function(ev){
+      try {
+        var data = JSON.parse(ev.target.result);
+        if(data.vouchers){ vouchers = data.vouchers; saveVouchers(true); renderVouchers(); }
+        if(data.bagChecked){ bagChecked = data.bagChecked; localStorage.setItem(BAG_KEY, JSON.stringify(bagChecked)); renderBag(); }
+        if(data.cityLodgings){ cityLodgings = Object.assign({}, DEFAULT_LODGING, data.cityLodgings); localStorage.setItem(LODGING_KEY, JSON.stringify(cityLodgings)); }
+        if(data.flightDate){ $("flightDateInput").value = data.flightDate; localStorage.setItem(FLIGHT_DT_KEY, data.flightDate); updateCountdown(); }
+        if(data.checklistLocal){ localStorage.setItem(CK_KEY, JSON.stringify(data.checklistLocal)); }
+        renderAll(false);
+        $("backupFeedback").textContent = "✅ Backup JSON restaurado com sucesso!";
+      } catch(err){
+        $("backupFeedback").textContent = "❌ Arquivo JSON inválido.";
+      }
+    };
+    reader.readAsText(file);
   });
 
   syncFromSheets();
