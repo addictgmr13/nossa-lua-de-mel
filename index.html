@@ -247,8 +247,13 @@ footer { margin-top: 56px; color: var(--mut); font-size: 14px; text-align: cente
   <div class="alert-box" id="alertBox"></div>
   <div class="cfg-panel" id="cfgPanel">
     <h3 style="margin-top:0">Vínculo com Google Sheets</h3>
-    <div class="cfg-row">
+    <label style="font-size:12px; color:var(--mut); display:block; margin-top:8px;">Link da Planilha (Leitura):</label>
+    <div class="cfg-row" style="margin-top:6px;">
       <input type="text" id="sheetInput" placeholder="Cole o link do Google Sheets aqui">
+    </div>
+    <label style="font-size:12px; color:var(--mut); display:block; margin-top:14px;">URL do Web App Apps Script (Gravação Automática):</label>
+    <div class="cfg-row" style="margin-top:6px;">
+      <input type="text" id="webAppInput" placeholder="https://script.google.com/macros/s/.../exec">
       <button type="button" class="btn btn-primary" id="btnSaveSheet">Salvar</button>
     </div>
   </div>
@@ -404,12 +409,34 @@ footer { margin-top: 56px; color: var(--mut); font-size: 14px; text-align: cente
 (function(){
   var DEFAULT_SHEET_ID = "1wphEUtivVELIzz-vJTDJOUSCNxYotCaDpFAaUa74KIc";
   var SHEET_KEY = "lua-de-mel-sheet-v10";
+  var WEBAPP_KEY = "lua-de-mel-webapp-v10";
   var CACHE_KEY = "lua-de-mel-cache-v10";
   var CK_KEY = "lua-de-mel-checklist-v10";
   var DT_KEY = "lua-de-mel-data-v10";
   var FLIGHT_DT_KEY = "lua-de-mel-flight-dt-v1";
   var VOUCHER_KEY = "lua-de-mel-vouchers-v1";
   var BAG_KEY = "lua-de-mel-bag-v1";
+
+  function getWebAppUrl(){
+    try { return localStorage.getItem(WEBAPP_KEY) || ""; } catch(e){ return ""; }
+  }
+
+  function postToSheets(payload){
+    var url = getWebAppUrl();
+    if(!url) return;
+    var txt = $("statusText");
+    if(txt) txt.textContent = "Salvando...";
+    fetch(url, {
+      method: "POST",
+      mode: "no-cors",
+      headers: { "Content-Type": "text/plain;charset=utf-8" },
+      body: JSON.stringify(payload)
+    }).then(function(){
+      if(txt) txt.textContent = "Sincronizado";
+    }).catch(function(){
+      if(txt) txt.textContent = "Erro ao salvar";
+    });
+  }
 
   var $ = function(id){ return document.getElementById(id); };
   var brl = function(v){ return (Number(v)||0).toLocaleString("pt-BR",{style:"currency",currency:"BRL"}); };
@@ -573,8 +600,9 @@ footer { margin-top: 56px; color: var(--mut); font-size: 14px; text-align: cente
     vouchers = Array.isArray(svV) && svV.length ? svV : DEFAULT_VOUCHERS;
   } catch(e){ vouchers = DEFAULT_VOUCHERS; }
 
-  function saveVouchers(){
+  function saveVouchers(syncRemote){
     try { localStorage.setItem(VOUCHER_KEY, JSON.stringify(vouchers)); } catch(e){}
+    if(syncRemote) postToSheets({ action: "sync_vouchers", items: vouchers });
   }
 
   function renderVouchers(){
@@ -598,7 +626,7 @@ footer { margin-top: 56px; color: var(--mut); font-size: 14px; text-align: cente
     list.querySelectorAll("[data-vdel]").forEach(function(btn){
       btn.addEventListener("click", function(){
         vouchers.splice(Number(btn.getAttribute("data-vdel")), 1);
-        saveVouchers();
+        saveVouchers(true);
         renderVouchers();
       });
     });
@@ -622,7 +650,7 @@ footer { margin-top: 56px; color: var(--mut); font-size: 14px; text-align: cente
     vouchers.push({ cat: cat, title: title, code: code });
     $("vTitle").value = "";
     $("vCode").value = "";
-    saveVouchers();
+    saveVouchers(true);
     renderVouchers();
   });
   renderVouchers();
@@ -675,6 +703,7 @@ footer { margin-top: 56px; color: var(--mut); font-size: 14px; text-align: cente
         bagChecked[k] = cb.checked;
         cb.parentElement.classList.toggle("done", cb.checked);
         try { localStorage.setItem(BAG_KEY, JSON.stringify(bagChecked)); } catch(e){}
+        postToSheets({ action: "sync_mala", items: bagChecked });
       });
     });
   }
@@ -738,6 +767,7 @@ footer { margin-top: 56px; color: var(--mut); font-size: 14px; text-align: cente
     var id = getSheetId();
     $("btnOpenSheet").href = "https://docs.google.com/spreadsheets/d/" + id + "/edit";
     $("sheetInput").value = "https://docs.google.com/spreadsheets/d/" + id + "/edit";
+    $("webAppInput").value = getWebAppUrl();
   }
 
   function cellStr(c){
@@ -1008,6 +1038,7 @@ footer { margin-top: 56px; color: var(--mut); font-size: 14px; text-align: cente
       item.done = e.target.checked; localSt[item.texto] = e.target.checked;
       try { localStorage.setItem(CK_KEY, JSON.stringify(localSt)); } catch(err){}
       updateProg();
+      postToSheets({ action: "toggle_checklist", texto: item.texto, done: item.done });
     };
     updateProg();
 
@@ -1088,9 +1119,51 @@ footer { margin-top: 56px; color: var(--mut); font-size: 14px; text-align: cente
 
     try {
       var tabs = ["Config", "Cofrinho", "Roteiro", "Orcamento", "Checklist"];
-      var results = await Promise.all(tabs.map(function(t){ return fetchTab(sheetId, t); }));
+      var results = await Promise.all([
+        fetchTab(sheetId, "Config"),
+        fetchTab(sheetId, "Cofrinho"),
+        fetchTab(sheetId, "Roteiro"),
+        fetchTab(sheetId, "Orcamento"),
+        fetchTab(sheetId, "Checklist"),
+        fetchTab(sheetId, "Vouchers").catch(function(){ return null; }),
+        fetchTab(sheetId, "Mala").catch(function(){ return null; })
+      ]);
       STATE = parseAllTabs({Config: results[0], Cofrinho: results[1], Roteiro: results[2], Orcamento: results[3], Checklist: results[4]});
       try { localStorage.setItem(CACHE_KEY, JSON.stringify({ ts: Date.now(), data: STATE })); } catch(e){}
+
+      var vRows = results[5];
+      if(vRows && vRows.length > 1){
+        var sheetV = [];
+        for(var vi = 1; vi < vRows.length; vi++){
+          var vr = vRows[vi];
+          var vTit = cellStr(vr[1]);
+          var vCod = cellStr(vr[2]);
+          if(vTit && vCod){
+            sheetV.push({ cat: cellStr(vr[0]) || "✈️ Voo", title: vTit, code: vCod });
+          }
+        }
+        if(sheetV.length > 0){
+          vouchers = sheetV;
+          saveVouchers(false);
+          renderVouchers();
+        }
+      }
+
+      var mRows = results[6];
+      if(mRows && mRows.length > 1){
+        var remoteBag = {};
+        for(var mi = 1; mi < mRows.length; mi++){
+          var mr = mRows[mi];
+          var mKey = cellStr(mr[0]);
+          var mDone = cellStr(mr[1]).toUpperCase();
+          if(mKey && (mDone === "SIM" || mDone === "TRUE" || mDone === "OK")){
+            remoteBag[mKey] = true;
+          }
+        }
+        bagChecked = remoteBag;
+        try { localStorage.setItem(BAG_KEY, JSON.stringify(bagChecked)); } catch(e){}
+        renderBag();
+      }
 
       renderAll(true);
       dot.className = "status-dot ok"; txt.textContent = "Sincronizado";
@@ -1115,7 +1188,11 @@ footer { margin-top: 56px; color: var(--mut); font-size: 14px; text-align: cente
   $("btnToggleCfg").addEventListener("click", function(){ $("cfgPanel").classList.toggle("show"); });
   $("btnSaveSheet").addEventListener("click", function(){
     var newId = extractSheetId($("sheetInput").value);
-    try { localStorage.setItem(SHEET_KEY, newId); } catch(e){}
+    var newWebApp = $("webAppInput").value.trim();
+    try {
+      localStorage.setItem(SHEET_KEY, newId);
+      localStorage.setItem(WEBAPP_KEY, newWebApp);
+    } catch(e){}
     updateSheetLinks(); $("cfgPanel").classList.remove("show"); syncFromSheets();
   });
 

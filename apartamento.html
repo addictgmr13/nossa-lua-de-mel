@@ -186,8 +186,13 @@ footer { margin-top: 56px; color: var(--mut); font-size: 14px; text-align: cente
     </div>
     <div class="cfg-panel" id="cfgPanel">
       <h3 style="margin-top:0">Vínculo com Google Sheets</h3>
-      <div class="cfg-row">
+      <label style="font-size:12px; color:var(--mut); display:block; margin-top:8px;">Link da Planilha (Leitura):</label>
+      <div class="cfg-row" style="margin-top:6px;">
         <input type="text" id="sheetInput" placeholder="Cole o link do Google Sheets aqui">
+      </div>
+      <label style="font-size:12px; color:var(--mut); display:block; margin-top:14px;">URL do Web App Apps Script (Gravação Automática):</label>
+      <div class="cfg-row" style="margin-top:6px;">
+        <input type="text" id="webAppInput" placeholder="https://script.google.com/macros/s/.../exec">
         <button type="button" class="btn btn-primary" id="btnSaveSheet">Salvar</button>
       </div>
     </div>
@@ -355,8 +360,30 @@ footer { margin-top: 56px; color: var(--mut); font-size: 14px; text-align: cente
 (function(){
   var DEFAULT_SHEET_ID = "12BraMQBBj5ibVlncKVWJ1BtcWo3UH2P7n0oj1WaJI-c";
   var SHEET_KEY = "flavio_gabriela_apto_sheet_v1";
+  var WEBAPP_KEY = "flavio_gabriela_apto_webapp_v1";
   var CHK_KEY = "flavio_gabriela_visit_chk_v1";
   var ENXOVAL_KEY = "flavio_gabriela_enxoval_v1";
+
+  function getWebAppUrl(){
+    try { return localStorage.getItem(WEBAPP_KEY) || ""; } catch(e){ return ""; }
+  }
+
+  function postToSheets(payload){
+    var url = getWebAppUrl();
+    if(!url) return;
+    var txt = document.getElementById("statusText");
+    if(txt) txt.textContent = "Salvando...";
+    fetch(url, {
+      method: "POST",
+      mode: "no-cors",
+      headers: { "Content-Type": "text/plain;charset=utf-8" },
+      body: JSON.stringify(payload)
+    }).then(function(){
+      if(txt) txt.textContent = "Sincronizado";
+    }).catch(function(){
+      if(txt) txt.textContent = "Erro ao salvar";
+    });
+  }
 
   var STATE = {
     mediaApto: 350000,
@@ -382,6 +409,7 @@ footer { margin-top: 56px; color: var(--mut); font-size: 14px; text-align: cente
     var id = getSheetId();
     document.getElementById("btnOpenSheet").href = "https://docs.google.com/spreadsheets/d/" + id + "/edit";
     document.getElementById("sheetInput").value = "https://docs.google.com/spreadsheets/d/" + id + "/edit";
+    document.getElementById("webAppInput").value = getWebAppUrl();
   }
 
   function cellStr(c){
@@ -605,8 +633,9 @@ footer { margin-top: 56px; color: var(--mut); font-size: 14px; text-align: cente
     enxovalItems = Array.isArray(svE) && svE.length ? svE : DEFAULT_ENXOVAL;
   } catch(e){ enxovalItems = DEFAULT_ENXOVAL; }
 
-  function saveEnxoval(){
+  function saveEnxoval(syncRemote){
     try { localStorage.setItem(ENXOVAL_KEY, JSON.stringify(enxovalItems)); } catch(e){}
+    if(syncRemote) postToSheets({ action: "sync_enxoval", items: enxovalItems });
   }
 
   function renderEnxoval(){
@@ -634,7 +663,7 @@ footer { margin-top: 56px; color: var(--mut); font-size: 14px; text-align: cente
       cb.addEventListener("change", function(){
         var idx = Number(cb.getAttribute("data-eidx"));
         enxovalItems[idx].done = cb.checked;
-        saveEnxoval();
+        saveEnxoval(true);
         renderEnxoval();
       });
     });
@@ -642,7 +671,7 @@ footer { margin-top: 56px; color: var(--mut); font-size: 14px; text-align: cente
     list.querySelectorAll("[data-edel]").forEach(function(btn){
       btn.addEventListener("click", function(){
         enxovalItems.splice(Number(btn.getAttribute("data-edel")), 1);
-        saveEnxoval();
+        saveEnxoval(true);
         renderEnxoval();
       });
     });
@@ -656,7 +685,7 @@ footer { margin-top: 56px; color: var(--mut); font-size: 14px; text-align: cente
     enxovalItems.push({ cat: cat, name: name, price: price, done: false });
     document.getElementById("enxName").value = "";
     document.getElementById("enxPrice").value = "";
-    saveEnxoval();
+    saveEnxoval(true);
     renderEnxoval();
   });
   renderEnxoval();
@@ -673,7 +702,9 @@ footer { margin-top: 56px; color: var(--mut); font-size: 14px; text-align: cente
     try {
       var results = await Promise.all([
         fetchTab(sheetId, "Cofrinho Inter"),
-        fetchTab(sheetId, "Imóveis")
+        fetchTab(sheetId, "Imóveis"),
+        fetchTab(sheetId, "Enxoval").catch(function(){ return null; }),
+        fetchTab(sheetId, "Checklist Visita").catch(function(){ return null; })
       ]);
 
       var cofRows = results[0];
@@ -743,6 +774,47 @@ footer { margin-top: 56px; color: var(--mut); font-size: 14px; text-align: cente
 
       if(sheetImov.length > 0) STATE.aptos = sheetImov;
 
+      var enxRows = results[2];
+      if(enxRows && enxRows.length > 1){
+        var sheetEnx = [];
+        for(var eIdx = 1; eIdx < enxRows.length; eIdx++){
+          var er = enxRows[eIdx];
+          var eName = cellStr(er[1]);
+          if(!eName) continue;
+          var eDoneStr = cellStr(er[3]).toUpperCase();
+          sheetEnx.push({
+            cat: cellStr(er[0]) || "🛋️ Móveis",
+            name: eName,
+            price: cellNum(er[2]),
+            done: (eDoneStr === "SIM" || eDoneStr === "TRUE" || eDoneStr === "OK")
+          });
+        }
+        if(sheetEnx.length > 0){
+          enxovalItems = sheetEnx;
+          saveEnxoval(false);
+          renderEnxoval();
+        }
+      }
+
+      var vChkRows = results[3];
+      if(vChkRows && vChkRows.length > 1){
+        var remoteChk = {};
+        for(var vIdx = 1; vIdx < vChkRows.length; vIdx++){
+          var vr = vChkRows[vIdx];
+          var vKey = cellStr(vr[0]);
+          var vDone = cellStr(vr[1]).toUpperCase();
+          if(vKey && (vDone === "SIM" || vDone === "TRUE" || vDone === "OK")){
+            remoteChk[vKey] = true;
+          }
+        }
+        try { localStorage.setItem(CHK_KEY, JSON.stringify(remoteChk)); } catch(e){}
+        document.querySelectorAll("#visitChecklist input[type='checkbox']").forEach(function(cb){
+          var k = cb.getAttribute("data-chk");
+          cb.checked = !!remoteChk[k];
+          cb.parentElement.classList.toggle("done", cb.checked);
+        });
+      }
+
       document.getElementById("simEntrada").value = STATE.metaEntrada;
       calcSimulador();
 
@@ -773,6 +845,7 @@ footer { margin-top: 56px; color: var(--mut); font-size: 14px; text-align: cente
         saved[key] = cb.checked;
         cb.parentElement.classList.toggle("done", cb.checked);
         try { localStorage.setItem(CHK_KEY, JSON.stringify(saved)); } catch(e){}
+        postToSheets({ action: "sync_visit_chk", items: saved });
       });
     });
   }
@@ -809,7 +882,11 @@ footer { margin-top: 56px; color: var(--mut); font-size: 14px; text-align: cente
   });
   document.getElementById("btnSaveSheet").addEventListener("click", function(){
     var newId = extractSheetId(document.getElementById("sheetInput").value);
-    try { localStorage.setItem(SHEET_KEY, newId); } catch(e){}
+    var newWebApp = document.getElementById("webAppInput").value.trim();
+    try {
+      localStorage.setItem(SHEET_KEY, newId);
+      localStorage.setItem(WEBAPP_KEY, newWebApp);
+    } catch(e){}
     updateSheetLinks();
     document.getElementById("cfgPanel").classList.remove("show");
     syncFromSheets();
