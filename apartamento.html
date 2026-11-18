@@ -102,19 +102,11 @@ h3 { font-size: 18px; font-weight: 700; margin-bottom: 12px; color: var(--ink); 
 .filter-btn.active { background: var(--primary); color: #fff; border-color: var(--primary); }
 
 .tblwrap { overflow-x: auto; border-radius: 16px; border: 1px solid var(--line); background: var(--bg); }
-table { width: 100%; border-collapse: collapse; font-size: 14px; min-width: 920px; text-align: left; }
+table { width: 100%; border-collapse: collapse; font-size: 14px; min-width: 820px; text-align: left; }
 th { background: var(--primary-light); color: var(--primary); font-weight: 800; padding: 14px 16px; font-size: 12px; text-transform: uppercase; letter-spacing: 0.05em; border-bottom: 1px solid var(--line); white-space: nowrap; }
 td { padding: 14px 16px; border-bottom: 1px solid var(--line); vertical-align: middle; font-weight: 500; }
 tr:last-child td { border-bottom: none; }
 .obs-sub { display: block; font-size: 12px; color: var(--mut); font-weight: 400; margin-top: 4px; line-height: 1.4; max-width: 340px; }
-
-/* Modo Visita no Celular (Estrelas + Anotações Rápidas + Comparar) */
-.stars { display: inline-flex; gap: 2px; cursor: pointer; font-size: 18px; user-select: none; }
-.star { color: #d6c8c6; transition: color 0.15s; }
-.star.on { color: #f59e0b; }
-.note-box { margin-top: 8px; display: flex; gap: 6px; align-items: center; }
-.note-input { font: inherit; font-size: 12px; padding: 6px 10px; border-radius: 8px; border: 1px solid var(--line); background: var(--card); color: var(--ink); width: 100%; max-width: 280px; }
-.note-input:focus { outline: none; border-color: var(--primary); }
 
 .cmp-check { width: 18px; height: 18px; accent-color: var(--primary); cursor: pointer; }
 
@@ -265,7 +257,7 @@ footer { margin-top: 56px; color: var(--mut); font-size: 14px; text-align: cente
   </section>
 
   <section>
-    <h2>🏢 Curadoria de Apartamentos & Modo Visita</h2>
+    <h2>🏢 Curadoria de Apartamentos</h2>
     
     <!-- Resumo da Curadoria -->
     <div class="stats" style="margin-bottom: 20px;">
@@ -275,7 +267,7 @@ footer { margin-top: 56px; color: var(--mut); font-size: 14px; text-align: cente
     </div>
 
     <div class="card">
-      <p style="color: var(--mut); margin-bottom: 16px; font-size: 15px;">Dê notas de 1 a 5 estrelas, escreva anotações rápidas na hora da visita (salvas automaticamente no celular) e marque até 3 imóveis para comparar lado a lado.</p>
+      <p style="color: var(--mut); margin-bottom: 16px; font-size: 15px;">Acompanhe os imóveis selecionados na planilha e marque até 3 opções na coluna <strong>Cmp</strong> para comparar valores e parcelas lado a lado.</p>
       
       <div class="filter-bar" id="filterBar">
         <div class="filter-group">
@@ -291,9 +283,8 @@ footer { margin-top: 56px; color: var(--mut); font-size: 14px; text-align: cente
           <thead>
             <tr>
               <th style="width:40px;">Cmp</th>
-              <th>Imóvel / Bairro & Anotações da Visita</th>
+              <th>Imóvel / Bairro</th>
               <th>Valor Estimado</th>
-              <th>Nota</th>
               <th>Interesse</th>
               <th>Visita</th>
               <th>Data</th>
@@ -365,7 +356,6 @@ footer { margin-top: 56px; color: var(--mut); font-size: 14px; text-align: cente
   var DEFAULT_SHEET_ID = "12BraMQBBj5ibVlncKVWJ1BtcWo3UH2P7n0oj1WaJI-c";
   var SHEET_KEY = "flavio_gabriela_apto_sheet_v1";
   var CHK_KEY = "flavio_gabriela_visit_chk_v1";
-  var VISIT_META_KEY = "flavio_gabriela_visit_meta_v1";
   var ENXOVAL_KEY = "flavio_gabriela_enxoval_v1";
 
   var STATE = {
@@ -377,13 +367,6 @@ footer { margin-top: 56px; color: var(--mut); font-size: 14px; text-align: cente
     filtroAtual: "todos",
     selecionadosCmp: []
   };
-
-  /* Metadados locais por imóvel (estrelas + anotação rápida da visita) */
-  var visitMeta = {};
-  try { visitMeta = JSON.parse(localStorage.getItem(VISIT_META_KEY) || "{}"); } catch(e){}
-  function saveVisitMeta(){
-    try { localStorage.setItem(VISIT_META_KEY, JSON.stringify(visitMeta)); } catch(e){}
-  }
 
   function getSheetId(){
     try { return localStorage.getItem(SHEET_KEY) || DEFAULT_SHEET_ID; } catch(e){ return DEFAULT_SHEET_ID; }
@@ -484,22 +467,19 @@ footer { margin-top: 56px; color: var(--mut); font-size: 14px; text-align: cente
     var meses = anos * 12;
     var taxaMensal = Math.pow(1 + taxaAnual / 100, 1 / 12) - 1;
 
-    var selectedObjs = STATE.aptos.filter(function(a){ return STATE.selecionadosCmp.indexOf(a.titulo) > -1; });
+    var selectedObjs = STATE.aptos.filter(function(a){ return STATE.selecionadosCmp.indexOf(a.uid) > -1; });
     grid.innerHTML = selectedObjs.map(function(item){
-      var meta = visitMeta[item.titulo] || { stars: 0, note: "" };
       var fin = Math.max((item.preco || 0) - STATE.metaEntrada, 0);
       var sac1 = fin > 0 ? (fin / meses) + (fin * taxaMensal) : 0;
       var docEst = (item.preco || 0) * 0.045;
-      var starsStr = meta.stars > 0 ? ("⭐".repeat(meta.stars)) : "Sem nota";
 
       return '<div class="cmp-card">' +
         '<h4>' + item.titulo + '</h4>' +
         '<div class="cmp-row"><span>Valor do Imóvel</span><strong>' + (item.preco ? brl(item.preco) : 'N/I') + '</strong></div>' +
         '<div class="cmp-row"><span>1ª Parcela SAC Est.</span><strong>' + brl(sac1) + '</strong></div>' +
         '<div class="cmp-row"><span>Doc. BH (4,5%)</span><strong>' + brl(docEst) + '</strong></div>' +
-        '<div class="cmp-row"><span>Nossa Nota</span><strong>' + starsStr + '</strong></div>' +
         '<div class="cmp-row"><span>Status</span><strong>' + (item.status || 'Analisando') + '</strong></div>' +
-        (meta.note ? '<p style="font-size:12px; color:var(--mut); margin-top:8px;">📝 ' + meta.note + '</p>' : '') +
+        (item.obs ? '<p style="font-size:12px; color:var(--mut); margin-top:8px;">' + item.obs + '</p>' : '') +
       '</div>';
     }).join("");
   }
@@ -549,7 +529,7 @@ footer { margin-top: 56px; color: var(--mut); font-size: 14px; text-align: cente
     var tbody = document.getElementById("listaAptos");
     
     if(aptosFiltrados.length === 0){
-      tbody.innerHTML = '<tr><td colspan="8" style="text-align: center; color: var(--mut); padding: 24px;">Nenhum imóvel encontrado para este filtro.</td></tr>';
+      tbody.innerHTML = '<tr><td colspan="7" style="text-align: center; color: var(--mut); padding: 24px;">Nenhum imóvel encontrado para este filtro.</td></tr>';
       return;
     }
 
@@ -577,54 +557,18 @@ footer { margin-top: 56px; color: var(--mut); font-size: 14px; text-align: cente
       var cleanLink = item.link || "#";
       if(cleanLink && cleanLink !== "#" && !cleanLink.startsWith("http")) cleanLink = "https://" + cleanLink;
 
-      var meta = visitMeta[item.titulo] || { stars: 0, note: "" };
-      var starsHtml = '<div class="stars" data-tit="'+item.titulo.replace(/"/g,'&quot;')+'">';
-      for(var s=1; s<=5; s++){
-        starsHtml += '<span class="star'+(s <= meta.stars ? ' on' : '')+'" data-val="'+s+'">★</span>';
-      }
-      starsHtml += '</div>';
-
-      var isCmpChecked = STATE.selecionadosCmp.indexOf(item.titulo) > -1;
+      var isCmpChecked = STATE.selecionadosCmp.indexOf(item.uid) > -1;
 
       return '<tr>' +
-        '<td><input type="checkbox" class="cmp-check" data-cmptit="'+item.titulo.replace(/"/g,'&quot;')+'"'+(isCmpChecked?' checked':'')+'></td>' +
-        '<td><strong>' + item.titulo + '</strong>' + obsHtml +
-          '<div class="note-box"><input type="text" class="note-input" data-notetit="'+item.titulo.replace(/"/g,'&quot;')+'" placeholder="📝 Anotação rápida da visita..." value="'+(meta.note || '').replace(/"/g,'&quot;')+'"></div>' +
-        '</td>' +
+        '<td><input type="checkbox" class="cmp-check" data-cmptit="'+item.uid.replace(/"/g,'&quot;')+'"'+(isCmpChecked?' checked':'')+'></td>' +
+        '<td><strong>' + item.titulo + '</strong>' + obsHtml + '</td>' +
         '<td style="white-space: nowrap;">' + (item.preco ? brl(item.preco) : 'Não informado') + '</td>' +
-        '<td>' + starsHtml + '</td>' +
         '<td><span class="badge ' + badgeClass + '">' + badgeText + '</span></td>' +
         '<td>' + visBadge + '</td>' +
         '<td>' + dataHtml + '</td>' +
         '<td><a href="' + cleanLink + '" target="_blank" class="link-apto">🔗 Abrir Anúncio</a></td>' +
       '</tr>';
     }).join("");
-
-    /* Eventos das estrelas */
-    tbody.querySelectorAll(".stars").forEach(function(box){
-      var tit = box.getAttribute("data-tit");
-      box.querySelectorAll(".star").forEach(function(stEl){
-        stEl.addEventListener("click", function(){
-          var val = Number(stEl.getAttribute("data-val"));
-          if(!visitMeta[tit]) visitMeta[tit] = { stars: 0, note: "" };
-          visitMeta[tit].stars = (visitMeta[tit].stars === val) ? 0 : val;
-          saveVisitMeta();
-          render();
-          renderComparePanel();
-        });
-      });
-    });
-
-    /* Eventos das anotações rápidas */
-    tbody.querySelectorAll(".note-input").forEach(function(inp){
-      var tit = inp.getAttribute("data-notetit");
-      inp.addEventListener("input", function(){
-        if(!visitMeta[tit]) visitMeta[tit] = { stars: 0, note: "" };
-        visitMeta[tit].note = inp.value;
-        saveVisitMeta();
-        renderComparePanel();
-      });
-    });
 
     /* Eventos de seleção para comparar */
     tbody.querySelectorAll(".cmp-check").forEach(function(cb){
@@ -785,6 +729,7 @@ footer { margin-top: 56px; color: var(--mut); font-size: 14px; text-align: cente
           var obs = cellStr(r[6]);
 
           sheetImov.push({
+            uid: tit + "|" + preco + "|" + (lnk || j),
             titulo: tit,
             preco: preco,
             status: st,
