@@ -29,9 +29,15 @@
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
 body { font-family: 'Plus Jakarta Sans', system-ui, sans-serif; background: var(--bg); color: var(--ink); line-height: 1.6; }
-.wrap { max-width: 1060px; margin: 0 auto; padding: 24px 20px 80px; }
+.wrap { max-width: 1080px; margin: 0 auto; padding: 20px 20px 80px; }
 
-header { padding: 20px 0 32px; text-align: center; position: relative; }
+/* Barra de Navegação Unificada */
+.top-nav { display: flex; justify-content: center; gap: 10px; margin-bottom: 24px; background: var(--card); padding: 8px; border-radius: 99px; border: 1px solid var(--line); box-shadow: 0 4px 16px var(--shadow); max-width: 420px; margin-left: auto; margin-right: auto; }
+.top-nav a { flex: 1; text-align: center; padding: 10px 18px; border-radius: 99px; font-size: 14px; font-weight: 700; text-decoration: none; color: var(--mut); transition: all 0.2s; }
+.top-nav a:hover { color: var(--primary); }
+.top-nav a.active { background: linear-gradient(135deg, var(--primary), var(--primary-hover)); color: #fff; box-shadow: 0 4px 12px rgba(155, 79, 83, 0.25); }
+
+header { padding: 12px 0 32px; text-align: center; position: relative; }
 .eyebrow { font-size: 13px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--primary); font-weight: 800; margin-bottom: 8px; display: block;}
 h1 { font-family: 'Playfair Display', serif; font-size: clamp(34px, 5vw, 48px); font-weight: 700; line-height: 1.15; margin: 0 0 12px; color: var(--primary); }
 .sub { color: var(--mut); font-size: 16px; font-weight: 500; max-width: 700px; margin: 0 auto; font-family: 'Playfair Display', serif; font-style: italic;}
@@ -54,7 +60,7 @@ h1 { font-family: 'Playfair Display', serif; font-size: clamp(34px, 5vw, 48px); 
 section { margin-top: 40px; }
 .card { background: var(--card); border: 1px solid var(--line); border-radius: 24px; padding: 32px; box-shadow: 0 12px 40px var(--shadow); }
 
-.stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 16px; margin-bottom: 24px; }
+.stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 16px; margin-bottom: 24px; }
 .stat { background: var(--card); border: 1px solid var(--line); border-radius: 20px; padding: 20px; box-shadow: 0 4px 12px var(--shadow); position: relative; overflow: hidden; }
 .stat::after { content: ''; position: absolute; top: 0; left: 0; width: 4px; height: 100%; background: var(--primary); border-radius: 4px 0 0 4px; opacity: 0.8;}
 .stat:nth-child(2)::after { background: #3b82f6; }
@@ -71,11 +77,28 @@ section { margin-top: 40px; }
 h2 { font-family: 'Playfair Display', serif; font-size: 24px; font-weight: 700; margin-bottom: 20px; color: var(--primary); display: flex; align-items: center; gap: 10px; }
 h3 { font-size: 18px; font-weight: 700; margin-bottom: 12px; color: var(--ink); }
 
+/* Simulador de Financiamento */
+.sim-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; margin-bottom: 24px; }
+.field { display: flex; flex-direction: column; gap: 6px; }
+.field label { font-size: 12px; font-weight: 700; text-transform: uppercase; color: var(--mut); }
+.field input, .field select { font: inherit; font-size: 15px; font-weight: 600; padding: 12px 14px; border-radius: 12px; border: 1.5px solid var(--line); background: var(--bg); color: var(--ink); }
+.field input:focus, .field select:focus { outline: none; border-color: var(--primary); }
+.sim-results { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 14px; background: var(--primary-light); padding: 20px; border-radius: 18px; border: 1px solid var(--line); }
+.sim-res-item small { display: block; font-size: 11px; font-weight: 700; text-transform: uppercase; color: var(--primary); margin-bottom: 4px; }
+.sim-res-item b { font-size: 20px; font-weight: 800; color: var(--ink); font-family: 'Playfair Display', serif; }
+
+/* Filtros da Tabela */
+.filter-bar { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 18px; }
+.filter-btn { font: inherit; font-size: 13px; font-weight: 700; padding: 8px 16px; border-radius: 99px; border: 1px solid var(--line); background: var(--bg); color: var(--mut); cursor: pointer; transition: all 0.2s; }
+.filter-btn:hover { border-color: var(--primary); color: var(--primary); }
+.filter-btn.active { background: var(--primary); color: #fff; border-color: var(--primary); }
+
 .tblwrap { overflow-x: auto; border-radius: 16px; border: 1px solid var(--line); background: var(--bg); }
 table { width: 100%; border-collapse: collapse; font-size: 14px; min-width: 780px; text-align: left; }
 th { background: var(--primary-light); color: var(--primary); font-weight: 800; padding: 14px 16px; font-size: 13px; text-transform: uppercase; letter-spacing: 0.05em; border-bottom: 1px solid var(--line); white-space: nowrap; }
 td { padding: 14px 16px; border-bottom: 1px solid var(--line); vertical-align: middle; font-weight: 500; }
 tr:last-child td { border-bottom: none; }
+.obs-sub { display: block; font-size: 12px; color: var(--mut); font-weight: 400; margin-top: 4px; line-height: 1.4; max-width: 380px; }
 
 .badge { display: inline-block; padding: 6px 12px; border-radius: 99px; font-size: 12px; font-weight: 700; text-align: center; white-space: nowrap; }
 .badge-sim { background: #d1fae5; color: #065f46; }
@@ -90,15 +113,26 @@ tr:last-child td { border-bottom: none; }
 .link-apto { color: var(--primary); font-weight: 700; text-decoration: none; display: inline-flex; align-items: center; gap: 6px; white-space: nowrap; }
 .link-apto:hover { text-decoration: underline; }
 
-.nav-back { display: inline-flex; align-items: center; gap: 8px; color: var(--primary); font-weight: 700; text-decoration: none; margin-bottom: 20px; font-size: 14px; }
-.nav-back:hover { text-decoration: underline; }
+/* Checklist de Visita Retrátil */
+details.visit-guide { background: var(--card); border: 1px solid var(--line); border-radius: 20px; padding: 20px 24px; box-shadow: 0 6px 24px var(--shadow); }
+details.visit-guide summary { font-family: 'Playfair Display', serif; font-size: 20px; font-weight: 700; color: var(--primary); cursor: pointer; list-style: none; display: flex; justify-content: space-between; align-items: center; }
+details.visit-guide summary::-webkit-details-marker { display: none; }
+details.visit-guide summary::after { content: '+'; font-size: 24px; font-family: 'Plus Jakarta Sans', sans-serif; transition: transform 0.2s; }
+details.visit-guide[open] summary::after { content: '−'; }
+.checklist-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; margin-top: 20px; padding-top: 20px; border-top: 1px solid var(--line); }
+.chk-item { display: flex; align-items: flex-start; gap: 10px; font-size: 14px; color: var(--ink); background: var(--bg); padding: 12px 14px; border-radius: 12px; border: 1px solid var(--line); cursor: pointer; }
+.chk-item input[type="checkbox"] { accent-color: var(--primary); width: 18px; height: 18px; margin-top: 2px; flex-shrink: 0; }
+.chk-item.done span { text-decoration: line-through; color: var(--mut); }
 
 footer { margin-top: 56px; color: var(--mut); font-size: 14px; text-align: center; font-weight: 600; font-family: 'Playfair Display', serif; }
 </style>
 </head>
 <body>
 <div class="wrap">
-  <a href="index.html" class="nav-back">← Voltar para o site da Lua de Mel</a>
+  <nav class="top-nav">
+    <a href="index.html">✈️ Lua de Mel</a>
+    <a href="apartamento.html" class="active">🏡 Nosso Apartamento</a>
+  </nav>
   
   <header>
     <span class="eyebrow">Nosso Novo Sonho</span>
@@ -132,19 +166,68 @@ footer { margin-top: 56px; color: var(--mut); font-size: 14px; text-align: cente
       <div class="stat"><small>Meta Entrada</small><b id="sMetaEntrada">R$ 70.000,00</b></div>
       <div class="stat"><small>Meta Documentação</small><b id="sMetaDoc">R$ 15.750,00</b></div>
       <div class="stat"><small>Meta Total</small><b id="sMeta">R$ 85.750,00</b></div>
-      <div class="stat"><small>Saldo no Inter</small><b id="sSaldo">R$ 5.420,00</b></div>
+      <div class="stat"><small>Saldo no Inter</small><b id="sSaldo">R$ 68.939,40</b></div>
     </div>
     <div class="card">
-      <div class="row"><span id="barL">R$ 5.420,00</span><span id="barR">Faltam R$ 80.330,00</span></div>
-      <div class="bar"><i id="bar" style="width: 6.3%"></i></div>
+      <div class="row"><span id="barL">R$ 68.939,40</span><span id="barR">Faltam R$ 16.810,60</span></div>
+      <div class="bar"><i id="bar" style="width: 80.4%"></i></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>🧮 Simulador Rápido de Financiamento</h2>
+    <div class="card">
+      <div class="sim-grid">
+        <div class="field">
+          <label for="simValor">Valor do Imóvel (R$)</label>
+          <input type="number" id="simValor" value="350000" step="5000">
+        </div>
+        <div class="field">
+          <label for="simEntrada">Valor da Entrada (R$)</label>
+          <input type="number" id="simEntrada" value="70000" step="5000">
+        </div>
+        <div class="field">
+          <label for="simJuros">Taxa de Juros (% a.a.)</label>
+          <input type="number" id="simJuros" value="10.2" step="0.1">
+        </div>
+        <div class="field">
+          <label for="simPrazo">Prazo (Anos)</label>
+          <select id="simPrazo">
+            <option value="20">20 anos (240 meses)</option>
+            <option value="25">25 anos (300 meses)</option>
+            <option value="30">30 anos (360 meses)</option>
+            <option value="35" selected>35 anos (420 meses)</option>
+          </select>
+        </div>
+      </div>
+      <div class="sim-results">
+        <div class="sim-res-item"><small>Valor Financiado</small><b id="resFinanciado">R$ 280.000,00</b></div>
+        <div class="sim-res-item"><small>1ª Parcela (SAC)</small><b id="resSac">R$ 3.046,67</b></div>
+        <div class="sim-res-item"><small>Parcela Fixa (PRICE)</small><b id="resPrice">R$ 2.448,32</b></div>
+        <div class="sim-res-item"><small>Renda Mínima Sugerida</small><b id="resRenda">R$ 10.155,56</b></div>
+      </div>
     </div>
   </section>
 
   <section>
     <h2>🏢 Curadoria de Apartamentos</h2>
+    
+    <!-- Resumo da Curadoria -->
+    <div class="stats" style="margin-bottom: 20px;">
+      <div class="stat"><small>Imóveis Avaliados</small><b id="cTotal">0</b></div>
+      <div class="stat"><small>Visitas Agendadas</small><b id="cVisitas">0</b></div>
+      <div class="stat"><small>Valor Médio Selecionados</small><b id="cMedia">R$ 0,00</b></div>
+    </div>
+
     <div class="card">
-      <p style="color: var(--mut); margin-bottom: 20px; font-size: 15px;">Estes imóveis são sincronizados automaticamente da nossa planilha oficial. Para adicionar novos imóveis ou alterar status, basta editar diretamente na planilha!</p>
+      <p style="color: var(--mut); margin-bottom: 16px; font-size: 15px;">Imóveis sincronizados automaticamente da planilha oficial. Use os filtros abaixo para facilitar durante as visitas.</p>
       
+      <div class="filter-bar" id="filterBar">
+        <button type="button" class="filter-btn active" data-filter="todos">Todos</button>
+        <button type="button" class="filter-btn" data-filter="visita">📅 Com Visita Agendada</button>
+        <button type="button" class="filter-btn" data-filter="alto">⭐ Alto Interesse / Amamos</button>
+      </div>
+
       <div class="tblwrap">
         <table>
           <thead>
@@ -165,6 +248,20 @@ footer { margin-top: 56px; color: var(--mut); font-size: 14px; text-align: cente
     </div>
   </section>
 
+  <section>
+    <details class="visit-guide">
+      <summary>📋 O que olhar na visita presencial (Checklist BH)</summary>
+      <div class="checklist-grid" id="visitChecklist">
+        <label class="chk-item"><input type="checkbox" data-chk="sol"><span><strong>Incidência de sol:</strong> Verificar se pega sol da manhã nos quartos e ventilação cruzada.</span></label>
+        <label class="chk-item"><input type="checkbox" data-chk="garagem"><span><strong>Vaga de garagem:</strong> Testar manobra, verificar se é livre ou presa e se é coberta.</span></label>
+        <label class="chk-item"><input type="checkbox" data-chk="hidraulica"><span><strong>Pressão e hidráulica:</strong> Abrir chuveiros e torneiras; checar sinais de infiltração no teto/banheiros.</span></label>
+        <label class="chk-item"><input type="checkbox" data-chk="eletrica"><span><strong>Quadro elétrico:</strong> Conferir se o disjuntor suporta ar-condicionado e chuveiro 220v.</span></label>
+        <label class="chk-item"><input type="checkbox" data-chk="barulho"><span><strong>Acústica e vizinhança:</strong> Fechar janelas para medir ruído da rua e fluxo de trânsito no horário de pico.</span></label>
+        <label class="chk-item"><input type="checkbox" data-chk="custos"><span><strong>Condomínio e IPTU:</strong> Confirmar o que está incluso no condomínio (água/gás) e fundo de reserva.</span></label>
+      </div>
+    </details>
+  </section>
+
   <footer>Feito com muito amor para Flávio e Gabriela ❤️</footer>
 </div>
 
@@ -172,13 +269,15 @@ footer { margin-top: 56px; color: var(--mut); font-size: 14px; text-align: cente
 (function(){
   var DEFAULT_SHEET_ID = "12BraMQBBj5ibVlncKVWJ1BtcWo3UH2P7n0oj1WaJI-c";
   var SHEET_KEY = "flavio_gabriela_apto_sheet_v1";
+  var CHK_KEY = "flavio_gabriela_visit_chk_v1";
 
   var STATE = {
     mediaApto: 350000,
     metaEntrada: 70000,
     metaDoc: 15750,
-    saldo: 5420,
-    aptos: []
+    saldo: 68939.40,
+    aptos: [],
+    filtroAtual: "todos"
   };
 
   function getSheetId(){
@@ -227,6 +326,35 @@ footer { margin-top: 56px; color: var(--mut); font-size: 14px; text-align: cente
 
   var brl = function(v){ return (Number(v)||0).toLocaleString("pt-BR",{style:"currency",currency:"BRL"}); };
 
+  /* Simulador de Financiamento */
+  function calcSimulador(){
+    var valor = parseFloat(document.getElementById("simValor").value) || 0;
+    var entrada = parseFloat(document.getElementById("simEntrada").value) || 0;
+    var taxaAnual = parseFloat(document.getElementById("simJuros").value) || 0;
+    var anos = parseInt(document.getElementById("simPrazo").value) || 35;
+
+    var financiado = Math.max(valor - entrada, 0);
+    var meses = anos * 12;
+    var taxaMensal = Math.pow(1 + taxaAnual / 100, 1 / 12) - 1;
+
+    var sac1 = 0;
+    var price = 0;
+    if(financiado > 0 && meses > 0){
+      var amort = financiado / meses;
+      sac1 = amort + (financiado * taxaMensal);
+      if(taxaMensal > 0){
+        price = financiado * (taxaMensal * Math.pow(1 + taxaMensal, meses)) / (Math.pow(1 + taxaMensal, meses) - 1);
+      } else {
+        price = amort;
+      }
+    }
+
+    document.getElementById("resFinanciado").textContent = brl(financiado);
+    document.getElementById("resSac").textContent = brl(sac1);
+    document.getElementById("resPrice").textContent = brl(price);
+    document.getElementById("resRenda").textContent = brl(sac1 / 0.30);
+  }
+
   function render(){
     var metaEntrada = STATE.metaEntrada;
     var metaDoc = STATE.metaDoc;
@@ -245,15 +373,38 @@ footer { margin-top: 56px; color: var(--mut); font-size: 14px; text-align: cente
     document.getElementById("barR").textContent = "Faltam " + brl(falta);
     document.getElementById("bar").style.width = Math.min(pct, 100).toFixed(2) + "%";
 
-    var aptos = STATE.aptos;
+    /* Resumo da Curadoria */
+    var todosAptos = STATE.aptos;
+    var totalAvaliados = todosAptos.length;
+    var visitasAgendadas = todosAptos.filter(function(a){ return (a.visita || "").toLowerCase() === "sim"; }).length;
+    var aptosComPreco = todosAptos.filter(function(a){ return a.preco > 0; });
+    var somaPrecos = aptosComPreco.reduce(function(acc, a){ return acc + a.preco; }, 0);
+    var mediaPrecos = aptosComPreco.length > 0 ? (somaPrecos / aptosComPreco.length) : 0;
+
+    document.getElementById("cTotal").textContent = totalAvaliados;
+    document.getElementById("cVisitas").textContent = visitasAgendadas;
+    document.getElementById("cMedia").textContent = brl(mediaPrecos);
+
+    /* Filtragem da Tabela */
+    var aptosFiltrados = todosAptos.filter(function(item){
+      if(STATE.filtroAtual === "visita"){
+        return (item.visita || "").toLowerCase() === "sim";
+      }
+      if(STATE.filtroAtual === "alto"){
+        var s = (item.status || "").toLowerCase();
+        return s.indexOf("amamos") > -1 || s.indexOf("alto") > -1;
+      }
+      return true;
+    });
+
     var tbody = document.getElementById("listaAptos");
     
-    if(aptos.length === 0){
-      tbody.innerHTML = '<tr><td colspan="6" style="text-align: center; color: var(--mut); padding: 24px;">Nenhum imóvel cadastrado na planilha.</td></tr>';
+    if(aptosFiltrados.length === 0){
+      tbody.innerHTML = '<tr><td colspan="6" style="text-align: center; color: var(--mut); padding: 24px;">Nenhum imóvel encontrado para este filtro.</td></tr>';
       return;
     }
 
-    tbody.innerHTML = aptos.map(function(item){
+    tbody.innerHTML = aptosFiltrados.map(function(item){
       var st = (item.status || "").toLowerCase();
       var badgeClass = "badge-talvez";
       var badgeText = item.status || "Analisando";
@@ -268,15 +419,17 @@ footer { margin-top: 56px; color: var(--mut); font-size: 14px; text-align: cente
         visBadge = '<span class="badge badge-sim">Sim</span>';
       }
 
-      var dataHtml = item.data 
+      var dataHtml = (vis === "sim" && item.data)
         ? '<span class="data-visita">📅 ' + item.data + '</span>' 
         : '<span class="sem-data">—</span>';
+
+      var obsHtml = item.obs ? '<span class="obs-sub">' + item.obs + '</span>' : '';
 
       var cleanLink = item.link || "#";
       if(cleanLink && cleanLink !== "#" && !cleanLink.startsWith("http")) cleanLink = "https://" + cleanLink;
 
       return '<tr>' +
-        '<td><strong>' + item.titulo + '</strong></td>' +
+        '<td><strong>' + item.titulo + '</strong>' + obsHtml + '</td>' +
         '<td style="white-space: nowrap;">' + (item.preco ? brl(item.preco) : 'Não informado') + '</td>' +
         '<td><span class="badge ' + badgeClass + '">' + badgeText + '</span></td>' +
         '<td>' + visBadge + '</td>' +
@@ -351,6 +504,7 @@ footer { margin-top: 56px; color: var(--mut); font-size: 14px; text-align: cente
           var visita = cellStr(r[3]) || "Não";
           var dataVisita = cellStr(r[4]);
           var lnk = cellStr(r[5]);
+          var obs = cellStr(r[6]);
 
           sheetImov.push({
             titulo: tit,
@@ -358,12 +512,17 @@ footer { margin-top: 56px; color: var(--mut); font-size: 14px; text-align: cente
             status: st,
             visita: visita,
             data: dataVisita,
-            link: lnk
+            link: lnk,
+            obs: obs
           });
         }
       }
 
       if(sheetImov.length > 0) STATE.aptos = sheetImov;
+
+      /* Atualiza os valores padrão do simulador com base nos dados reais */
+      document.getElementById("simEntrada").value = STATE.metaEntrada;
+      calcSimulador();
 
       dot.className = "status-dot"; dot.style.background = "var(--ok)";
       txt.textContent = "Sincronizado";
@@ -377,8 +536,42 @@ footer { margin-top: 56px; color: var(--mut); font-size: 14px; text-align: cente
     }
   }
 
+  /* Persistência do Checklist de Visita */
+  function initChecklist(){
+    var saved = {};
+    try { saved = JSON.parse(localStorage.getItem(CHK_KEY) || "{}"); } catch(e){}
+    var boxes = document.querySelectorAll("#visitChecklist input[type='checkbox']");
+    boxes.forEach(function(cb){
+      var key = cb.getAttribute("data-chk");
+      if(saved[key]){
+        cb.checked = true;
+        cb.parentElement.classList.add("done");
+      }
+      cb.addEventListener("change", function(){
+        saved[key] = cb.checked;
+        cb.parentElement.classList.toggle("done", cb.checked);
+        try { localStorage.setItem(CHK_KEY, JSON.stringify(saved)); } catch(e){}
+      });
+    });
+  }
+
   updateSheetLinks();
+  calcSimulador();
+  initChecklist();
   render();
+
+  ["simValor", "simEntrada", "simJuros", "simPrazo"].forEach(function(id){
+    document.getElementById(id).addEventListener("input", calcSimulador);
+  });
+
+  document.querySelectorAll("#filterBar .filter-btn").forEach(function(btn){
+    btn.addEventListener("click", function(){
+      document.querySelectorAll("#filterBar .filter-btn").forEach(function(b){ b.classList.remove("active"); });
+      btn.classList.add("active");
+      STATE.filtroAtual = btn.getAttribute("data-filter");
+      render();
+    });
+  });
 
   document.getElementById("btnSync").addEventListener("click", syncFromSheets);
   document.getElementById("btnToggleCfg").addEventListener("click", function(){
