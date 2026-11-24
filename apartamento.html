@@ -32,8 +32,8 @@ body { font-family: 'Plus Jakarta Sans', system-ui, sans-serif; background: var(
 .wrap { max-width: 1120px; margin: 0 auto; padding: 20px 20px 80px; }
 
 /* Barra de Navegação Unificada */
-.top-nav { display: flex; justify-content: center; gap: 10px; margin-bottom: 24px; background: var(--card); padding: 8px; border-radius: 99px; border: 1px solid var(--line); box-shadow: 0 4px 16px var(--shadow); max-width: 420px; margin-left: auto; margin-right: auto; }
-.top-nav a { flex: 1; text-align: center; padding: 10px 18px; border-radius: 99px; font-size: 14px; font-weight: 700; text-decoration: none; color: var(--mut); transition: all 0.2s; }
+.top-nav { display: flex; justify-content: center; flex-wrap: wrap; gap: 8px; margin-bottom: 24px; background: var(--card); padding: 8px; border-radius: 99px; border: 1px solid var(--line); box-shadow: 0 4px 16px var(--shadow); max-width: 620px; margin-left: auto; margin-right: auto; }
+.top-nav a { flex: 1; text-align: center; padding: 10px 14px; border-radius: 99px; font-size: 14px; font-weight: 700; text-decoration: none; color: var(--mut); transition: all 0.2s; white-space: nowrap; }
 .top-nav a:hover { color: var(--primary); }
 .top-nav a.active { background: linear-gradient(135deg, var(--primary), var(--primary-hover)); color: #fff; box-shadow: 0 4px 12px rgba(155, 79, 83, 0.25); }
 
@@ -236,6 +236,7 @@ footer { margin-top: 56px; color: var(--mut); font-size: 14px; text-align: cente
   <nav class="top-nav">
     <a href="index.html">✈️ Lua de Mel</a>
     <a href="apartamento.html" class="active">🏡 Nosso Apartamento</a>
+    <a href="cha-de-casa-nova.html">🎁 Chá de Casa Nova</a>
   </nav>
   
   <header>
@@ -471,14 +472,14 @@ footer { margin-top: 56px; color: var(--mut); font-size: 14px; text-align: cente
 
 <script>
 (function(){
-  var DEFAULT_SHEET_ID = "12BraMQBBj5ibVlncKVWJ1BtcWo3UH2P7n0oj1WaJI-c";
-  var SHEET_KEY = "flavio_gabriela_unified_sheet_v1";
-  var WEBAPP_KEY = "flavio_gabriela_unified_webapp_v1";
+  var DEFAULT_SHEET_ID = "1cy1nGaro-5XO7YyRzvRN1dZEnbAnPtqlyRKDlLLgVgs";
+  var SHEET_KEY = "flavio_gabriela_unified_sheet_v2";
+  var WEBAPP_KEY = "flavio_gabriela_unified_webapp_v2";
   var CHK_KEY = "flavio_gabriela_visit_chk_v1";
   var ENXOVAL_KEY = "flavio_gabriela_enxoval_v1";
   var DT_APTO_KEY = "flavio_gabriela_apto_dt_v1";
 
-  var DEFAULT_WEBAPP_URL = "https://script.google.com/macros/s/AKfycbx1HyO8kaXKpTV2ZdEnEgMpjFG7qE3tTigmLhgwNj7Z7fLbCOzmEghNJOAKVizS7BLU/exec";
+  var DEFAULT_WEBAPP_URL = "https://script.google.com/macros/s/AKfycbw3BZsUJLfMmXk3sHJG1R9WhEHsH2s74vL9EpzaxqWWjcvD9WzkLr1QCWgZITgZUz_ukQ/exec";
   function getWebAppUrl(){
     try { return localStorage.getItem(WEBAPP_KEY) || DEFAULT_WEBAPP_URL; } catch(e){ return DEFAULT_WEBAPP_URL; }
   }
