@@ -1,0 +1,837 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Chá de Casa Nova — Flávio e Gabriela</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;0,700;1,400;1,600&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js" defer></script>
+<style>
+:root {
+  color-scheme: light;
+  --bg: #fcf8f7;
+  --card: #ffffff;
+  --ink: #2c2423;
+  --mut: #786a68;
+  --line: #ebdcd8;
+  --shadow: rgba(120, 70, 60, 0.06);
+  --primary: #9b4f53;
+  --primary-hover: #823e42;
+  --primary-light: #f7eded;
+  --ok: #10b981;
+  --ok-light: #ecfdf5;
+  --track: #f1eae7;
+}
+
+* { box-sizing: border-box; }
+body { margin: 0; font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif; background: var(--bg); color: var(--ink); line-height: 1.6; overflow-x: clip; }
+.wrap { max-width: 1120px; margin: 0 auto; padding: 20px 20px 80px; }
+
+/* Barra de Navegação Unificada */
+.top-nav { display: flex; justify-content: center; flex-wrap: wrap; gap: 8px; margin-bottom: 24px; background: var(--card); padding: 8px; border-radius: 99px; border: 1px solid var(--line); box-shadow: 0 4px 16px var(--shadow); max-width: 620px; margin-left: auto; margin-right: auto; }
+.top-nav a { flex: 1; text-align: center; padding: 10px 14px; border-radius: 99px; font-size: 14px; font-weight: 700; text-decoration: none; color: var(--mut); transition: all 0.2s; white-space: nowrap; }
+.top-nav a:hover { color: var(--primary); }
+.top-nav a.active { background: linear-gradient(135deg, var(--primary), var(--primary-hover)); color: #fff; box-shadow: 0 4px 12px rgba(155, 79, 83, 0.25); }
+
+header { padding: 8px 0 28px; text-align: center; position: relative; }
+.eyebrow { font-size: 13px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--primary); font-weight: 800; margin-bottom: 8px; display: block; }
+h1 { font-family: 'Playfair Display', Georgia, serif; font-size: clamp(34px, 5.5vw, 50px); font-weight: 700; letter-spacing: -0.02em; line-height: 1.15; margin: 0 0 12px; color: var(--primary); }
+.sub { color: var(--mut); font-size: 16px; font-weight: 500; max-width: 720px; margin: 0 auto; font-family: 'Playfair Display', serif; font-style: italic; }
+
+.header-actions { display: flex; justify-content: center; align-items: center; gap: 10px; margin-top: 22px; flex-wrap: wrap; }
+
+.btn { font-family: inherit; font-size: 14px; font-weight: 700; padding: 11px 20px; border-radius: 14px; border: 1px solid var(--line); background: var(--card); color: var(--ink); cursor: pointer; display: inline-flex; align-items: center; justify-content: center; gap: 8px; transition: all 0.2s; box-shadow: 0 2px 6px var(--shadow); text-decoration: none; }
+.btn:hover { border-color: var(--primary); transform: translateY(-2px); box-shadow: 0 4px 12px var(--shadow); color: var(--primary); }
+.btn:active { transform: scale(0.98); }
+.btn-primary { background: linear-gradient(135deg, var(--primary), var(--primary-hover)); color: #fff; border: none; box-shadow: 0 6px 20px rgba(155, 79, 83, 0.28); }
+.btn-primary:hover { color: #fff; box-shadow: 0 8px 24px rgba(155, 79, 83, 0.38); opacity: 0.96; }
+.btn-ok { background: linear-gradient(135deg, #10b981, #059669); color: #fff; border: none; box-shadow: 0 6px 18px rgba(16, 185, 129, 0.25); }
+.btn-ok:hover { color: #fff; opacity: 0.96; }
+.btn-sm { padding: 8px 14px; font-size: 13px; border-radius: 10px; }
+
+/* Banner Pix Rápido */
+.pix-banner {
+  margin: 24px auto 0; max-width: 780px; background: linear-gradient(135deg, var(--primary), var(--primary-hover));
+  color: #fff; border-radius: 22px; padding: 20px 26px; display: flex; align-items: center; justify-content: space-between;
+  flex-wrap: wrap; gap: 16px; box-shadow: 0 10px 30px rgba(155, 79, 83, 0.25); text-align: left;
+}
+.pix-banner-info span { font-size: 11px; text-transform: uppercase; letter-spacing: 0.14em; opacity: 0.88; font-weight: 800; display: block; }
+.pix-banner-info strong { font-family: 'Playfair Display', serif; font-size: 21px; display: block; margin: 2px 0; }
+.pix-banner-info small { font-size: 13px; opacity: 0.9; display: block; }
+.pix-banner-actions { display: flex; gap: 10px; flex-wrap: wrap; }
+.btn-glass { background: rgba(255,255,255,0.18); backdrop-filter: blur(4px); border: 1px solid rgba(255,255,255,0.35); color: #fff; }
+.btn-glass:hover { background: rgba(255,255,255,0.28); color: #fff; border-color: #fff; }
+
+/* Stats */
+.stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-top: 28px; }
+@media (max-width: 768px) { .stats { grid-template-columns: repeat(2, 1fr); } }
+.stat { background: var(--card); border: 1px solid var(--line); border-radius: 20px; padding: 20px; box-shadow: 0 4px 12px var(--shadow); position: relative; overflow: hidden; }
+.stat::after { content: ''; position: absolute; top: 0; left: 0; width: 4px; height: 100%; background: var(--primary); border-radius: 4px 0 0 4px; opacity: 0.85; }
+.stat:nth-child(2)::after { background: var(--ok); }
+.stat:nth-child(3)::after { background: #3b82f6; }
+.stat:nth-child(4)::after { background: #f59e0b; }
+.stat small { display: block; color: var(--mut); font-size: 11px; font-weight: 800; letter-spacing: 0.05em; text-transform: uppercase; margin-bottom: 6px; }
+.stat b { font-size: 24px; font-weight: 800; letter-spacing: -0.02em; display: block; color: var(--ink); font-family: 'Playfair Display', serif; }
+
+/* Barra de Filtros & Busca */
+section { margin-top: 40px; }
+h2 { font-family: 'Playfair Display', Georgia, serif; font-size: 26px; font-weight: 700; letter-spacing: -0.01em; margin: 0 0 18px; color: var(--primary); display: flex; align-items: center; gap: 10px; }
+
+.toolbar { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; justify-content: space-between; margin-bottom: 20px; }
+.cat-filters { display: flex; gap: 8px; flex-wrap: wrap; }
+.filter-btn { font: inherit; font-size: 13px; font-weight: 700; padding: 8px 15px; border-radius: 99px; border: 1px solid var(--line); background: var(--card); color: var(--mut); cursor: pointer; transition: all 0.2s; }
+.filter-btn:hover { border-color: var(--primary); color: var(--primary); }
+.filter-btn.active { background: var(--primary); color: #fff; border-color: var(--primary); }
+
+.search-controls { display: flex; gap: 10px; flex-wrap: wrap; flex: 1; justify-content: flex-end; min-width: 260px; }
+.search-controls input, .search-controls select {
+  font: inherit; font-size: 14px; padding: 9px 14px; border: 1.5px solid var(--line); border-radius: 12px; background: var(--card); color: var(--ink); font-weight: 600;
+}
+.search-controls input { min-width: 210px; }
+.search-controls input:focus, .search-controls select:focus { outline: none; border-color: var(--primary); }
+
+/* Grid de Produtos */
+.gift-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(265px, 1fr)); gap: 18px; }
+.gift-card {
+  background: var(--card); border: 1px solid var(--line); border-radius: 22px; padding: 22px;
+  box-shadow: 0 6px 20px var(--shadow); display: flex; flex-direction: column; justify-content: space-between; gap: 14px;
+  cursor: pointer; transition: transform 0.22s ease, border-color 0.22s ease, box-shadow 0.22s ease; position: relative;
+}
+.gift-card:hover { transform: translateY(-4px); border-color: var(--primary); box-shadow: 0 12px 28px rgba(155, 79, 83, 0.14); }
+.gift-card.gifted { background: #fdfcfb; border-color: #c7ebd9; }
+.gift-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 10px; }
+.gift-icon { width: 48px; height: 48px; border-radius: 14px; background: var(--primary-light); display: flex; align-items: center; justify-content: center; font-size: 24px; flex-shrink: 0; }
+.gift-cat-tag { font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.04em; padding: 4px 10px; border-radius: 99px; background: var(--bg); color: var(--mut); border: 1px solid var(--line); }
+.gift-card.gifted .gift-cat-tag { background: var(--ok-light); color: #047857; border-color: #a7f3d0; }
+
+.gift-body h3 { margin: 0 0 6px; font-size: 17px; font-weight: 800; color: var(--ink); line-height: 1.3; }
+.gift-body p { margin: 0; font-size: 13px; color: var(--mut); line-height: 1.45; }
+
+.gift-footer { border-top: 1px dashed var(--line); padding-top: 14px; display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+.gift-price small { display: block; font-size: 11px; color: var(--mut); font-weight: 700; text-transform: uppercase; }
+.gift-price strong { font-family: 'Playfair Display', serif; font-size: 20px; font-weight: 700; color: var(--primary); }
+.gift-gifted-by { font-size: 12px; color: #047857; background: var(--ok-light); padding: 6px 10px; border-radius: 10px; font-weight: 700; margin-top: 4px; }
+
+/* Painel Gerenciar Lista */
+.cfg-panel { margin-top: 16px; padding: 24px; border-radius: 20px; background: var(--card); border: 1px solid var(--line); display: none; box-shadow: 0 10px 30px var(--shadow); text-align: left; max-width: 760px; margin-left: auto; margin-right: auto; }
+.cfg-panel.show { display: block; }
+.add-form { display: grid; grid-template-columns: 1.3fr 1fr 0.8fr 0.6fr auto; gap: 10px; margin-top: 12px; }
+@media (max-width: 768px) { .add-form { grid-template-columns: 1fr; } }
+.add-form input, .add-form select { font: inherit; font-size: 14px; padding: 10px 12px; border: 1.5px solid var(--line); border-radius: 12px; background: var(--bg); color: var(--ink); font-weight: 600; }
+
+/* Mural de Carinho */
+.card { background: var(--card); border: 1px solid var(--line); border-radius: 24px; padding: 28px; box-shadow: 0 12px 40px var(--shadow); }
+.wishes-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 14px; }
+.wish-card { background: var(--bg); border: 1px solid var(--line); border-radius: 16px; padding: 16px 18px; display: flex; flex-direction: column; gap: 6px; }
+.wish-head { display: flex; justify-content: space-between; align-items: center; gap: 8px; }
+.wish-head strong { font-size: 15px; color: var(--ink); }
+.wish-head span { font-size: 12px; font-weight: 800; color: var(--primary); background: var(--primary-light); padding: 3px 9px; border-radius: 8px; }
+.wish-gift { font-size: 12px; font-weight: 700; color: var(--mut); }
+.wish-note { font-size: 14px; color: var(--ink); font-style: italic; margin: 4px 0 0; }
+
+/* Modal Pix QR Code */
+.modal-backdrop {
+  position: fixed; inset: 0; background: rgba(44, 36, 35, 0.58); backdrop-filter: blur(4px);
+  display: none; align-items: center; justify-content: center; padding: 16px; z-index: 9999; overflow-y: auto;
+}
+.modal-backdrop.open { display: flex; }
+.modal-box {
+  background: var(--card); border: 1px solid var(--line); border-radius: 26px; max-width: 520px; width: 100%;
+  padding: 28px; box-shadow: 0 24px 60px rgba(0, 0, 0, 0.24); position: relative; margin: auto; animation: popIn 0.2s ease;
+}
+@keyframes popIn { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
+.modal-close {
+  position: absolute; top: 18px; right: 18px; width: 34px; height: 34px; border-radius: 50%;
+  border: 1px solid var(--line); background: var(--bg); color: var(--mut); font-size: 16px; font-weight: 800;
+  cursor: pointer; display: flex; align-items: center; justify-content: center;
+}
+.modal-close:hover { border-color: var(--primary); color: var(--primary); }
+
+.modal-header { display: flex; align-items: center; gap: 14px; margin-bottom: 18px; padding-right: 32px; }
+.modal-icon { width: 52px; height: 52px; border-radius: 16px; background: var(--primary-light); display: flex; align-items: center; justify-content: center; font-size: 26px; flex-shrink: 0; }
+.modal-header h3 { margin: 0; font-family: 'Playfair Display', serif; font-size: 22px; color: var(--primary); line-height: 1.2; }
+.modal-header small { display: block; font-size: 12px; color: var(--mut); font-weight: 700; margin-top: 2px; }
+
+.qr-panel {
+  background: var(--bg); border: 1.5px dashed var(--primary); border-radius: 20px; padding: 18px;
+  display: flex; flex-direction: column; align-items: center; text-align: center; gap: 10px; margin-bottom: 18px;
+}
+.qr-frame {
+  background: #ffffff; padding: 12px; border-radius: 16px; border: 1px solid var(--line);
+  box-shadow: 0 4px 14px var(--shadow); min-width: 204px; min-height: 204px; display: flex; align-items: center; justify-content: center;
+}
+.qr-frame img, .qr-frame canvas { display: block; max-width: 180px; max-height: 180px; }
+.pix-key-pill {
+  font-size: 12px; font-weight: 800; color: var(--primary); background: var(--primary-light);
+  padding: 5px 12px; border-radius: 99px; display: inline-flex; align-items: center; gap: 6px;
+}
+.copy-row { display: flex; gap: 8px; flex-wrap: wrap; justify-content: center; width: 100%; }
+
+.form-group { display: flex; flex-direction: column; gap: 6px; margin-bottom: 14px; text-align: left; }
+.form-group label { font-size: 12px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.04em; color: var(--ink); }
+.form-group input, .form-group textarea {
+  font: inherit; font-size: 14px; padding: 11px 14px; border: 1.5px solid var(--line); border-radius: 12px;
+  background: var(--bg); color: var(--ink); font-weight: 600; width: 100%;
+}
+.form-group textarea { min-height: 74px; resize: vertical; }
+.form-group input:focus, .form-group textarea:focus { outline: none; border-color: var(--primary); background: var(--card); }
+
+.modal-grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+@media (max-width: 520px) { .modal-grid-2 { grid-template-columns: 1fr; } }
+
+.feedback-toast { font-size: 13px; font-weight: 700; color: #047857; text-align: center; margin-top: 8px; min-height: 20px; }
+
+footer { margin-top: 56px; color: var(--mut); font-size: 14px; text-align: center; font-weight: 600; font-family: 'Playfair Display', serif; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <!-- Barra de Navegação Unificada -->
+  <nav class="top-nav">
+    <a href="index.html">✈️ Lua de Mel</a>
+    <a href="apartamento.html">🏡 Nosso Apartamento</a>
+    <a href="cha-de-casa-nova.html" class="active">🎁 Chá de Casa Nova</a>
+  </nav>
+
+  <header>
+    <span class="eyebrow">Nosso Novo Lar</span>
+    <h1>Chá de Casa Nova — Flávio e Gabriela</h1>
+    <p class="sub">Escolha um item abaixo para nos presentear! Ao clicar em qualquer produto, o QR Code Pix já abre pronto com o valor aproximado.</p>
+
+    <div class="header-actions">
+      <a href="index.html" class="btn">← Voltar para Lua de Mel</a>
+      <button type="button" class="btn btn-primary" id="btnCustomPix">💝 Presentear com Valor Livre</button>
+      <button type="button" class="btn" id="btnToggleManage">⚙ Gerenciar Lista</button>
+    </div>
+
+    <!-- Banner Chave Pix -->
+    <div class="pix-banner">
+      <div class="pix-banner-info">
+        <span>Chave Pix Oficial (Celular)</span>
+        <strong>(31) 99666-2368</strong>
+        <small>Flávio Garcia & Gabriela • Clique em qualquer presente para gerar o QR Code automaticamente</small>
+      </div>
+      <div class="pix-banner-actions">
+        <button type="button" class="btn btn-glass" id="btnCopyRawKey">📋 Copiar Chave Pix</button>
+      </div>
+    </div>
+
+    <!-- Painel Gerenciar Lista (para os noivos adicionarem itens) -->
+    <div class="cfg-panel" id="managePanel">
+      <h3 style="margin-top:0; color:var(--primary);">Adicionar Novo Item à Lista</h3>
+      <p style="font-size:13px; color:var(--mut); margin:4px 0 12px;">Inclua novos presentes na lista ou redefina os itens padrão.</p>
+      <div class="add-form">
+        <input type="text" id="newItemName" placeholder="Nome do produto (ex: Cafeteira)">
+        <select id="newItemCat">
+          <option value="cozinha">🍳 Cozinha & Eletros</option>
+          <option value="mesa">🍽️ Mesa Posta</option>
+          <option value="sala">🛋️ Sala & Decoração</option>
+          <option value="quarto">🛏️ Quarto & Banho</option>
+          <option value="lavanderia">🧺 Lavanderia & Utilidades</option>
+        </select>
+        <input type="number" id="newItemPrice" placeholder="Valor (R$)" min="1" step="1">
+        <input type="text" id="newItemIcon" placeholder="Emoji (ex: ☕)" maxlength="4">
+        <button type="button" class="btn btn-primary" id="btnAddItem">+ Adicionar</button>
+      </div>
+      <div style="margin-top:14px; display:flex; gap:10px; flex-wrap:wrap; align-items:center;">
+        <button type="button" class="btn btn-sm" id="btnResetGifts">↺ Restaurar Lista Original</button>
+        <span id="manageFeedback" style="font-size:12px; font-weight:700; color:var(--ok);"></span>
+      </div>
+    </div>
+  </header>
+
+  <!-- Indicadores -->
+  <div class="stats">
+    <div class="stat"><small>Itens na Lista</small><b id="statTotal">0</b></div>
+    <div class="stat"><small>Presentes Recebidos</small><b id="statGifted">0</b></div>
+    <div class="stat"><small>Disponíveis</small><b id="statAvail">0</b></div>
+    <div class="stat"><small>Recados no Mural</small><b id="statWishes">0</b></div>
+  </div>
+
+  <!-- Lista de Produtos -->
+  <section>
+    <h2>🎁 Lista de Presentes (Clique para abrir o Pix)</h2>
+
+    <div class="toolbar">
+      <div class="cat-filters" id="catFilters">
+        <button type="button" class="filter-btn active" data-cat="all">Todos</button>
+        <button type="button" class="filter-btn" data-cat="cozinha">🍳 Cozinha & Eletros</button>
+        <button type="button" class="filter-btn" data-cat="mesa">🍽️ Mesa Posta</button>
+        <button type="button" class="filter-btn" data-cat="sala">🛋️ Sala & Decoração</button>
+        <button type="button" class="filter-btn" data-cat="quarto">🛏️ Quarto & Banho</button>
+        <button type="button" class="filter-btn" data-cat="lavanderia">🧺 Lavanderia</button>
+      </div>
+
+      <div class="search-controls">
+        <input type="text" id="searchInput" placeholder="Buscar produto...">
+        <select id="statusFilter">
+          <option value="all">Todos os status</option>
+          <option value="avail">Disponíveis</option>
+          <option value="gifted">Já presenteados</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="gift-grid" id="giftGrid"></div>
+  </section>
+
+  <!-- Mural de Recados & Presentes -->
+  <section>
+    <h2>💌 Mural de Carinho & Presentes Registrados</h2>
+    <div class="card">
+      <div id="wishesContainer"></div>
+    </div>
+  </section>
+
+  <div style="text-align:center; margin-top: 36px;">
+    <a href="index.html" class="btn">← Voltar para a página principal (Lua de Mel)</a>
+  </div>
+
+  <footer>Feito com muito amor para Flávio e Gabriela ❤️</footer>
+</div>
+
+<!-- Modal Pix QR Code -->
+<div class="modal-backdrop" id="pixModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+  <div class="modal-box">
+    <button type="button" class="modal-close" id="btnCloseModal" aria-label="Fechar">✕</button>
+
+    <div class="modal-header">
+      <div class="modal-icon" id="modalIcon">🎁</div>
+      <div>
+        <h3 id="modalTitle">Presente</h3>
+        <small id="modalCat">Categoria • Valor aproximado</small>
+      </div>
+    </div>
+
+    <!-- QR Code Pix -->
+    <div class="qr-panel">
+      <div class="pix-key-pill">🔑 Chave Pix (Celular): <strong>31996662368</strong></div>
+      <div class="qr-frame" id="qrContainer"></div>
+      <div style="font-size:12px; color:var(--mut); max-width:360px;">
+        Abra o app do seu banco → <strong>Pix → Ler QR Code</strong> ou copie o código abaixo:
+      </div>
+      <div class="copy-row">
+        <button type="button" class="btn btn-primary btn-sm" id="btnCopyPixCode">📋 Copiar Pix Copia e Cola</button>
+        <button type="button" class="btn btn-sm" id="btnCopyModalKey">📱 Copiar Chave (31996662368)</button>
+      </div>
+      <div class="feedback-toast" id="modalCopyFeedback"></div>
+    </div>
+
+    <!-- Campos: Valor, Nome da Pessoa e Observação -->
+    <div class="modal-grid-2">
+      <div class="form-group">
+        <label for="modalAmount">Valor do Presente (R$)</label>
+        <input type="number" id="modalAmount" min="1" step="0.01" placeholder="0,00">
+      </div>
+      <div class="form-group">
+        <label for="guestName">Seu Nome *</label>
+        <input type="text" id="guestName" placeholder="Ex: Tia Maria e Tio João">
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="guestNote">Observação / Recadinho para os noivos</label>
+      <textarea id="guestNote" placeholder="Escreva uma mensagem carinhosa ou observação sobre o presente..."></textarea>
+    </div>
+
+    <div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:6px;">
+      <button type="button" class="btn btn-ok" style="flex:1;" id="btnConfirmGift">✅ Confirmar Presente & Salvar Recado</button>
+      <button type="button" class="btn" id="btnSendWhatsApp" title="Enviar aviso pelo WhatsApp">📲 Avisar no WhatsApp</button>
+    </div>
+    <div class="feedback-toast" id="modalConfirmFeedback"></div>
+  </div>
+</div>
+
+<script>
+(function(){
+  var PIX_KEY_RAW = "31996662368";
+  var PIX_KEY_EMV = "+5531996662368"; // Padrão oficial BACEN para chave telefone no Brasil
+  var WHATSAPP_PHONE = "5531996662368";
+
+  var GIFTS_STORAGE_KEY = "flavio_gabriela_cha_gifts_v1";
+  var WISHES_STORAGE_KEY = "flavio_gabriela_cha_wishes_v1";
+  var WEBAPP_KEY = "flavio_gabriela_unified_webapp_v1";
+  var DEFAULT_WEBAPP_URL = "https://script.google.com/macros/s/AKfycbx1HyO8kaXKpTV2ZdEnEgMpjFG7qE3tTigmLhgwNj7Z7fLbCOzmEghNJOAKVizS7BLU/exec";
+
+  var CAT_LABELS = {
+    cozinha: "🍳 Cozinha & Eletros",
+    mesa: "🍽️ Mesa Posta",
+    sala: "🛋️ Sala & Decoração",
+    quarto: "🛏️ Quarto & Banho",
+    lavanderia: "🧺 Lavanderia & Utilidades"
+  };
+
+  var DEFAULT_GIFTS = [
+    { id: "airfryer", cat: "cozinha", icon: "🍟", name: "Fritadeira Elétrica Air Fryer Digital", desc: "Capacidade 4L a 5L, painel digital antiaderente para o dia a dia.", price: 420 },
+    { id: "cafeteira", cat: "cozinha", icon: "☕", name: "Cafeteira Elétrica / Espresso", desc: "Para começar todas as manhãs no apartamento novo com café fresquinho.", price: 280 },
+    { id: "panelas", cat: "cozinha", icon: "🍳", name: "Jogo de Panelas Antiaderente (5 peças)", desc: "Revestimento cerâmico ou antiaderente com tampas de vidro.", price: 480 },
+    { id: "liquidificador", cat: "cozinha", icon: "🥤", name: "Liquidificador Turbo 1200W", desc: "Copo resistente com filtro e múltiplas velocidades.", price: 190 },
+    { id: "microondas", cat: "cozinha", icon: "📡", name: "Forno Micro-ondas 30L", desc: "Acabamento espelhado ou inox para nossa cozinha.", price: 650 },
+    { id: "sanduicheira", cat: "cozinha", icon: "🥪", name: "Sanduicheira e Grill Antiaderente", desc: "Ideal para lanches rápidos e grelhados.", price: 140 },
+    { id: "potes", cat: "cozinha", icon: "🫙", name: "Kit Potes Herméticos (10 unidades)", desc: "Organização prática para mantimentos e geladeira.", price: 150 },
+    { id: "facas", cat: "cozinha", icon: "🔪", name: "Conjunto de Facas Inox + Tábua", desc: "Kit completo de corte para preparar nossos jantares.", price: 160 },
+
+    { id: "aparelho_jantar", cat: "mesa", icon: "🍽️", name: "Aparelho de Jantar Porcelana (20 peças)", desc: "Pratos rasos, fundos, sobremesa e xícaras para receber visitas.", price: 360 },
+    { id: "faqueiro", cat: "mesa", icon: "🍴", name: "Faqueiro Aço Inox (24 peças)", desc: "Talheres resistentes com acabamento polido.", price: 170 },
+    { id: "tacas", cat: "mesa", icon: "🥂", name: "Jogo de Taças Cristal (Vinho e Água)", desc: "Conjunto com 12 taças para brindar momentos especiais.", price: 220 },
+    { id: "travessas", cat: "mesa", icon: "🥧", name: "Conjunto de Travessas e Assadeiras de Vidro", desc: "Marinex refratárias para ir direto do forno à mesa.", price: 145 },
+
+    { id: "aspirador", cat: "sala", icon: "🧹", name: "Aspirador de Pó Vertical 2 em 1", desc: "Prático e leve para manter o apartamento sempre impecável.", price: 320 },
+    { id: "almofadas", cat: "sala", icon: "🛋️", name: "Kit Almofadas Decorativas + Manta", desc: "Para deixar o sofá da sala ainda mais aconchegante.", price: 180 },
+    { id: "luminaria", cat: "sala", icon: "💡", name: "Luminária de Chão / Abajur Moderno", desc: "Iluminação quente e acolhedora para a sala de estar.", price: 240 },
+    { id: "quadros", cat: "sala", icon: "🖼️", name: "Trio de Quadros & Vaso Decorativo", desc: "Toque especial na decoração da sala.", price: 195 },
+
+    { id: "jogo_cama", cat: "quarto", icon: "🛏️", name: "Jogo de Cama Queen 400 Fios", desc: "Lençol com elástico, sobre-lençol e fronhas macias.", price: 290 },
+    { id: "edredom", cat: "quarto", icon: "🛌", name: "Edredom / Cobreleito Dupla Face Queen", desc: "Conforto térmico e elegante para o quarto do casal.", price: 260 },
+    { id: "toalhas", cat: "quarto", icon: "🛁", name: "Jogo de Toalhas Banho & Rosto (5 peças)", desc: "100% algodão encorpado e super macio.", price: 185 },
+    { id: "organizadores", cat: "quarto", icon: "🧺", name: "Kit Colmeias & Cabides de Veludo", desc: "Para deixar o guarda-roupa impecável.", price: 130 },
+
+    { id: "ferro", cat: "lavanderia", icon: "👔", name: "Ferro de Passar a Vapor / Vaporizador", desc: "Base cerâmica antiaderente com jato extra de vapor.", price: 175 },
+    { id: "varal", cat: "lavanderia", icon: "👕", name: "Varal de Chão Dobrável Reforçado", desc: "Com abas laterais, compacto e resistente.", price: 155 },
+    { id: "cesto", cat: "lavanderia", icon: "🧺", name: "Cesto de Roupas em Bambu / Tecido", desc: "Design moderno para a área de serviço.", price: 120 },
+    { id: "ferramentas", cat: "lavanderia", icon: "🧰", name: "Maleta de Ferramentas Básicas", desc: "Martelo, chaves, trena e nível para pequenos reparos.", price: 165 }
+  ];
+
+  var gifts = [];
+  var wishes = [];
+  var currentCat = "all";
+  var activeGift = null;
+
+  function loadData(){
+    try {
+      var sg = JSON.parse(localStorage.getItem(GIFTS_STORAGE_KEY) || "null");
+      gifts = Array.isArray(sg) && sg.length ? sg : JSON.parse(JSON.stringify(DEFAULT_GIFTS));
+    } catch(e){
+      gifts = JSON.parse(JSON.stringify(DEFAULT_GIFTS));
+    }
+    try {
+      var sw = JSON.parse(localStorage.getItem(WISHES_STORAGE_KEY) || "null");
+      wishes = Array.isArray(sw) ? sw : [];
+    } catch(e){
+      wishes = [];
+    }
+  }
+
+  function saveData(){
+    try {
+      localStorage.setItem(GIFTS_STORAGE_KEY, JSON.stringify(gifts));
+      localStorage.setItem(WISHES_STORAGE_KEY, JSON.stringify(wishes));
+    } catch(e){}
+  }
+
+  function postToSheets(payload){
+    var url = DEFAULT_WEBAPP_URL;
+    try { url = localStorage.getItem(WEBAPP_KEY) || DEFAULT_WEBAPP_URL; } catch(e){}
+    if(!url) return;
+    fetch(url, {
+      method: "POST",
+      mode: "no-cors",
+      headers: { "Content-Type": "text/plain;charset=utf-8" },
+      body: JSON.stringify(payload)
+    }).catch(function(){});
+  }
+
+  function brl(v){
+    return (Number(v) || 0).toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
+  }
+
+  /* =========================================================
+     GERADOR OFICIAL DE PIX BR CODE (EMV® QRCPS-MPM + CRC16)
+     ========================================================= */
+  function crc16CCITT(str){
+    var crc = 0xFFFF;
+    for(var i = 0; i < str.length; i++){
+      crc ^= (str.charCodeAt(i) << 8);
+      for(var j = 0; j < 8; j++){
+        if((crc & 0x8000) !== 0){
+          crc = ((crc << 1) ^ 0x1021) & 0xFFFF;
+        } else {
+          crc = (crc << 1) & 0xFFFF;
+        }
+      }
+    }
+    return ("0000" + crc.toString(16).toUpperCase()).slice(-4);
+  }
+
+  function tlv(tag, val){
+    var len = ("00" + val.length).slice(-2);
+    return tag + len + val;
+  }
+
+  function sanitizeAscii(str, maxLen){
+    return String(str || "")
+      .normalize("NFD").replace(/[\u0300-\u036f]/g, "")
+      .replace(/[^a-zA-Z0-9 \-\.]/g, "")
+      .trim()
+      .slice(0, maxLen);
+  }
+
+  function buildPixPayload(amount, infoText){
+    var mai = tlv("00", "br.gov.bcb.pix") + tlv("01", PIX_KEY_EMV);
+    var cleanInfo = sanitizeAscii(infoText, 40);
+    if(cleanInfo){
+      var maxAllowed = 99 - mai.length - 4;
+      if(maxAllowed > 0){
+        mai += tlv("02", cleanInfo.slice(0, maxAllowed));
+      }
+    }
+
+    var numAmount = Number(amount);
+    var amountField = (!isNaN(numAmount) && numAmount > 0) ? tlv("54", numAmount.toFixed(2)) : "";
+
+    var payload =
+      tlv("00", "01") +
+      tlv("26", mai) +
+      tlv("52", "0000") +
+      tlv("53", "986") +
+      amountField +
+      tlv("58", "BR") +
+      tlv("59", "FLAVIO E GABRIELA") +
+      tlv("60", "BELO HORIZONTE") +
+      tlv("62", tlv("05", "CHACASANOVA")) +
+      "6304";
+
+    return payload + crc16CCITT(payload);
+  }
+
+  function renderQrCode(payload){
+    var container = document.getElementById("qrContainer");
+    container.innerHTML = "";
+    if(typeof window.QRCode === "function"){
+      try {
+        new window.QRCode(container, {
+          text: payload,
+          width: 180,
+          height: 180,
+          colorDark: "#2c2423",
+          colorLight: "#ffffff",
+          correctLevel: window.QRCode.CorrectLevel.M
+        });
+        return;
+      } catch(e){}
+    }
+    // Fallback automático via API pública caso o script CDN ainda esteja carregando
+    var img = document.createElement("img");
+    img.alt = "QR Code Pix";
+    img.width = 180;
+    img.height = 180;
+    img.src = "https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=" + encodeURIComponent(payload);
+    container.appendChild(img);
+  }
+
+  /* =========================================================
+     RENDERIZAÇÃO DA LISTA, INDICADORES E MURAL
+     ========================================================= */
+  function renderStats(){
+    var total = gifts.length;
+    var giftedCount = gifts.filter(function(g){ return !!g.giftedBy; }).length;
+    var availCount = Math.max(total - giftedCount, 0);
+
+    document.getElementById("statTotal").textContent = total;
+    document.getElementById("statGifted").textContent = giftedCount;
+    document.getElementById("statAvail").textContent = availCount;
+    document.getElementById("statWishes").textContent = wishes.length;
+  }
+
+  function renderGifts(){
+    var query = (document.getElementById("searchInput").value || "").toLowerCase().trim();
+    var statusF = document.getElementById("statusFilter").value;
+    var grid = document.getElementById("giftGrid");
+
+    var filtered = gifts.filter(function(g){
+      if(currentCat !== "all" && g.cat !== currentCat) return false;
+      if(statusF === "avail" && g.giftedBy) return false;
+      if(statusF === "gifted" && !g.giftedBy) return false;
+      if(query){
+        var hay = (g.name + " " + (g.desc || "") + " " + (CAT_LABELS[g.cat] || "")).toLowerCase();
+        if(hay.indexOf(query) === -1) return false;
+      }
+      return true;
+    });
+
+    if(!filtered.length){
+      grid.innerHTML = '<div class="card" style="grid-column:1/-1; text-align:center; color:var(--mut);">Nenhum produto encontrado com esses filtros.</div>';
+      return;
+    }
+
+    grid.innerHTML = filtered.map(function(g){
+      var isGifted = !!g.giftedBy;
+      var badge = isGifted ? "✅ Presenteado" : (CAT_LABELS[g.cat] || "🎁 Presente");
+      var giftedNote = isGifted ? '<div class="gift-gifted-by">💝 Presente de ' + escapeHtml(g.giftedBy) + '</div>' : '';
+      return '<div class="gift-card' + (isGifted ? ' gifted' : '') + '" data-gift-id="' + g.id + '">' +
+        '<div>' +
+          '<div class="gift-top">' +
+            '<div class="gift-icon">' + (g.icon || "🎁") + '</div>' +
+            '<span class="gift-cat-tag">' + badge + '</span>' +
+          '</div>' +
+          '<div class="gift-body" style="margin-top:12px;">' +
+            '<h3>' + escapeHtml(g.name) + '</h3>' +
+            '<p>' + escapeHtml(g.desc || "Presente para o nosso novo apartamento.") + '</p>' +
+            giftedNote +
+          '</div>' +
+        '</div>' +
+        '<div class="gift-footer">' +
+          '<div class="gift-price">' +
+            '<small>Valor aproximado</small>' +
+            '<strong>' + brl(g.price) + '</strong>' +
+          '</div>' +
+          '<button type="button" class="btn btn-primary btn-sm">Presentear Pix</button>' +
+        '</div>' +
+      '</div>';
+    }).join("");
+
+    grid.querySelectorAll(".gift-card").forEach(function(card){
+      card.addEventListener("click", function(){
+        var id = card.getAttribute("data-gift-id");
+        var found = gifts.find(function(item){ return item.id === id; });
+        if(found) openPixModal(found);
+      });
+    });
+  }
+
+  function renderWishes(){
+    var container = document.getElementById("wishesContainer");
+    if(!wishes.length){
+      container.innerHTML = '<p style="margin:0; text-align:center; color:var(--mut); font-size:14px;">Ainda não há recados registrados aqui. Seja o primeiro a escolher um presente acima e deixar uma mensagem para Flávio e Gabriela! 🥂</p>';
+      return;
+    }
+    container.innerHTML = '<div class="wishes-grid">' + wishes.slice().reverse().map(function(w){
+      return '<div class="wish-card">' +
+        '<div class="wish-head"><strong>' + escapeHtml(w.name) + '</strong><span>' + brl(w.amount) + '</span></div>' +
+        '<div class="wish-gift">🎁 ' + escapeHtml(w.giftName) + ' • ' + escapeHtml(w.date || "") + '</div>' +
+        (w.note ? '<p class="wish-note">“' + escapeHtml(w.note) + '”</p>' : '') +
+      '</div>';
+    }).join("") + '</div>';
+  }
+
+  function escapeHtml(s){
+    return String(s || "")
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;");
+  }
+
+  /* =========================================================
+     MODAL PIX (ABRE AO CLICAR NO PRODUTO)
+     ========================================================= */
+  function openPixModal(gift){
+    activeGift = gift;
+    document.getElementById("modalIcon").textContent = gift.icon || "🎁";
+    document.getElementById("modalTitle").textContent = gift.name;
+    document.getElementById("modalCat").textContent = (CAT_LABELS[gift.cat] || "Chá de Casa Nova") + " • Chave Pix: 31996662368";
+    document.getElementById("modalAmount").value = gift.price > 0 ? Number(gift.price).toFixed(2) : "";
+    document.getElementById("guestName").value = "";
+    document.getElementById("guestNote").value = "";
+    document.getElementById("modalCopyFeedback").textContent = "";
+    document.getElementById("modalConfirmFeedback").textContent = "";
+
+    updateModalQr();
+    document.getElementById("pixModal").classList.add("open");
+  }
+
+  function closePixModal(){
+    document.getElementById("pixModal").classList.remove("open");
+    activeGift = null;
+  }
+
+  function getCurrentPixPayload(){
+    var amt = parseFloat(document.getElementById("modalAmount").value);
+    var giftLabel = activeGift ? activeGift.name : "Cha de Casa Nova";
+    return buildPixPayload(amt, giftLabel);
+  }
+
+  function updateModalQr(){
+    var payload = getCurrentPixPayload();
+    renderQrCode(payload);
+  }
+
+  document.getElementById("modalAmount").addEventListener("input", updateModalQr);
+  document.getElementById("btnCloseModal").addEventListener("click", closePixModal);
+  document.getElementById("pixModal").addEventListener("click", function(e){
+    if(e.target === document.getElementById("pixModal")) closePixModal();
+  });
+  document.addEventListener("keydown", function(e){
+    if(e.key === "Escape") closePixModal();
+  });
+
+  function copyText(text, feedbackEl, msg){
+    if(navigator.clipboard && navigator.clipboard.writeText){
+      navigator.clipboard.writeText(text).catch(function(){});
+    } else {
+      var ta = document.createElement("textarea");
+      ta.value = text;
+      document.body.appendChild(ta);
+      ta.select();
+      document.execCommand("copy");
+      document.body.removeChild(ta);
+    }
+    if(feedbackEl){
+      feedbackEl.textContent = msg;
+      setTimeout(function(){ feedbackEl.textContent = ""; }, 3500);
+    }
+  }
+
+  document.getElementById("btnCopyPixCode").addEventListener("click", function(){
+    var code = getCurrentPixPayload();
+    copyText(code, document.getElementById("modalCopyFeedback"), "✅ Código Pix Copia e Cola copiado! Cole no app do seu banco.");
+  });
+
+  document.getElementById("btnCopyModalKey").addEventListener("click", function(){
+    copyText(PIX_KEY_RAW, document.getElementById("modalCopyFeedback"), "✅ Chave Pix 31996662368 copiada!");
+  });
+
+  document.getElementById("btnCopyRawKey").addEventListener("click", function(){
+    copyText(PIX_KEY_RAW, null, "");
+    var btn = document.getElementById("btnCopyRawKey");
+    var orig = btn.textContent;
+    btn.textContent = "✅ Chave 31996662368 Copiada!";
+    setTimeout(function(){ btn.textContent = orig; }, 2500);
+  });
+
+  document.getElementById("btnCustomPix").addEventListener("click", function(){
+    openPixModal({
+      id: "custom_" + Date.now(),
+      cat: "cozinha",
+      icon: "💝",
+      name: "Contribuição Livre — Chá de Casa Nova",
+      desc: "Escolha qualquer valor para ajudar a montar nosso novo lar!",
+      price: 150
+    });
+  });
+
+  document.getElementById("btnConfirmGift").addEventListener("click", function(){
+    var gName = (document.getElementById("guestName").value || "").trim();
+    var gNote = (document.getElementById("guestNote").value || "").trim();
+    var amt = parseFloat(document.getElementById("modalAmount").value) || (activeGift ? activeGift.price : 0);
+    var fb = document.getElementById("modalConfirmFeedback");
+
+    if(!gName){
+      fb.style.color = "#dc2626";
+      fb.textContent = "⚠️ Por favor, preencha o seu nome antes de confirmar.";
+      document.getElementById("guestName").focus();
+      return;
+    }
+
+    var giftTitle = activeGift ? activeGift.name : "Contribuição Livre";
+    var today = new Date().toLocaleDateString("pt-BR");
+
+    // Marca o item da lista como presenteado
+    if(activeGift){
+      var idx = gifts.findIndex(function(item){ return item.id === activeGift.id; });
+      if(idx > -1){
+        gifts[idx].giftedBy = gName;
+      }
+    }
+
+    var record = {
+      name: gName,
+      giftName: giftTitle,
+      amount: amt,
+      note: gNote,
+      date: today
+    };
+    wishes.push(record);
+    saveData();
+
+    postToSheets({
+      action: "registrar_cha_casa_nova",
+      presente: record
+    });
+
+    renderStats();
+    renderGifts();
+    renderWishes();
+
+    fb.style.color = "#047857";
+    fb.textContent = "✅ Presente e recado registrados com muito carinho! Obrigado, " + gName + "!";
+  });
+
+  document.getElementById("btnSendWhatsApp").addEventListener("click", function(){
+    var gName = (document.getElementById("guestName").value || "").trim() || "Convidado(a)";
+    var gNote = (document.getElementById("guestNote").value || "").trim();
+    var amt = parseFloat(document.getElementById("modalAmount").value) || (activeGift ? activeGift.price : 0);
+    var giftTitle = activeGift ? activeGift.name : "Chá de Casa Nova";
+
+    var text = "🎁 *Chá de Casa Nova — Flávio & Gabriela*\n" +
+      "👤 *De:* " + gName + "\n" +
+      "🏠 *Presente:* " + giftTitle + "\n" +
+      "💰 *Valor Pix:* " + brl(amt) +
+      (gNote ? "\n💌 *Recado:* " + gNote : "");
+
+    window.open("https://wa.me/" + WHATSAPP_PHONE + "?text=" + encodeURIComponent(text), "_blank");
+  });
+
+  /* =========================================================
+     GERENCIAR LISTA (ADICIONAR / RESTAURAR)
+     ========================================================= */
+  document.getElementById("btnToggleManage").addEventListener("click", function(){
+    document.getElementById("managePanel").classList.toggle("show");
+  });
+
+  document.getElementById("btnAddItem").addEventListener("click", function(){
+    var name = (document.getElementById("newItemName").value || "").trim();
+    var cat = document.getElementById("newItemCat").value;
+    var price = parseFloat(document.getElementById("newItemPrice").value) || 100;
+    var icon = (document.getElementById("newItemIcon").value || "").trim() || "🎁";
+    var fb = document.getElementById("manageFeedback");
+
+    if(!name){
+      fb.style.color = "#dc2626";
+      fb.textContent = "Digite o nome do produto.";
+      return;
+    }
+
+    gifts.unshift({
+      id: "item_" + Date.now(),
+      cat: cat,
+      icon: icon,
+      name: name,
+      desc: "Item adicionado à lista do Chá de Casa Nova.",
+      price: price
+    });
+    saveData();
+    renderStats();
+    renderGifts();
+
+    document.getElementById("newItemName").value = "";
+    document.getElementById("newItemPrice").value = "";
+    document.getElementById("newItemIcon").value = "";
+    fb.style.color = "#047857";
+    fb.textContent = "✅ Item adicionado!";
+    setTimeout(function(){ fb.textContent = ""; }, 2500);
+  });
+
+  document.getElementById("btnResetGifts").addEventListener("click", function(){
+    gifts = JSON.parse(JSON.stringify(DEFAULT_GIFTS));
+    saveData();
+    renderStats();
+    renderGifts();
+    var fb = document.getElementById("manageFeedback");
+    fb.style.color = "#047857";
+    fb.textContent = "✅ Lista original restaurada!";
+    setTimeout(function(){ fb.textContent = ""; }, 2500);
+  });
+
+  /* Filtros */
+  document.querySelectorAll("#catFilters .filter-btn").forEach(function(btn){
+    btn.addEventListener("click", function(){
+      document.querySelectorAll("#catFilters .filter-btn").forEach(function(b){ b.classList.remove("active"); });
+      btn.classList.add("active");
+      currentCat = btn.getAttribute("data-cat");
+      renderGifts();
+    });
+  });
+  document.getElementById("searchInput").addEventListener("input", renderGifts);
+  document.getElementById("statusFilter").addEventListener("change", renderGifts);
+
+  loadData();
+  renderStats();
+  renderGifts();
+  renderWishes();
+})();
+</script>
+</body>
+</html>
